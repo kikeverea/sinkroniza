@@ -1,0 +1,72 @@
+<%= form_with model: user, url: url do |form| %>
+  <div class="card card-body px-4" style="border: 1px solid #ECECEC">
+
+    <% if user and user.errors.any? %>
+      <div class="alert alert-danger d-flex align-items-center p-5">
+        <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
+        <div class="d-flex flex-column">
+          <h4 class="mb-1 text-dark"><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h4>
+          <span style="margin-left: 10px;">
+            <% user.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+
+
+    
+
+      <div class="row py-3">
+        <div >
+          <label class="form-label">Role</label>
+          <select name="user[role]" class="form-select" data-controller='user' data-action="change->user#change">
+            <% User.roles.each do |role, role_value| %>
+              <option value=<%= role_value %> <%= "selected" if user&.role == role_value %>><%= role_value.titleize %></option>  
+            <% end %>
+          </select>
+        </div>
+      </div>
+
+
+    <div id="fields_container">
+      
+      <!-- New Client -->
+      <div id="client_user">
+
+            <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <%= form.email_field :email, class: "form-control form-control-solid", required: true %>
+            </div>
+
+
+            <div class="mb-3">
+                <%= form.label "Nombre", class: "fs-6 fw-semibold mb-2" %>
+                <%= form.text_field :name, class: "form-control form-control-solid", required: true %>
+            </div>
+
+            <div class="mb-3">
+                <%= form.label "Apellido", class: "fs-6 fw-semibold mb-2" %>
+                <%= form.text_field :lastname, class: "form-control form-control-solid" %>
+            </div>
+
+            <div class="separator mt-4 mb-4"></div>
+            <div class="mb-3">
+                <%= form.label "Contraseña", class: "fs-6 fw-semibold mb-2" %>
+                <%= form.password_field :password, class: "form-control form-control-solid" %>
+            </div>
+
+            <div class="mb-3">
+                <%= form.label "Confirmar Contraseña", class: "fs-6 fw-semibold mb-2" %>
+                <%= form.password_field :password_confirmation, class: "form-control form-control-solid" %>
+            </div>
+
+
+      </div>
+    <div>
+      
+      <%= form.submit "Guardar", id: "submit_button", class: "btn btn-success btn-sm my-2" %>
+    </div>
+  </div>
+  <% end %>

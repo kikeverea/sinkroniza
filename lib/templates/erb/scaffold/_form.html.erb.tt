@@ -1,0 +1,43 @@
+<!-- lib/templates/erb/scaffold/_form.html.erb.tt -->
+<div class="card card-body">
+
+<%%= form_with(model: <%= model_resource_name %>) do |form| %>
+
+  <%% if <%= singular_table_name %>.errors.any? %>
+  <div class="alert alert-danger d-flex align-items-center p-5">
+      <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
+      <div class="d-flex flex-column">
+          <h4 class="mb-1 text-dark"><%%= pluralize(<%= singular_table_name %>.errors.count, "error") %> prohibited this <%= singular_table_name %> from being saved:</h4>
+          <span style="margin-left: 10px;">
+            <%% <%= singular_table_name %>.errors.each do |error| %>
+              <li><%%= error.full_message %></li>
+            <%% end %>
+          </span>
+      </div>
+  </div>
+  <%% end %>
+
+<% attributes.each do |attribute| -%>
+  <div class="mb-3">
+  <% if attribute.password_digest? -%>
+    <%%= form.label :password, class: "label" %>
+    <%%= form.password_field :password, class: "form-control form-control-solid" %>
+  </div>
+
+  <div class="mb-3">
+    <%%= form.label :password_confirmation, class: "fs-6 fw-semibold mb-2" %>
+    <%%= form.password_field :password_confirmation, class: "form-control form-control-solid" %>
+  <% else %>
+      <%%= form.label :<%= attribute.column_name %>, class: "fs-6 fw-semibold mb-2" %>
+      <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: "form-control form-control-solid" %>
+  <% end %>
+  </div>
+
+<% end -%>
+
+<div class="mt-5">
+   <%%= form.button "Save", class: "btn btn-success btn-sm" %>
+</div>
+<%% end %>
+
+</div>

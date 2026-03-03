@@ -1,0 +1,17 @@
+<!-- lib/templates/erb/scaffold/show.html.erb.tt -->
+
+<div class="card card-body">
+    <p><strong>User:</strong></p>
+  <p><%= @log.user_id %></p>
+
+    <p><strong>User name:</strong></p>
+  <p><%= @log.user_name %></p>
+
+    <p><strong>Action:</strong></p>
+  <p><%= @log.action %></p>
+
+    <div class="flex items-center justify-start mt-6">
+    <%= link_to 'Edit', edit_log_path(@log) %> |
+    <%= link_to 'Back', logs_path %>
+  </div>
+</div>
