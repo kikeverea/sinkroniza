@@ -8,7 +8,6 @@ gem 'jquery-rails', '~> 4.4'
 gem "sassc-rails"
 
 gem 'devise'
-gem 'cancancan'
 gem 'will_paginate'
 gem 'ransack'
 gem 'rack-cors'
