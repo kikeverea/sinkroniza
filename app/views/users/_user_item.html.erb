@@ -1,0 +1,20 @@
+<div class="d-flex align-items-center">
+  <!--begin:: Avatar -->
+  <div class="symbol symbol-circle symbol-50px overflow-hidden">
+    <%= link_to link do %>
+      <div class="symbol symbol-circle symbol-45px">
+        <%= image_tag user.image.url, class: 'w-100 my-5' if user.image? %>
+        <% if !user.image? %>
+          <img class="w-100" src="https://avatar.iran.liara.run/username?username=<%=user.name %>+<%= user.lastname %>">
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <!--end::Avatar-->
+  <!--begin::User details-->
+  <div class="d-flex flex-column ms-5">
+    <%= link_to user.full_name, link, class: 'text-gray-800 text-hover-primary mb-1', style: 'text-decoration: none' %>
+    <!--<span><%= user.full_name %></span>-->
+  </div>
+  <!--end::User details-->
+</div>

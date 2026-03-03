@@ -1,0 +1,13 @@
+<!-- lib/templates/erb/scaffold/show.html.erb.tt -->
+
+<div class="card card-body">
+  <% attributes.reject(&:password_digest?).each do |attribute| -%>
+  <p><strong><%= attribute.human_name %>:</strong></p>
+  <p><%%= @<%= singular_table_name %>.<%= attribute.name %> %></p>
+
+  <% end -%>
+  <div class="flex items-center justify-start mt-6">
+    <%%= link_to 'Edit', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>) %> |
+    <%%= link_to 'Back', <%= index_helper %>_path %>
+  </div>
+</div>
