@@ -135,6 +135,10 @@ GEM
       devise (~> 4.0)
       warden-jwt_auth (~> 0.8)
     domain_name (0.6.20240107)
+    dotenv (3.2.0)
+    dotenv-rails (3.2.0)
+      dotenv (= 3.2.0)
+      railties (>= 6.1)
     drb (2.2.1)
     dry-auto_inject (1.0.1)
       dry-core (~> 1.0)
@@ -147,7 +151,8 @@ GEM
       zeitwerk (~> 2.6)
     erubi (1.13.1)
     execjs (2.9.1)
-    ffi (1.17.0)
+    ffi (1.17.0-arm64-darwin)
+    ffi (1.17.0-x86_64-linux-gnu)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hkdf (0.3.0)
@@ -200,7 +205,6 @@ GEM
     mime-types-data (3.2024.0604)
     mini_magick (4.13.1)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.8)
     minitest (5.25.5)
     msgpack (1.7.2)
     multi_json (1.15.0)
@@ -221,8 +225,9 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.3)
-    nokogiri (1.18.7)
-      mini_portile2 (~> 2.8.2)
+    nokogiri (1.18.7-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.18.7-x86_64-linux-gnu)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     popper_js (2.11.8)
@@ -372,6 +377,7 @@ GEM
     zeitwerk (2.6.18)
 
 PLATFORMS
+  arm64-darwin-23
   x86_64-linux
 
 DEPENDENCIES
@@ -386,6 +392,7 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  dotenv-rails
   importmap-rails
   jbuilder
   jquery-rails (~> 4.4)
