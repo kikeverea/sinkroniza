@@ -1,7 +1,7 @@
 <!-- lib/templates/erb/scaffold/index.html.erb.tt -->
 <div class="card card-body" id="<%= plural_table_name %>">
 
-<%%= link_to new_<%= singular_route_name %>_path, class: "btn btn-success btn-sm", style: 'max-width:200px; width: auto;' do %>
+<%%= link_to new_<%= singular_route_name %>_path, class: "btn btn-success btn-sm" style="max-width:200px; width: auto;" do %>
   <i class="fa fa-plus"></i> New <%= singular_table_name.titleize %>
 <%% end %>
 
@@ -28,16 +28,16 @@
         <% end %>
 
       <td class="text-end">
-						<button type="button" class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split", style: 'margin-left: 20px', data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Acciones
-						</button>
-						<div class="dropdown-menu"  style="border: 1px solid #ECECEC">
+        <button type="button" class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split" style="margin-left: 20px", data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Acciones
+        </button>
+        <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
 
-							<%= link_to "Ver", <%= singular_table_name %>, class: 'dropdown-item' %>
-							<%= link_to "Editar", edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'dropdown-item' %>
-							<%= link_to "Eliminar", <%= singular_table_name %>, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
-						</div>
-					</td>
+            <%%= link_to "Ver", <%= singular_table_name %>, class: 'dropdown-item' %>
+            <%%= link_to "Editar", edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'dropdown-item' %>
+            <%%= link_to "Eliminar", <%= singular_table_name %>, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
+        </div>
+      </td>
     </tr>
     <%% end %>
   </tbody>

@@ -1,29 +1,42 @@
-<h2>Sign up</h2>
+<% @invitation_token ||= InvitationToken.new %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%# Force POST as users will never have a password set at this point, and update needs validation %>
+<%= form_for resource,
+  as: resource_name,
+  url: registration_path(resource_name),
+  html: { method: :post } do |form|
+%>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <%= form.hidden_field :email, value: @invitation_token.email %>
+  <%= hidden_field_tag :token, @invitation_token.id %>
+
+  <div class="field mb-4">
+    <%= form.label :email_placeholder, "Correo Electrónico", class: "form-label" %>
+    <%= form.email_field :email_placeholder,
+      value: @invitation_token.email,
+      autocomplete: "email",
+      class: "form-control bg-transparent",
+      disabled: true
+    %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+  <div class="field mb-4">
+    <%= form.label :password, "Contraseña", class: "form-label" %>
+
+    <%= form.password_field :password, autocomplete: "new-password", class: "form-control bg-transparent" %>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  <div class="field mb-6">
+    <%= form.label :password_confirmation, "Confirma Contraseña", class: "form-label" %>
+    <%= form.password_field :password_confirmation, autocomplete: "new-password", class: "form-control bg-transparent" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= form.submit "Registrarse", class: "btn btn-slate w-100" %>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<div class="py-4">
+  <%= render "devise/shared/links" %>
+</div>

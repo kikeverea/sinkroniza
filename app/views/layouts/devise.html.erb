@@ -5,7 +5,7 @@
 	<!--begin::Head-->
 	<head>
 		<base href="../../../" />
-		<title>Sign In</title>
+		<title>Iniciar sesión</title>
 		<meta charset="utf-8" />
 		<meta name="description" content="<%= @meta_description %>" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,7 +25,30 @@
 		<link href="/css/style.bundle.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 		<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
-	</head>
+
+    <style>
+        a {
+            color: #556064;
+        }
+
+        .btn-slate {
+            color: #fff;
+            background-color: #4E94BD;
+            border-color: #4E94BD;
+        }
+
+        .btn-slate:hover {
+            color: #fff;
+            background-color: #346791;
+            border-color: #346791;
+        }
+
+        .btn-slate:focus,
+        .btn-slate.focus {
+            box-shadow: 0 0 0 0.25rem rgba(85, 96, 100, 0.5);
+        }
+    </style>
+  </head>
 	<!--end::Head-->
 	<!--begin::Body-->
 	<body id="kt_body" class="app-blank app-blank">
@@ -37,24 +60,13 @@
 			<!--begin::Authentication - Sign-in -->
 			<div class="d-flex flex-column flex-lg-row flex-column-fluid">
 				<!--begin::Aside-->
-				<div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center" style="background-image: url(assets/media/misc/auth-bg.png); background:#2C4553 !important;">
+				<div
+          class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center"
+          style="background-image: url(assets/media/misc/auth-bg.png); background: #4E94BD !important;"
+        >
 					<!--begin::Content-->
-					<div class="d-flex flex-column flex-center p-6 p-lg-10 w-100">
-						<!--begin::Logo-->
-						<a href="index.html" class="mb-0 mb-lg-20">
-
-							<%= image_tag "/assets/images/logo-device.png", class:"h-0px h-lg-50px" %>
-						</a>
-						<!--end::Logo-->
-						<!--begin::Image-->
-						<!--<img class="d-none d-lg-block mx-auto w-300px w-lg-75 w-xl-500px mb-10 mb-lg-20" src="/assets/images/logo-devise.png" alt="" />-->
-						<!--end::Image-->
-						<!--begin::Title-->
-						<h1 class="d-none d-lg-block text-white fs-2qx fw-bold text-center mb-7">Fast, Efficient and Productive</h1>
-						<!--end::Title-->
-						<!--begin::Text-->
-						<div class="d-none d-lg-block text-white fs-base text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet justo ac nisi auctor tincidunt sit amet eget tortor.<br> Donec fringilla, purus dictum maximus venenatis, augue nibh placerat diam, id ornare purus lectus egestas justo..</div>
-						<!--end::Text-->
+					<div class="d-flex justify-content-center align-items-center p-6 p-lg-10 w-100">
+            <%= image_tag asset_path('logo-lg.png'), class: "w-75" %>
 					</div>
 					<!--end::Content-->
 				</div>
@@ -70,10 +82,10 @@
 								<!--begin::Heading-->
 								<div class="text-center mb-11">
 									<!--begin::Title-->
-									<h1 class="text-gray-900 fw-bolder mb-3">Sign In</h1>
+									<h1 class="text-gray-900 fw-bolder mb-3">Iniciar Sesión</h1>
 									<!--end::Title-->
 									<!--begin::Subtitle-->
-									<div class="text-gray-500 fw-semibold fs-6">Welcome back</div>
+									<div class="text-gray-500 fw-semibold fs-6">Bienvenido</div>
 									<!--end::Subtitle=-->
 								</div>
 
@@ -84,17 +96,6 @@
 						<!--end::Wrapper-->
 					</div>
 					<!--end::Form-->
-					<!--begin::Footer-->
-					<div class="d-flex flex-center flex-wrap px-5">
-						<!--begin::Links-->
-						<div class="d-flex fw-semibold text-primary fs-base">
-							<a href="" class="px-5" target="_blank">Terms</a>
-							<a href="" class="px-5" target="_blank">Privacy</a>
-							<a href="" class="px-5" target="_blank">Contact Us</a>
-						</div>
-						<!--end::Links-->
-					</div>
-					<!--end::Footer-->
 				</div>
 				<!--end::Body-->
 			</div>

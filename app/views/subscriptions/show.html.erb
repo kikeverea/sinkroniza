@@ -1,0 +1,20 @@
+<!-- lib/templates/erb/scaffold/show.html.erb.tt -->
+
+<div class="card card-body">
+    <p><strong>Name:</strong></p>
+  <p><%= @subscription.name %></p>
+
+    <p><strong>Description:</strong></p>
+  <p><%= @subscription.description %></p>
+
+    <p><strong>Quantity users:</strong></p>
+  <p><%= @subscription.quantity_users %></p>
+
+    <p><strong>Status:</strong></p>
+  <p><%= @subscription.status %></p>
+
+    <div class="flex items-center justify-start mt-6">
+    <%= link_to 'Edit', edit_subscription_path(@subscription) %> |
+    <%= link_to 'Back', subscriptions_path %>
+  </div>
+</div>
