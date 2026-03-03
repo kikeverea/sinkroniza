@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :subscriptions
   resources :logs
 
   get 'users/index', to:'users#index', as: :users

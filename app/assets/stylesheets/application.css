@@ -26,6 +26,11 @@
     border: 1px solid #ECECEC !important
  }
 
+.btn-slate {
+    color: #fff;
+    background-color: #556064;
+    border-color: #4b5659;
+}
 
 
 .digg_pagination {
