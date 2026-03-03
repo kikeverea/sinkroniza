@@ -18,6 +18,8 @@ gem 'rpush'
 gem 'mailjet'
 gem 'cancancan'
 
+gem "dotenv-rails"
+
 
 #Gema JWT
 gem 'devise-jwt'
