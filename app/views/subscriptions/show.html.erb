@@ -1,20 +1,35 @@
-<!-- lib/templates/erb/scaffold/show.html.erb.tt -->
-
 <div class="card card-body">
-    <p><strong>Name:</strong></p>
-  <p><%= @subscription.name %></p>
 
-    <p><strong>Description:</strong></p>
-  <p><%= @subscription.description %></p>
+  <div class="mb-5">
+    <div class="form-label">
+      <strong>Nombre</strong>
+    </div>
+    <div><%= @subscription.name %></div>
+  </div>
 
-    <p><strong>Quantity users:</strong></p>
-  <p><%= @subscription.quantity_users %></p>
+  <div class="mb-5">
+    <div class="form-label">
+      <strong>Descripción</strong>
+    </div>
+    <div><%= @subscription.description %></div>
+  </div>
 
-    <p><strong>Status:</strong></p>
-  <p><%= @subscription.status %></p>
+  <div class="mb-5">
+    <div class="form-label">
+      <strong>Cantidad de usuarios</strong>
+    </div>
+    <div><%= @subscription.quantity_users %></div>
+  </div>
 
-    <div class="flex items-center justify-start mt-6">
-    <%= link_to 'Edit', edit_subscription_path(@subscription) %> |
-    <%= link_to 'Back', subscriptions_path %>
+  <div class="mb-5">
+    <div class="form-label">
+      <strong>Estado</strong>
+    </div>
+    <div><%= @subscription.status.present? ? @subscription.status : "-" %></div>
+  </div>
+
+  <div class="flex items-center justify-start mt-6">
+    <%= link_to "← Ir a subscripciones", subscriptions_path, class: "me-1" %> |
+    <%= link_to "Editar", edit_subscription_path(@subscription), class: "ms-1" %>
   </div>
 </div>

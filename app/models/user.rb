@@ -5,33 +5,31 @@ class User < ApplicationRecord
 
   mount_base64_uploader :image, ImageUploader
 
-  def self.ransackable_associations(auth_object = nil)
+  validates :name, :lastname, presence: true
+
+  def self.ransackable_associations(_auth_object = nil)
     []
     end
     
-  def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "name", "email"]
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at name email]
   end
 
   enum role: {
-      admin: "admin",
+    admin: "admin"
   }
 
   def full_name
     "#{self.name} #{self.lastname}"
   end
 
-
   def jwt_payload
     self.jti = self.class.generate_jti
     self.save
 
-    # super isn't doing anything useful, but if the gem updates i'll want it to be safe
     super.merge({
       jti: self.jti,
       usr: self.id,
     })
   end
-
-
 end

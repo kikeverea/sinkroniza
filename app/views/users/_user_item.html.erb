@@ -1,3 +1,5 @@
+<% user ||= @user %>
+
 <div class="d-flex align-items-center">
   <!--begin:: Avatar -->
   <div class="symbol symbol-circle symbol-50px overflow-hidden">
@@ -5,7 +7,10 @@
       <div class="symbol symbol-circle symbol-45px">
         <%= image_tag user.image.url, class: 'w-100 my-5' if user.image? %>
         <% if !user.image? %>
-          <img class="w-100" src="https://avatar.iran.liara.run/username?username=<%=user.name %>+<%= user.lastname %>">
+          <img
+            src="https://ui-avatars.com/api/?background=random&rounded=true&name=<%= user.name %>+<%= user.lastname %>"
+            alt="iniciales usuario"
+          >
         <% end %>
       </div>
     <% end %>

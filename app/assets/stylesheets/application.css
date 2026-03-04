@@ -19,17 +19,32 @@
  *:not(i),
 *:not(i)::before,
 *:not(i)::after  {
-    font-family: Montserrat;
- }
+  font-family: Montserrat;
+}
 
- .card {
-    border: 1px solid #ECECEC !important
- }
+.card {
+  border: 1px solid #ECECEC !important
+}
 
-.btn-slate {
-    color: #fff;
-    background-color: #556064;
-    border-color: #4b5659;
+.btn-sinkroniza {
+  color: #fff;
+  background-color: #4E94BD;
+  border-color: #4E94BD;
+}
+
+.btn-sinkroniza:hover {
+  color: #fff;
+  background-color: #346791;
+  border-color: #346791;
+}
+
+.btn-sinkroniza:focus,
+.btn-sinkroniza.focus {
+  box-shadow: 0 0 0 0.25rem rgba(85, 96, 100, 0.5);
+}
+
+.table > tbody {
+  vertical-align: middle;
 }
 
 
