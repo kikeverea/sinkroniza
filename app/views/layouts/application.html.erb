@@ -4,8 +4,9 @@
 
 <head>
 
+  <% unless Rails.env.test? %>
     <meta charset="utf-8" />
-    <title><%= APP_CONFIG["default_meta_title"] %></title>
+    <title><%= APP_CONFIG && APP_CONFIG["default_meta_title"] %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
@@ -17,10 +18,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="/assets/images/favicon.ico">
-
+    <link rel="shortcut icon" href="<%= asset_path('favicon.ico') %>">
 
     <!-- jvectormap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.0/jqvmap.min.css" integrity="sha512-yPDxA+ekauI+e3TTVcvDkF10qScQEITYSTarvIDwkCAK+WUopYRmL/eusP8f+lhsqO0ixKxNvrnE4NKvlS3x3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -31,243 +33,296 @@
     <!-- Icons Css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.9.55/css/materialdesignicons.min.css" integrity="sha512-vIgFb4o1CL8iMGoIF7cYiEVFrel13k/BkTGvs0hGfVnlbV6XjAA0M0oEHdWqGdAVRTDID3vIZPOHmKdrMAUChA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- App Css-->
-    <link href="/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- Toastr-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Date range picker-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Dropzone -->
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
+    <!-- Draggable -->
+    <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.js"></script>
+
+    <!-- Apex Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- Quill -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+    <!-- Hue Bee -->
+    <link rel="stylesheet" href="https://unpkg.com/huebee@2/dist/huebee.min.css">
+    <script src="https://unpkg.com/huebee@2/dist/huebee.pkgd.min.js"></script>
+
+    <!-- Stepper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
 
     <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag "app.min", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
-    <scrip>
-        document.addEventListener("turbo:load", () => console.log("Turbo cargó"))
-    </scrip>
+  <% end %>
 </head>
 
 <body data-sidebar="dark" style="background-color: #F3F3F3">
+
 <!-- Begin page -->
 <div id="layout-wrapper">
-    <header id="page-topbar">
-        <div class="navbar-header">
-            <div class="d-flex">
-                <!-- LOGO -->
-                <div class="navbar-brand-box text-center">
-                    <a href="index.html" class="logo logo-dark">
-                        <span class="logo-sm">
-                          <img src="/assets/images/logo-sm.png" alt="logo-sm-dark" height="22">
-                        </span>
-                        <span class="logo-lg">
-                          <img src="/assets/images/logo-device.png" alt="logo-dark" height="24">
-                        </span>
-                    </a>
 
-                    <a href="index.html" class="logo logo-light">
-                        <span class="logo-sm">
-                          <img src="/assets/images/logo-sm.png" alt="logo-sm-light" height="22">
-                        </span>
-                        <span class="logo-lg">
-                          <img src="/assets/images/logo-device.png" alt="logo-light" height="24">
-                        </span>
-                    </a>
+  <header id="page-topbar">
+    <div class="navbar-header">
+      <div class="d-flex align-items-center w-100">
+        <!-- LOGO -->
+        <div class="navbar-brand-box text-center">
+          <%= link_to show_user_path(current_user), class: "logo logo-dark" do %>
+            <span class="logo-sm">
+              <%= image_tag asset_path("logo-sm.png"), style: "width: 45px; height: 55px" %>
+            </span>
+            <span class="logo-lg">
+              <%= image_tag asset_path("logo-lg.png"), style: "width: 90%; margin-top: 8px" %>
+            </span>
+          <% end %>
+
+          <%= link_to show_user_path(current_user), class: "logo logo-light" do %>
+            <span class="logo-sm">
+              <%= image_tag asset_path("logo-sm.png"), style: "width: 45px; height: 55px" %>
+            </span>
+            <span class="logo-lg">
+              <%= image_tag asset_path("logo-lg.png"), style: "width: 90%; margin-top: 8px" %>
+            </span>
+          <% end %>
+        </div>
+
+        <button type="button" class="btn btn-sm px-3 fs-3 header-item waves-effect" id="vertical-menu-btn">
+          <i class="fa-solid fa-bars mb-2"></i>
+        </button>
+
+        <div class="d-flex align-items-center flex-grow-1">
+          <% if current_user.admin? && (request.url == root_url || request.url == show_user_url(current_user)) %>
+            <div class="d-flex gap-4 ms-4 h-100 align-items-center">
+              <div class="symbol symbol-40px symbol-circle">
+                <% if current_user.image? %>
+                  <%= image_tag current_user.image.url %>
+                <% else %>
+                  <img
+                    src="https://ui-avatars.com/api/?background=random&rounded=true&name=<%= current_user.name %>+<%= current_user.lastname %>"
+                    alt="iniciales usuario"
+                  >
+                <% end %>
+              </div>
+              <div>
+                <div class="fs-6 text-gray-800 fw-bold mb-1">
+                  Mi Perfil
                 </div>
 
-                <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
-                  <i class="fa-solid fa-bars"></i>
-                </button>
-
-                <div class="d-flex align-items-center h-100">
-                  <h2 class="mt-7"><%= @title %></h2>
-                </div>
-            </div>
-
-            <div class="d-flex">
-              <div class="dropdown d-inline-block user-dropdown">
-                <button
-                  type="button"
-                  id="page-header-user-dropdown" class="btn header-item waves-effect"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                >
-                    <%= image_tag current_user.image.url, class: 'rounded-circle header-profile-user' if current_user.image? %>
-                    <% if !current_user.image? %>
-                      <img class="rounded-circle header-profile-user" src="https://avatar.iran.liara.run/username?username=<%=current_user.name %>+<%= current_user.lastname %>">
-                    <% end %>
-
-                    <span class="d-none d-xl-inline-block ms-1"><%=current_user.name%></span>
-                    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="/users/show/<%=current_user.id%>"><i class="ri-user-line align-middle me-1"></i>
-                      Perfil
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="<%=logout_path%>">
-                      <i class="ri-shut-down-line align-middle me-1 text-danger"></i> Cerrar sesión
-                    </a>
+                <div class="fs-8 fw-semibold text-muted">
+                  <%= current_user.role %>
                 </div>
               </div>
             </div>
+          <% else %>
+            <h3><%= @title %></h3>
+          <% end %>
         </div>
-    </header>
+        <div class="d-flex">
+          <div class="dropdown d-inline-block user-dropdown">
+            <button
+              type="button"
+              class="btn header-item waves-effect" id="page-header-user-dropdown"
+              data-controller="dropdown"
+              data-action="click->dropdown#toggle blur->dropdown#handleBlur"
+            >
 
-    <!-- ========== Left Sidebar Start ========== -->
-    <div class="vertical-menu">
+              <%= image_tag current_user.image.url, class: 'rounded-circle header-profile-user' if current_user.image? %>
+              <% unless current_user.image? %>
+                <img class="rounded-circle header-profile-user" src="https://ui-avatars.com/api/?background=random&rounded=true&name=<%= current_user.name %>+<%= current_user.lastname %>">
+              <%  end %>
 
-        <div data-simplebar class="h-100">
-
-            <!--- Sidemenu -->
-            <div id="sidebar-menu">
-                <!-- Left Menu Start -->
-                <ul class="metismenu list-unstyled" id="side-menu">
-                    <li class="menu-title">Menu</li>
-                    <li>
-                      <%= link_to users_path, class: "waves-effect", style: "text-decoration: none" do %>
-                        <i class="fa-solid fa-user"></i>
-                        <span>Usuarios</span>
-                      <% end %>
-                    </li>
-                    <li>
-                      <%= link_to subscriptions_path, class: "waves-effect", style: "text-decoration: none" do %>
-                        <i class="fa-solid fa-user"></i>
-                        <span>Subscripciones</span>
-                      <% end %>
-                    </li>
-
-                    <!-- Submenu -->
-<!--                    <li>-->
-<!--                      <a href="javascript: void(0);" class="has-arrow waves-effect">-->
-<!--                        <i class="mdi mdi-gradient"></i>-->
-<!--                        <span>Vertical</span>-->
-<!--                      </a>-->
-<!--                      <ul class="sub-menu" aria-expanded="false">-->
-<!--                        <li><a href="layouts-light-sidebar.html">Light Sidebar</a></li>-->
-<!--                        <li><a href="layouts-compact-sidebar.html">Compact Sidebar</a></li>-->
-<!--                        <li><a href="layouts-icon-sidebar.html">Icon Sidebar</a></li>-->
-<!--                        <li><a href="layouts-boxed.html">Boxed Layout</a></li>-->
-<!--                      </ul>-->
-<!--                    </li>-->
-
-                </ul>
+              <span class="d-none d-xl-inline-block ms-1"><%=current_user.name%></span>
+              <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end">
+              <%= link_to show_user_path(current_user),
+                  class:"dropdown-item",
+                  data: { turbo: false } do
+              %>
+                <i class="ri-shut-down-line align-middle me-1"></i> Perfil
+              <% end %>
+              <div class="dropdown-divider"></div>
+              <%= link_to logout_path,
+                  class:"dropdown-item text-danger",
+                  data: { turbo_prefetch: false, turbo_stream: false, turbo: true, turbo_method: :delete } do
+              %>
+                <i class="ri-shut-down-line align-middle me-1 text-danger"></i> Cerrar Sesión
+              <% end %>
             </div>
-            <!-- Sidebar -->
+          </div>
         </div>
+      </div>
     </div>
-    <!-- Left Sidebar End -->
+  </header>
 
-    
+  <!-- ========== Left Sidebar Start ========== -->
+  <div class="vertical-menu">
 
-    <!-- ============================================================== -->
-    <!-- Start right Content here -->
-    <!-- ============================================================== -->
-    <div class="main-content">
+    <div data-simplebar class="h-100">
 
-        <div class="page-content">
-            <div class="container-fluid">
+      <!--- Sidemenu -->
+      <div id="sidebar-menu">
+        <!-- Left Menu Start -->
+        <ul class="metismenu list-unstyled" id="side-menu">
 
-            <%= yield %>
+          <li class="menu-title">Menu</li>
 
-            </div>
-            <!-- container-fluid -->
-        </div>
-        <!-- End Page-content -->
+          <!-- Usuarios -->
+          <li class="py-1">
+            <%= link_to users_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+              <i class="fa-solid fa-user"></i>
+              <span>Usuarios</span>
+            <% end %>
+          </li>
 
-        <footer class="footer" style="position: fixed;">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                         Copyright © <script>document.write(new Date().getFullYear())</script> Innobing Global Consulting.
-                    </div>
-                    <div class="col-sm-6">
-                        <!--<div class="text-sm-end d-none d-sm-block">
-                            Crafted with <i class="mdi mdi-heart text-danger"></i> by <a
-                                href="https://1.envato.market/themesdesign" target="_blank">Themesdesign</a>
-                        </div>-->
-                    </div>
-                </div>
-            </div>
-        </footer>
+          <!-- Subscripciones -->
+          <li class="py-1">
+            <%= link_to subscriptions_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+              <i class="fa-solid fa-file-contract"></i>
+              <span>Subscripciones</span>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to "javascript: void(0);", class: "waves-effect has-arrow", style: "text-decoration: none" do %>
+              <i class="fa-solid fa-gear"></i>
+              <span>Configuración</span>
+            <% end %>
 
+            <ul class="sub-menu mm-collapse" aria-expanded="false">
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+      <!-- Sidebar -->
     </div>
-    <!-- end main content-->
+  </div>
+  <!-- Left Sidebar End -->
+
+  <!-- ============================================================== -->
+  <!-- Start right Content here -->
+  <!-- ============================================================== -->
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+
+        <% if notice %>
+          <div class="alert alert-primary mb-8">
+            <%= notice %>
+          </div>
+        <% end %>
+
+        <% if flash[:errors] %>
+          <div class="alert alert-danger alert-dismissible d-flex p-5 gap-4">
+            <i class="fa-solid fa-circle-exclamation text-danger fs-1"></i>
+            <div class="d-flex flex-column">
+                    <span style="margin-left: 10px;">
+                      <% flash[:errors].each do |error| %>
+                        <li><%= error %></li>
+                      <% end %>
+                    </span>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% end %>
+
+        <%= yield %>
+      </div>
+      <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+
+    <footer class="footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6">
+            Copyright © <%= Time.current.strftime("%Y")%> Innobing Global Consulting
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+  <!-- end main content-->
 
 </div>
 <!-- END layout-wrapper -->
 
 <!-- Right Sidebar -->
 <div class="right-bar">
-    <div data-simplebar class="h-100">
-        <div class="rightbar-title d-flex align-items-center px-3 py-4">
-            
-            <h5 class="m-0 me-2">Settings</h5>
+  <div data-simplebar class="h-100">
+    <div class="rightbar-title d-flex align-items-center px-3 py-4">
 
-            <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
-                <i class="mdi mdi-close noti-icon"></i>
-            </a>
-        </div>
+      <h5 class="m-0 me-2">Settings</h5>
 
-        <!-- Settings -->
-        <hr class="mt-0" />
-        <h6 class="text-center mb-0">Choose Layouts</h6>
+      <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
+        <i class="mdi mdi-close noti-icon"></i>
+      </a>
+    </div>
 
-        <div class="p-4">
-            <div class="mb-2">
-                <img src="assets/images/layouts/layout-1.png" class="img-thumbnail" alt="layout-1">
-            </div>
+    <!-- Settings -->
+    <hr class="mt-0" />
+    <h6 class="text-center mb-0">Choose Layouts</h6>
 
-            <div class="form-check form-switch mb-3">
-                <input class="form-check-input theme-choice" type="checkbox" id="light-mode-switch" checked>
-                <label class="form-check-label" for="light-mode-switch">Light Mode</label>
-            </div>
-    
-            <div class="mb-2">
-                <img src="assets/images/layouts/layout-2.png" class="img-thumbnail" alt="layout-2">
-            </div>
-            <div class="form-check form-switch mb-3">
-                <input class="form-check-input theme-choice" type="checkbox" id="dark-mode-switch" data-bsStyle="assets/css/bootstrap-dark.min.css" data-appStyle="assets/css/app-dark.min.css">
-                <label class="form-check-label" for="dark-mode-switch">Dark Mode</label>
-            </div>
-    
-            <div class="mb-2">
-                <img src="assets/images/layouts/layout-3.png" class="img-thumbnail" alt="layout-3">
-            </div>
-            <div class="form-check form-switch mb-5">
-                <input class="form-check-input theme-choice" type="checkbox" id="rtl-mode-switch" data-appStyle="assets/css/app-rtl.min.css">
-                <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
-            </div>
+    <div class="p-4">
 
-            
-        </div>
+      <div class="form-check form-switch mb-3">
+        <input class="form-check-input theme-choice" type="checkbox" id="light-mode-switch">
+      </div>
 
-    </div> <!-- end slimscroll-menu-->
+    </div>
+
+  </div>
+  <!-- end slimscroll-menu-->
 </div>
 <!-- /Right-bar -->
 
 <!-- Right bar overlay-->
 <div class="rightbar-overlay"></div>
 
+<div id="turbo-consumer"></div>
+<div id="turbo-status-consumer"></div>
+<div id="turbo-message-consumer"></div>
+
 <!-- JAVASCRIPT -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/3.0.7/metisMenu.min.js" integrity="sha512-o36qZrjup13zLM13tqxvZTaXMXs+5i4TL5UWaDCsmbp5qUcijtdCFuW9a/3qnHGfWzFHBAln8ODjf7AnUNebVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/simplebar/6.2.7/simplebar.min.js" integrity="sha512-NkLfoy5pkmAKUxk/OXl9vi1PDSFnEEJ3bDFdX0ln1L0pto6jM7On0lLsjhNC62i2ifyXhPWjPpcGEXawBfErtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<!--<script src="assets/libs/node-waves/waves.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.min.js" integrity="sha512-MzXgHd+o6pUd/tm8ZgPkxya3QUCiHVMQolnY3IZqhsrOWQaBfax600esAw3XbBucYB15hZLOF0sKMHsTPdjLFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<!-- apexcharts js -->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.54.1/apexcharts.min.js" integrity="sha512-yR5RFcmaHqsGbB9WPG104Fk3+x2s9fMYCgA09VaRT2Lqpay6oNhKldYsZKU/rpYqbsNVhN5+RTbQBSd9+DhL6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+<!-- Sweet alert 2-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Toastr-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <!-- jquery.vectormap map -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.0/jquery.vmap.min.js" integrity="sha512-iH29HnxBZRuPGQz9GvXzk3A5Z5MC9f/vhmic85cEu01ZSrcGVJGC/A9v2vLFfQ32tLBjvsfHm7Z/zIhy+za7Zw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="/assets/js/app.js"></script>
-<script src="/assets/libs/jqvmap/maps/jquery.vmap.usa.js"></script>
+<script src="<%= asset_path('app.js') %>"></script>
+<script src="<%= asset_path('jqvmaps/maps/jquery.vmap.usa.js') %>"></script>
 
-<script src="/assets/js/pages/dashboard.init.js"></script>
-
-
-
-
+<!-- Date Range Picker -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 </body>
 
