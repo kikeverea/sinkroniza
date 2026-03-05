@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_03_133239) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_05_152630) do
+  create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "subscription_id", null: false
+    t.string "name"
+    t.string "legal_name"
+    t.string "tax_id"
+    t.text "address"
+    t.string "cp"
+    t.string "logo"
+    t.string "manager_name"
+    t.string "manager_lastname"
+    t.string "manager_email"
+    t.string "manager_nif"
+    t.string "manager_phone"
+    t.boolean "active", default: true
+    t.integer "creator_user_id"
+    t.string "creator_user_name"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subscription_id"], name: "index_companies_on_subscription_id"
+  end
+
   create_table "logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.string "user_name"
@@ -46,4 +68,5 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_03_133239) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "companies", "subscriptions"
 end

@@ -1,0 +1,61 @@
+<div class="card card-body" id="companies">
+
+  <%= link_to new_company_path, class: "btn btn-success btn-sm", style: "max-width:200px; width: auto;" do %>
+    <i class="fa fa-plus"></i> Nueva Compañía
+  <% end %>
+
+  <div class="separator my-10"></div>
+
+  <table class="table table-hover table-rounded table-striped gy-7 gs-7">
+    <thead>
+      <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
+        <th>Logo</th>
+        <th>Nombre</th>
+        <th>Suscripción</th>
+        <th>Nombre legal</th>
+        <th>ID Fiscal</th>
+        <th>Dirección</th>
+        <th>Código postal</th>
+        <th>Manager</th>
+        <th>Activa</th>
+        <th>Creada por</th>
+        <th>Estado</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @companies.each do |company| %>
+        <tr>
+          <td><%= company.logo? ? image_tag(company.logo.url, class: "w-100px") : "-" %></td>
+          <td><%= company.name %></td>
+          <td><%= company.subscription.name %></td>
+          <td><%= company.legal_name.present? ? company.legal_name : "-" %></td>
+          <td><%= company.tax_id.present? ? company.tax_id : "-" %></td>
+          <td><%= company.address.present? ? company.address : "-" %></td>
+          <td><%= company.cp.present? ? company.cp : "-" %></td>
+          <td><%= company.manager_full_name.present? ? company.manager_full_name.present? : "-" %></td>
+          <td><%= boolean_icon company.active %></td>
+          <td><%= company.creator_user_name %></td>
+          <td><%= company.status %></td>
+
+          <td class="text-end">
+            <button
+              type="button"
+              class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Acciones
+            </button>
+            <div class="dropdown-menu" style="border: 1px solid #ECECEC">
+              <%= link_to "Ver", company, class: "dropdown-item" %>
+              <%= link_to "Editar", edit_company_path(company), class: "dropdown-item" %>
+              <%= link_to "Eliminar", company, class:"dropdown-item", data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
