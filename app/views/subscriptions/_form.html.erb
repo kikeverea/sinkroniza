@@ -18,23 +18,18 @@
     <% end %>
 
     <div class="mb-3">
-      <%= form.label :name, "Nombre", class: "fs-6 fw-semibold mb-2" %>
+      <%= form.label :name, "Nombre", class: "form-label required" %>
       <%= form.text_field :name, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-3">
-      <%= form.label :description, "Descripción", class: "fs-6 fw-semibold mb-2" %>
-      <%= form.text_area :description, class: "form-control form-control-solid" %>
-    </div>
-
-    <div class="mb-3">
-      <%= form.label :quantity_users, "Cantidad de usuarios", class: "fs-6 fw-semibold mb-2" %>
+      <%= form.label :quantity_users, "Cantidad de usuarios", class: "form-label required" %>
       <%= form.number_field :quantity_users, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-3">
-      <%= form.label :status, "Estado", class: "fs-6 fw-semibold mb-2" %>
-      <%= form.text_field :status, class: "form-control form-control-solid" %>
+      <%= form.label :description, "Descripción", class: "form-label" %>
+      <%= form.text_area :description, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mt-5">

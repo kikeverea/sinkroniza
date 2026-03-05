@@ -1,0 +1,91 @@
+<div class="mb-8">
+  <%= form_with model: company do |form| %>
+    <div class="card card-body">
+
+      <div class="mb-3">
+        <%= form.label :subscription_id, "Suscripción", class: "fs-6 fw-semibold mb-2 required" %>
+        <%= form.collection_select :subscription_id,
+          Subscription.all, :id, :name,
+          { include_blank: "Seleccionar suscripción"},
+          class: "form-select"
+        %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :name, "Nombre", class: "fs-6 fw-semibold mb-2 required" %>
+        <%= form.text_field :name, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :legal_name, "Razón social", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.text_field :legal_name, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :tax_id, "ID Fiscal", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.text_field :tax_id, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :address, "Dirección", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.text_area :address, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :cp, "Código postal", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.text_field :cp, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mb-3 mt-3">
+        <%= form.label :active, "Activa", class: "fs-6 fw-semibold mb-2 me-2" %>
+        <%= form.check_box :active %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :logo, "Logo", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.file_field :logo, accept: "image/*", class: "d-block" %>
+      </div>
+
+      <% if company.logo? %>
+        <div class="mb-3">
+          <%= image_tag company.logo.url, class: "w-200px" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="card card-body mt-8">
+      <h4 class="mb-4">Manager</h4>
+
+      <div class="mb-3">
+        <%= form.label :manager_name, "Nombre", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.text_field :manager_name, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :manager_lastname, "Apellido", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.text_field :manager_lastname, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :manager_email, "Correo Electrónico", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.text_field :manager_email, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :manager_nif, "NIF", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.text_field :manager_nif, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :manager_phone, "Teléfono", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.text_field :manager_phone, class: "form-control form-control-solid" %>
+      </div>
+    </div>
+
+
+    <div class="mt-5">
+      <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
+      <%= link_to "Cancelar", companies_path, class: "btn btn-sm btn-link btn-color-muted btn-active-color-success ms-4" %>
+    </div>
+  <% end %>
+</div>

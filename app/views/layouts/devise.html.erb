@@ -14,38 +14,40 @@
 		<meta property="og:url" content="" />
 		<meta property="og:site_name" content="" />
 		<link rel="canonical" href="" />
-		<%= favicon_link_tag asset_path('favicon.png') %>
-		<!--begin::Fonts(mandatory for all pages)-->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-		<!--end::Fonts-->
-		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
 
+		<%= favicon_link_tag asset_path('favicon.ico') %>
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+
+		<!-- Global Stylesheets Bundle(mandatory for all pages) -->
 		<link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="/css/style.bundle.css" rel="stylesheet" type="text/css" />
-		<!--end::Global Stylesheets Bundle-->
-		<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
+
+		<script>
+			// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
+		</script>
 
     <style>
-        a {
-            color: #556064;
-        }
+			a {
+				color: #556064;
+			}
 
-        .btn-sinkroniza {
-            color: #fff;
-            background-color: #4E94BD;
-            border-color: #4E94BD;
-        }
+			.btn-sinkroniza {
+				color: #fff;
+				background-color: #4E94BD;
+				border-color: #4E94BD;
+			}
 
-        .btn-sinkroniza:hover {
-            color: #fff;
-            background-color: #346791;
-            border-color: #346791;
-        }
+			.btn-sinkroniza:hover {
+				color: #fff;
+				background-color: #346791;
+				border-color: #346791;
+			}
 
-        .btn-sinkroniza:focus,
-        .btn-sinkroniza.focus {
-            box-shadow: 0 0 0 0.25rem rgba(85, 96, 100, 0.5);
-        }
+			.btn-sinkroniza:focus,
+			.btn-sinkroniza.focus {
+				box-shadow: 0 0 0 0.25rem rgba(85, 96, 100, 0.5);
+			}
     </style>
   </head>
 	<!--end::Head-->
