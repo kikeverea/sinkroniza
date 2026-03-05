@@ -1,0 +1,39 @@
+<div class="card card-body" id="folders">
+  <%= link_to new_folder_path, class: "btn btn-success btn-sm mw-200px" do %>
+    <i class="fa fa-plus"></i> Nueva carpeta
+  <% end %>
+
+  <div class="separator my-10"></div>
+
+  <table class="table table-hover table-rounded table-striped gb-7 gs-7">
+    <thead>
+      <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
+        <th>Nombre</th>
+        <th>Compañía</th>
+        <th>Carpetas</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @folders.each do |folder| %>
+        <% child_count = folder.child_folders.count %>
+        <% company = folder.company %>
+        <tr>
+          <td><%= link_to folder.name, folder %></td>
+          <td><%= company ? link_to(company.name, company) : "-" %></td>
+          <td><%= child_count == 0 ? "-" : child_count %></td>
+          <td class="text-end">
+            <button type="button" class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split" style="margin-left: 20px", data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Acciones
+            </button>
+            <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
+              <%= link_to "Ver", folder, class: 'dropdown-item' %>
+              <%= link_to "Editar", edit_folder_path(folder), class: 'dropdown-item' %>
+              <%= link_to "Eliminar", folder, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

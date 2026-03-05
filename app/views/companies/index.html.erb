@@ -1,6 +1,6 @@
 <div class="card card-body" id="companies">
 
-  <%= link_to new_company_path, class: "btn btn-success btn-sm", style: "max-width:200px; width: auto;" do %>
+  <%= link_to new_company_path, class: "btn btn-success btn-sm mw-200px" do %>
     <i class="fa fa-plus"></i> Nueva Compañía
   <% end %>
 
@@ -25,10 +25,11 @@
     </thead>
     <tbody>
       <% @companies.each do |company| %>
+        <% subscription = company.subscription %>
         <tr>
           <td><%= company.logo? ? image_tag(company.logo.url, class: "w-100px") : "-" %></td>
-          <td><%= company.name %></td>
-          <td><%= company.subscription.name %></td>
+          <td><%= link_to company.name, company %></td>
+          <td><%= link_to subscription.name, subscription %></td>
           <td><%= company.legal_name.present? ? company.legal_name : "-" %></td>
           <td><%= company.tax_id.present? ? company.tax_id : "-" %></td>
           <td><%= company.address.present? ? company.address : "-" %></td>
