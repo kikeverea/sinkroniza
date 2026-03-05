@@ -47,6 +47,11 @@
   vertical-align: middle;
 }
 
+.footer {
+  position: fixed;
+  bottom: 0;
+}
+
 
 .digg_pagination {
    display: flex;

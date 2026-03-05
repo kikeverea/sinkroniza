@@ -1,0 +1,33 @@
+es:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "El registro es inválido. %{errors}"
+        blank: "campo obligatorio"
+        taken: "ya está en uso"
+        too_short: "mínimo %{count} caracteres"
+        too_long: "máximo %{count} caracteres"
+        not_a_number: "no es un número"
+        invalid: "no es válido"
+        confirmation: "no coincide con la contraseña"
+        required: "campo obligatorio"
+        even: "debe ser un número par"
+        odd: "debe ser un número impar"
+        greater_than: "debe ser mayor que %{count}"
+        less_than: "debe ser menor que %{count}"
+    activemodel:
+      errors:
+        messages:
+          record_invalid: "El registro es inválido. %{errors}"
+          blank: "campo obligatorio"
+          taken: "ya está en uso"
+          too_short: "mínimo %{count} caracteres"
+          too_long: "máximo %{count} caracteres"
+          not_a_number: "no es un número"
+          invalid: "no es válido"
+          confirmation: "no coincide con la contraseña"
+          required: "campo obligatorio"
+          even: "debe ser un número par"
+          odd: "debe ser un número impar"
+          greater_than: "debe ser mayor que %{count}"
+          less_than: "debe ser menor que %{count}"
