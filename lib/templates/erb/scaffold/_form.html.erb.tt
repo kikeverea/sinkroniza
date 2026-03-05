@@ -36,7 +36,8 @@
     <% end -%>
 
     <div class="mt-5">
-      <%%= form.button "Save", class: "btn btn-success btn-sm" %>
+      <%%= form.button "Guardar", class: "btn btn-success btn-sm" %>
+      <%%= link_to "Cancelar" <%= index_helper %>_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
     </div>
   <%% end %>
 </div>

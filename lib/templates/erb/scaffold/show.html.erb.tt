@@ -1,13 +1,16 @@
 <!-- lib/templates/erb/scaffold/show.html.erb.tt -->
 
-<div class="card card-body">
-  <% attributes.reject(&:password_digest?).each do |attribute| -%>
-  <p><strong><%= attribute.human_name %>:</strong></p>
-  <p><%%= @<%= singular_table_name %>.<%= attribute.name %> %></p>
-
+<div class="card card-body w-100 w-xl-50 mb-8">
+  <table class="table">
+    <tbody>
+      <% attributes.reject(&:password_digest?).each do |attribute| -%>
+        <tr>
+          <td><strong><%= attribute.human_name %></strong></td>
+          <td><%%= @<%= singular_table_name %>.<%= attribute.name %> %></td>
+        </tr>
   <% end -%>
   <div class="flex items-center justify-start mt-6">
-    <%%= link_to 'Edit', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>) %> |
-    <%%= link_to 'Back', <%= index_helper %>_path %>
+    <%%= link_to "← Atrás", <%= index_helper %>_path, class: "me-1" %> |
+    <%%= link_to "Editar", edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: "ms-1" %>
   </div>
 </div>

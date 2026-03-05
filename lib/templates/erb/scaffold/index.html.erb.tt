@@ -26,13 +26,12 @@
 
         <td class="text-end">
           <button type="button" class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split" style="margin-left: 20px", data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Acciones
+            Acciones
           </button>
           <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
-
-              <%%= link_to "Ver", <%= singular_table_name %>, class: 'dropdown-item' %>
-              <%%= link_to "Editar", edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'dropdown-item' %>
-              <%%= link_to "Eliminar", <%= singular_table_name %>, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
+            <%%= link_to "Ver", <%= singular_table_name %>, class: 'dropdown-item' %>
+            <%%= link_to "Editar", edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'dropdown-item' %>
+            <%%= link_to "Eliminar", <%= singular_table_name %>, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
           </div>
         </td>
       </tr>

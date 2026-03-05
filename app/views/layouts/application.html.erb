@@ -186,7 +186,7 @@
 
           <li class="menu-title">Menu</li>
 
-          <!-- Usuarios -->
+          <!-- Users -->
           <li class="py-1">
             <%= link_to users_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
               <i class="fa-solid fa-user"></i>
@@ -194,7 +194,7 @@
             <% end %>
           </li>
 
-          <!-- Compañías -->
+          <!-- Companies -->
           <li class="py-1">
             <%= link_to companies_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
               <i class="fa-solid fa-building"></i>
@@ -202,11 +202,19 @@
             <% end %>
           </li>
 
-          <!-- Suscripciones -->
+          <!-- Subscriptions -->
           <li class="py-1">
             <%= link_to subscriptions_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
               <i class="fa-solid fa-file-contract"></i>
               <span>Suscripciones</span>
+            <% end %>
+          </li>
+
+          <!-- Folders -->
+          <li class="py-1">
+            <%= link_to folders_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+              <i class="fa-solid fa-folder-open"></i>
+              <span>Carpetas</span>
             <% end %>
           </li>
 

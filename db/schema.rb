@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_05_152630) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_26_100745) do
   create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "subscription_id", null: false
     t.string "name"
@@ -33,10 +33,23 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_05_152630) do
     t.index ["subscription_id"], name: "index_companies_on_subscription_id"
   end
 
+  create_table "folders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.bigint "company_id"
+    t.bigint "parent_folder_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_folders_on_company_id"
+    t.index ["parent_folder_id"], name: "index_folders_on_parent_folder_id"
+  end
+
   create_table "logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.string "user_name"
-    t.string "action"
+    t.integer "company_id"
+    t.string "company_name"
+    t.text "action"
+    t.string "log_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -58,15 +71,24 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_05_152630) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "role"
     t.string "name"
     t.string "lastname"
     t.string "image"
     t.string "jti"
+    t.string "nif"
+    t.string "role"
+    t.string "status"
+    t.datetime "last_connection"
+    t.datetime "date_expiration_password"
+    t.bigint "company_id"
+    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "companies", "subscriptions"
+  add_foreign_key "folders", "companies"
+  add_foreign_key "folders", "folders", column: "parent_folder_id"
+  add_foreign_key "users", "companies"
 end

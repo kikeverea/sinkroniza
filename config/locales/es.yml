@@ -1,5 +1,10 @@
 es:
   activerecord:
+    enums:
+      user:
+        active: "Activo"
+        inactive: "Inactivo"
+        deleted: "Eliminado"
     errors:
       messages:
         record_invalid: "El registro es inválido. %{errors}"

@@ -1,6 +1,6 @@
 <div class="card card-body" id="subscriptions">
 
-  <%= link_to new_subscription_path, class: "btn btn-success btn-sm", style: "max-width:200px; width: auto;" do %>
+  <%= link_to new_subscription_path, class: "btn btn-success btn-sm mw-200px" do %>
     <i class="fa fa-plus"></i> Nueva subscripción
   <% end %>
 
@@ -9,7 +9,6 @@
   <table class="table table-hover table-rounded table-striped gs-7">
     <thead>
       <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
-        <th>ID</th>
         <th>Nombre</th>
         <th>Descripción</th>
         <th>Cantidad usuarios</th>
@@ -20,8 +19,7 @@
     <tbody>
       <% @subscriptions.each do |subscription| %>
         <tr>
-          <td><%= subscription.id %></td>
-          <td><%= subscription.name %></td>
+          <td><%= link_to subscription.name, subscription %></td>
           <td><%= subscription.description %></td>
           <td><%= subscription.quantity_users %></td>
           <td><%= subscription.status %></td>

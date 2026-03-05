@@ -5,6 +5,8 @@ class User < ApplicationRecord
 
   mount_base64_uploader :image, ImageUploader
 
+  belongs_to :company, optional: true
+
   validates :name, :lastname, presence: true
 
   def self.ransackable_associations(_auth_object = nil)
@@ -15,9 +17,16 @@ class User < ApplicationRecord
     %w[created_at name email]
   end
 
-  enum role: {
+  enum :role, {
     admin: "admin"
   }
+
+  enum :status, {
+    active: "active",
+    inactive: "inactive",
+    deleted: "deleted"
+  },
+  default: :active
 
   def full_name
     "#{self.name} #{self.lastname}"

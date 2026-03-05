@@ -2,6 +2,7 @@ class Company < ApplicationRecord
   before_create :set_creator
 
   belongs_to :subscription
+  has_many :users
 
   mount_base64_uploader :logo, ImageUploader
 
