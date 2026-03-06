@@ -18,8 +18,11 @@ class User < ApplicationRecord
   end
 
   enum :role, {
-    admin: "admin"
-  }
+    super_admin: "super_admin",
+    admin: "admin",
+    user: "user"
+  },
+  default: :user
 
   enum :status, {
     active: "active",
@@ -29,11 +32,11 @@ class User < ApplicationRecord
   default: :active
 
   def role_text
-    I18n.t("activerecord.enums.user.#{role}")
+    I18n.t("activerecord.enums.user.role.#{role}")
   end
 
   def status_text
-    I18n.t("activerecord.enums.user.#{status}")
+    I18n.t("activerecord.enums.user.status.#{status}")
   end
 
   def full_name

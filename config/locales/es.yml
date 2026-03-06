@@ -2,6 +2,10 @@ es:
   activerecord:
     enums:
       user:
+        role:
+          super_admin: "Super admin"
+          admin: "Admin"
+          user: "Usuario"
         status:
           active: "Activo"
           inactive: "Inactivo"
