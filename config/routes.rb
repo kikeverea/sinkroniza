@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :web_companies
+  resources :webs
   resources :folders
   resources :companies
   resources :subscriptions

@@ -1,0 +1,47 @@
+<div class="card card-body w-100 w-xl-50">
+  <table class="table">
+    <tbody>
+        <tr>
+          <td><strong>Nombre</strong></td>
+          <td><%= @web.name %></td>
+        </tr>
+        <tr>
+          <td><strong>Alias</strong></td>
+          <td><%= @web.alias.present? ? @web.alias : "-" %></td>
+        </tr>
+        <tr>
+          <td><strong>Compañía</strong></td>
+          <td><%= @web.web_company.name %></td>
+        </tr>
+        <tr>
+          <td><strong>Tipo compañía</strong></td>
+          <td><%= @web.web_company_type.present? ? @web.web_company_type : "-" %></td>
+        </tr>
+        <tr>
+          <td><strong>URL</strong></td>
+          <td><%= @web.access_url.present? ? @web.access_url : "-" %></td>
+        </tr>
+        <tr>
+          <td><strong>Active</strong></td>
+          <td><%= boolean_icon(@web.active) %></td>
+        </tr>
+        <tr>
+          <td><strong>Creada por</strong></td>
+          <td><%= @web.creator_user_name %></td>
+        </tr>
+        <tr>
+          <td><strong>Estado</strong></td>
+          <td><%= @web.status_text %></td>
+        </tr>
+        <tr>
+          <td><strong>Logo</strong></td>
+          <td><%= @web.logo? ? image_tag(@web.logo.url, class: "w-200px") : "-" %></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="flex items-center justify-start mt-4 mb-8">
+  <%= link_to "← Atrás", @web.web_company, class: "me-1" %> |
+  <%= link_to "Editar", edit_web_path(@web), class: "ms-1" %>
+</div>

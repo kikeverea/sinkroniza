@@ -1,0 +1,44 @@
+<div class="card card-body" id="web_companies">
+  <%= link_to new_web_company_path, class: "btn btn-success btn-sm w-200px" do %>
+    <i class="fa fa-plus"></i> Nueva web
+  <% end %>
+
+  <div class="separator mt-10 mb-3"></div>
+
+  <table class="table table-hover table-rounded table-striped gy-7 gs-7">
+    <thead>
+      <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
+        <th>Logo</th>
+        <th>Nombre</th>
+        <th>Tipo</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @web_companies.each do |web_company| %>
+        <tr>
+          <td><%= web_company.logo? ? image_tag(web_company.logo.url, class: "w-100px") : "-" %></td>
+          <td><%= link_to web_company.name, web_company %></td>
+          <td><%= web_company_type_text web_company.web_company_type %></td>
+
+          <td class="text-end">
+            <button
+              type="button"
+              class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Acciones
+            </button>
+            <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
+              <%= link_to "Ver", web_company, class: 'dropdown-item' %>
+              <%= link_to "Editar", edit_web_company_path(web_company), class: 'dropdown-item' %>
+              <%= link_to "Eliminar", web_company, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

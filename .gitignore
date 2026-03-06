@@ -37,3 +37,4 @@
 /.idea
 
 config/database.yml
+/public/uploads

@@ -1,0 +1,51 @@
+<div class="card card-body">
+
+  <%= form_with model: web_company do |form| %>
+
+    <% if web_company.errors.any? %>
+      <div class="alert alert-danger d-flex align-items-center p-5">
+        <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
+        <div class="d-flex flex-column">
+          <h4 class="mb-1 text-dark">
+            No se ha podido realizar la acción
+          </h4>
+          <span class="ms-4">
+            <% web_company.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="mb-4">
+      <%= form.label :name, "Nombre", class: "form-label required" %>
+      <%= form.text_field :name, class: "form-control form-control-solid" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :web_company_type, "Tipo", class: "form-label required" %>
+      <%= form.select :web_company_type,
+        options_for_select(WebCompany.web_company_types.map { |type, _val| [web_company_type_text(type), type] }, web_company.web_company_type),
+        { include_blank: "Seleccionar tipo"},
+        class: "form-select"
+      %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :logo, "Logo", class: "fs-6 fw-semibold mb-2" %>
+      <%= form.file_field :logo, accept: "image/*", class: "d-block" %>
+    </div>
+
+    <% if web_company.logo? %>
+      <div class="mb-4">
+        <%= image_tag web_company.logo.url, class: "w-200px" %>
+      </div>
+    <% end %>
+
+    <div class="mt-8">
+      <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
+      <%= link_to "Cancelar", web_companies_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
+    </div>
+  <% end %>
+</div>

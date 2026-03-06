@@ -1,0 +1,70 @@
+<div class="card card-body">
+
+<%= form_with model: web do |form| %>
+
+    <% if web.errors.any? %>
+      <div class="alert alert-danger d-flex align-items-center p-5">
+        <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
+        <div class="d-flex flex-column">
+          <h4 class="mb-1 text-dark">
+            No se ha podido realizar la acción
+          </h4>
+          <span class="ms-4">
+            <% web.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+
+    <%= form.hidden_field :web_company_id, value: web.web_company_id %>
+
+    <div class="mb-4">
+      <div class="mb-4">
+        <%= form.label :name, "Nombre", class: "form-label required" %>
+        <%= form.text_field :name, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :alias, "Alias", class: "form-label" %>
+        <%= form.text_field :alias, class: "form-control form-control-solid" %>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :access_url, "Url", class: "form-label" %>
+      <%= form.text_field :access_url, class: "form-control form-control-solid" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :status, "Estado", class: "form-label" %>
+      <%= form.select :status,
+        options_for_select(Web.statuses.map { |status, _val| [web_status_text(status), status] }),
+        {},
+        class: "form-select"
+      %>
+    </div>
+
+    <div class="mb-3 mt-6">
+      <%= form.label :active, "Activa", class: "form-label" %>
+      <%= form.check_box :active, class: "ms-2" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :logo, "Logo", class: "form-label" %>
+      <%= form.file_field :logo, accept: "image/*", class: "d-block" %>
+    </div>
+
+    <% if web.logo? %>
+      <div class="mb-4">
+        <%= image_tag web.logo.url, class: "w-200px" %>
+      </div>
+    <% end %>
+    
+    <div class="mt-8">
+      <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
+      <%= link_to "Cancelar", web.web_company, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
+    </div>
+  <% end %>
+</div>
