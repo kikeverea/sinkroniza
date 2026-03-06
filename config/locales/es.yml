@@ -2,9 +2,20 @@ es:
   activerecord:
     enums:
       user:
-        active: "Activo"
-        inactive: "Inactivo"
-        deleted: "Eliminado"
+        status:
+          active: "Activo"
+          inactive: "Inactivo"
+          deleted: "Eliminado"
+      web:
+        status:
+          pending: "Pendiente"
+          active: "Activa"
+          rejected: "Rechazada"
+      web_company:
+        web_company_type:
+          bank: "Banco"
+          other: "Otro"
+          insurance: "Seguro"
     errors:
       messages:
         record_invalid: "El registro es inválido. %{errors}"

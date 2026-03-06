@@ -18,22 +18,22 @@
       </div>
     <% end %>
 
-    <%= form.hidden_field :parent_folder_id, value: parent_folder&.id %>
+    <%= form.hidden_field :parent_folder_id, value: folder.parent_folder_id %>
 
-    <div class="mb-3">
+    <div class="mb-4">
       <%= form.label :name, "Nombre", class: "form-label required" %>
       <%= form.text_field :name, class: "form-control form-control-solid" %>
     </div>
 
-    <% if parent_folder %>
-      <%= form.hidden_field :company_id, value: parent_folder.company_id %>
+    <% if folder.has_parent? %>
+      <%= form.hidden_field :company_id, value: folder.parent_folder.company_id %>
     <% else %>
-      <div class="mb-3">
+      <div class="mb-4">
         <%= form.label :company_id, "Compañía", class: "form-label" %>
         <%= form.collection_select :company_id,
           Company.all.order(:name), :id, :name,
           { include_blank: "Seleccionar compañía" },
-          class: "form-control form-control-solid" %>
+          class: "form-select" %>
       </div>
     <% end %>
 

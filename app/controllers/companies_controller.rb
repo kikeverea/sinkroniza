@@ -3,7 +3,7 @@ class CompaniesController < ApplicationController
 
   def index
     @title = "Compañías"
-    @companies = Company.all
+    @companies = Company.includes(:subscription)
   end
 
   def show

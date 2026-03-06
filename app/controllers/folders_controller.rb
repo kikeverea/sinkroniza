@@ -3,7 +3,7 @@ class FoldersController < ApplicationController
 
   def index
     @title = "Carpetas"
-    @folders = Folder.parents
+    @folders = Folder.parents.includes(:child_folders)
   end
 
   def show
@@ -12,8 +12,7 @@ class FoldersController < ApplicationController
 
   def new
     @title = "Nueva carpeta"
-    @folder = Folder.new
-    @parent_folder = Folder.find(params[:parent_folder_id]) if params[:parent_folder_id]
+    @folder = Folder.new(parent_folder_id: (Folder.find(params[:parent_folder_id]) if params[:parent_folder_id]))
   end
 
   def edit

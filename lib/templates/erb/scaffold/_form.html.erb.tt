@@ -20,11 +20,11 @@
     <%% end %>
 
     <% attributes.each do |attribute| -%>
-      <div class="mb-3">
+      <div class="mb-4">
         <% if attribute.password_digest? -%>
           <%%= form.label :password, class: "label" %>
           <%%= form.password_field :password, class: "form-control form-control-solid" %>
-          <div class="mb-3">
+          <div class="mb-4">
             <%%= form.label :password_confirmation, class: "form-label" %>
             <%%= form.password_field :password_confirmation, class: "form-control form-control-solid" %>
           </div>
@@ -35,9 +35,9 @@
       </div>
     <% end -%>
 
-    <div class="mt-5">
+    <div class="mt-8">
       <%%= form.button "Guardar", class: "btn btn-success btn-sm" %>
-      <%%= link_to "Cancelar" <%= index_helper %>_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
+      <%%= link_to "Cancelar", <%= index_helper %>_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
     </div>
   <%% end %>
 </div>

@@ -28,6 +28,14 @@ class User < ApplicationRecord
   },
   default: :active
 
+  def role_text
+    I18n.t("activerecord.enums.user.#{role}")
+  end
+
+  def status_text
+    I18n.t("activerecord.enums.user.#{status}")
+  end
+
   def full_name
     "#{self.name} #{self.lastname}"
   end

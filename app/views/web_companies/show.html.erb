@@ -1,0 +1,27 @@
+<div class="card card-body w-100 w-xl-50 mb-8">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong>Name</strong></td>
+        <td><%= @web_company.name %></td>
+      </tr>
+      <tr>
+        <td><strong>Tipo</strong></td>
+        <td><%= @web_company.type_text %></td>
+      </tr>
+      <tr>
+        <td><strong>Logo</strong></td>
+        <td><%= @web_company.logo? ? image_tag(@web_company.logo.url, class: "w-200px") : "-" %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card card-body">
+  <%= render "webs/index", web_company: @web_company, webs: @web_company.webs %>
+</div>
+
+<div class="flex items-center justify-start mt-4 mb-8">
+  <%= link_to "← Atrás", web_companies_path, class: "me-1" %> |
+  <%= link_to "Editar", edit_web_company_path(@web_company), class: "ms-1" %>
+</div>

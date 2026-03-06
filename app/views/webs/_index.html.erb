@@ -1,0 +1,45 @@
+<div class="d-flex align-items-center justify-content-between mx-4">
+  <h4>Webs asociadas</h4>
+  <%= link_to new_web_path(web_company_id: web_company.id), class: "btn btn-primary btn-sm w-200px" do %>
+    <i class="fa fa-plus"></i> Añadir web
+  <% end %>
+</div>
+
+
+<table class="table table-hover table-rounded table-striped gy-7 gs-7">
+  <thead>
+    <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
+      <th>Logo</th>
+      <th>Nombre</th>
+      <th>Alias</th>
+      <th>Url</th>
+      <th>Activa</th>
+      <th>Creada por</th>
+      <th>Estado</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% webs.each do |web| %>
+      <tr>
+        <td><%= web.logo? ? image_tag(web.logo.url, class: "w-100px") : "-" %></td>
+        <td><%= link_to web.name, web %></td>
+        <td><%= web.alias.present? ? link_to(web.alias, web) : "-" %></td>
+        <td><%= web.access_url.present? ? web.access_url : "-" %></td>
+        <td><%= boolean_icon(web.active) %></td>
+        <td><%= web.creator_user_name %></td>
+        <td><%= web.status_text %></td>
+        <td class="text-end">
+          <button type="button" class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split" style="margin-left: 20px", data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Acciones
+          </button>
+          <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
+            <%= link_to "Ver", web, class: 'dropdown-item' %>
+            <%= link_to "Editar", edit_web_path(web), class: 'dropdown-item' %>
+            <%= link_to "Eliminar", web, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
