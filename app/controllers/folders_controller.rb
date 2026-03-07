@@ -10,9 +10,15 @@ class FoldersController < ApplicationController
     @title = "Carpeta"
   end
 
+  def by_name
+    @title = "Carpeta"
+    @folder = Folder.find_by(name: params[:name])
+    render :show
+  end
+
   def new
     @title = "Nueva carpeta"
-    @folder = Folder.new(parent_folder_id: (Folder.find(params[:parent_folder_id]) if params[:parent_folder_id]))
+    @folder = Folder.new(parent_folder_id:params[:parent_folder_id])
   end
 
   def edit
@@ -23,7 +29,7 @@ class FoldersController < ApplicationController
     @folder = Folder.new(folder_params)
 
     respond_to do |format|
-      if @folder.save
+      if @folder.save!
         format.html { redirect_to @folder, notice: "Carpeta creada" }
         format.json { render :show, status: :created, location: @folder }
       else

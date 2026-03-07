@@ -14,28 +14,19 @@
 </div>
 
 <div class="card card-body">
-  <div class="d-flex justify-content-between w-100 pb-4">
+  <div class="d-flex justify-content-between w-100 pb-4 gap-6">
     <h4>Carpetas</h4>
+
+    <% if @folder.has_parent? %>
+      <span class="flex-grow-1"><%= folder_path_link @folder %></span>
+    <% end %>
+
     <%= link_to new_folder_path(parent_folder_id: @folder.id), class: "btn btn-primary btn-sm mw-200px" do %>
       <i class="fa fa-plus"></i> Añadir subcarpeta
     <% end %>
   </div>
 
   <div class="d-flex justify-content-start align-items-center gap-4">
-    <% if @folder.has_parent? %>
-      <% parent_folder = @folder.parent_folder %>
-
-      <%= link_to parent_folder, class: "btn btn-flush btn-active-color-warning w-80px" do %>
-        <div class="d-flex flex-column align-items-center justify-content-center gap-2 fs-7">
-          <i class="fa-solid fa-arrow-up fs-3x"></i>
-          <div class="w-100px truncate-2-lines">
-            Ir a <%= parent_folder.name %>
-          </div>
-
-        </div>
-      <% end %>
-    <% end %>
-
     <% @folder.child_folders.each do |folder| %>
       <%= link_to folder, class: "btn btn-flush btn-active-color-warning w-100px" do %>
         <div class="d-flex flex-column align-items-center justify-content-center gap-2 fs-7">

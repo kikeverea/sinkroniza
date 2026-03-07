@@ -3,31 +3,35 @@ Rails.application.routes.draw do
   resources :credentials
   resources :web_companies
   resources :webs
-  resources :folders
   resources :companies
   resources :subscriptions
   resources :logs
 
-  get 'users/index', to:'users#index', as: :users
-  post 'users/create', to:'users#create', as: :create_user
-  get 'users/new', to:'users#new', as: :new_user
-  get 'users/edit/:id', to:'users#edit', as: :edit_user
-  get 'users/show/:id', to:'users#show', as: :show_user
-  patch 'users/update/:id', to:'users#update', as: :update_user
-  delete 'users/delete/:id', to:'users#destroy', as: :delete_user
+  get "users/index", to:"users#index", as: :users
+  post "users/create", to:"users#create", as: :create_user
+  get "users/new", to:"users#new", as: :new_user
+  get "users/edit/:id", to:"users#edit", as: :edit_user
+  get "users/show/:id", to:"users#show", as: :show_user
+  patch "users/update/:id", to:"users#update", as: :update_user
+  delete "users/delete/:id", to:"users#destroy", as: :delete_user
 
-  get 'admin/index'
-  ## Users
-  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', passwords: 'users/passwords' }
-    devise_scope :user do
-       post '/signup', to: 'users/registrations#create'
-       post '/login', to:'users/sessions#create' # Para obtener el token de inicio de sesión
-    end
+  get "admin/index"
+## Users
+  devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords" }
+  devise_scope :user do
+     post "/signup", to: "users/registrations#create"
+     post "/login", to:"users/sessions#create" # Para obtener el token de inicio de sesión
+  end
+  get :logout, to: "users#logout", as: :logout
 
 
-  get :logout, to: 'users#logout', as: :logout
+## Folders
+  get "folders/name/:name", to: "folders#by_name", as: :folder_by_name
+  resources :folders
 
-  root to: 'admin#index'
+
+## General
+  root to: "admin#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
