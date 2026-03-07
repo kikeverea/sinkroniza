@@ -1,0 +1,31 @@
+<div class="card card-body w-100 w-xl-50">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong>Nombre</strong></td>
+        <td><%= @group.name %></td>
+      </tr>
+      <tr>
+        <td><strong>Compañía</strong></td>
+        <td><%= @group.company.name %></td>
+      </tr>
+      <tr>
+        <td><strong>Tipo</strong></td>
+        <td><%= @group.group_type_text %></td>
+      </tr>
+      <tr>
+        <td><strong>Creado por</strong></td>
+        <td><%= User.find(@group.created_by_user_id).full_name %></td>
+      </tr>
+      <tr>
+        <td><strong>Descripción</strong></td>
+        <td><%= @group.description.present? ? @group.description : "-" %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="flex items-center justify-start mt-4 mb-8">
+  <%= link_to "← Atrás", groups_path, class: "me-1" %> |
+  <%= link_to "Editar", edit_group_path(@group), class: "ms-1" %>
+</div>

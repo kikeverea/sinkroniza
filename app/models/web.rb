@@ -30,6 +30,6 @@ class Web < ApplicationRecord
   end
 
   def set_web_company_type
-    self.web_company_type = web_company.web_company_type
+    self.web_company_type ||= web_company.web_company_type
   end
 end

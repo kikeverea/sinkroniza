@@ -7,5 +7,4 @@ module UsersHelper
   def user_status_text(status)
     I18n.t("activerecord.enums.user.status.#{status}")
   end
-
 end

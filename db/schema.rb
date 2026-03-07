@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_26_100748) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_26_100750) do
   create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "subscription_id", null: false
     t.string "name"
@@ -33,6 +33,30 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100748) do
     t.index ["subscription_id"], name: "index_companies_on_subscription_id"
   end
 
+  create_table "credentials", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "web_company_type"
+    t.string "name"
+    t.text "description"
+    t.text "admin_description"
+    t.text "encrypted_blob"
+    t.string "mediator_code"
+    t.string "priority"
+    t.string "owner"
+    t.boolean "visible_extension"
+    t.boolean "active", default: true
+    t.string "credential_type"
+    t.bigint "company_id", null: false
+    t.bigint "web_id", null: false
+    t.bigint "group_id"
+    t.bigint "folder_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_credentials_on_company_id"
+    t.index ["folder_id"], name: "index_credentials_on_folder_id"
+    t.index ["group_id"], name: "index_credentials_on_group_id"
+    t.index ["web_id"], name: "index_credentials_on_web_id"
+  end
+
   create_table "folders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "company_id"
@@ -41,6 +65,17 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100748) do
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_folders_on_company_id"
     t.index ["parent_folder_id"], name: "index_folders_on_parent_folder_id"
+  end
+
+  create_table "groups", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.string "name"
+    t.text "description"
+    t.integer "created_by_user_id"
+    t.string "group_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_groups_on_company_id"
   end
 
   create_table "logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -113,8 +148,13 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100748) do
   end
 
   add_foreign_key "companies", "subscriptions"
+  add_foreign_key "credentials", "companies"
+  add_foreign_key "credentials", "folders"
+  add_foreign_key "credentials", "groups"
+  add_foreign_key "credentials", "webs"
   add_foreign_key "folders", "companies"
   add_foreign_key "folders", "folders", column: "parent_folder_id"
+  add_foreign_key "groups", "companies"
   add_foreign_key "users", "companies"
   add_foreign_key "webs", "web_companies"
 end

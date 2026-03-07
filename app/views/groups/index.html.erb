@@ -1,0 +1,46 @@
+<div class="card card-body" id="groups">
+  <%= link_to new_group_path, class: "btn btn-success btn-sm w-200px" do %>
+    <i class="fa fa-plus"></i> Nuevo grupo
+  <% end %>
+
+  <div class="separator mt-10 mb-3"></div>
+
+  <table class="table table-hover table-rounded table-striped gy-7 gs-7">
+    <thead>
+      <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
+        <th>Nombre</th>
+        <th>Compañía</th>
+        <th>Creado por</th>
+        <th>Tipo</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @groups.each do |group| %>
+        <tr>
+          <td><%= link_to group.name, group %></td>
+          <td><%= link_to group.company.name, group.company %></td>
+          <td><%= User.find(group.created_by_user_id).full_name %></td>
+          <td><%= group.group_type_text %></td>
+
+          <td class="text-end">
+            <button
+              type="button"
+              class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Acciones
+            </button>
+            <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
+              <%= link_to "Ver", group, class: 'dropdown-item' %>
+              <%= link_to "Editar", edit_group_path(group), class: 'dropdown-item' %>
+              <%= link_to "Eliminar", group, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

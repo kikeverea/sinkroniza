@@ -18,7 +18,7 @@ class Company < ApplicationRecord
   def set_creator
     return if Current.user.nil?
 
-    self.creator_user_id = Current.user.id
-    self.creator_user_name = Current.user.full_name
+    self.creator_user_id ||= Current.user.id
+    self.creator_user_name ||= Current.user.full_name
   end
 end

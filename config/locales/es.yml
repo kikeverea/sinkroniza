@@ -20,6 +20,15 @@ es:
           bank: "Banco"
           other: "Otro"
           insurance: "Seguro"
+      credential:
+        credential_type:
+          autologin: "Auto login"
+          regular: "Regular"
+          note: "Nota"
+      group:
+        group_type:
+          personal: "Personal"
+          company: "Compañía"
     errors:
       messages:
         record_invalid: "El registro es inválido. %{errors}"

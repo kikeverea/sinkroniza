@@ -1,23 +1,21 @@
-<div class="card card-body">
+<% if web.errors.any? %>
+  <div class="alert alert-danger d-flex align-items-center p-5">
+    <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
+    <div class="d-flex flex-column">
+      <h4 class="mb-1 text-dark">
+        No se ha podido realizar la acción
+      </h4>
+      <span class="ms-4">
+        <% web.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </span>
+    </div>
+  </div>
+<% end %>
 
-<%= form_with model: web do |form| %>
-
-    <% if web.errors.any? %>
-      <div class="alert alert-danger d-flex align-items-center p-5">
-        <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
-        <div class="d-flex flex-column">
-          <h4 class="mb-1 text-dark">
-            No se ha podido realizar la acción
-          </h4>
-          <span class="ms-4">
-            <% web.errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </span>
-        </div>
-      </div>
-    <% end %>
-
+<div class="card card-body mb-8">
+  <%= form_with model: web do |form| %>
     <%= form.hidden_field :web_company_id, value: web.web_company_id %>
 
     <div class="mb-4">

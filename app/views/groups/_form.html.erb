@@ -1,0 +1,52 @@
+<% if group.errors.any? %>
+  <div class="alert alert-danger d-flex align-items-center p-5">
+    <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
+    <div class="d-flex flex-column">
+      <h4 class="mb-1 text-dark">
+        No se ha podido realizar la acción
+      </h4>
+      <span class="ms-4">
+        <% group.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </span>
+    </div>
+  </div>
+<% end %>
+
+<div class="card card-body mb-8">
+  <%= form_with model: group  do |form| %>
+      <div class="mb-4">
+        <%= form.label :name, "Nombre", class: "form-label required" %>
+        <%= form.text_field :name, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :company_id, "Compañía", class: "form-label required" %>
+        <%= form.collection_select :company_id,
+          Company.order(:name), :id, :name,
+          { include_blank: "Seleccionar compañía" },
+          class: "form-select"
+        %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :group_type, class: "form-label required" %>
+        <%= form.select :group_type,
+          options_for_select(Group.group_types.map { |type, _val| [group_type_text(type), type] }, group.group_type),
+          { include_blank: "Seleccionar tipo" },
+          class: "form-select"
+        %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :description, "Descripción", class: "form-label" %>
+        <%= form.text_area :description, class: "form-control form-control-solid" %>
+      </div>
+
+      <div class="mt-8">
+        <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
+        <%= link_to "Cancelar", groups_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
+      </div>
+  <% end %>
+</div>

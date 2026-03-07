@@ -1,21 +1,21 @@
-<div class="card card-body">
-  <%= form_with model: subscription do |form| %>
+<% if subscription && subscription.errors.any? %>
+  <div class="alert alert-danger d-flex align-items-center p-5">
+    <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
+    <div class="d-flex flex-column">
+      <h4 class="mb-1 text-dark">
+        No se ha podido realizar la acción
+      </h4>
+      <span class="ms-4">
+        <% subscription.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </span>
+    </div>
+  </div>
+<% end %>
 
-    <% if subscription && subscription.errors.any? %>
-      <div class="alert alert-danger d-flex align-items-center p-5">
-        <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
-        <div class="d-flex flex-column">
-          <h4 class="mb-1 text-dark">
-            No se ha podido realizar la acción
-          </h4>
-          <span class="ms-4">
-            <% subscription.errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </span>
-        </div>
-      </div>
-    <% end %>
+<div class="card card-body mb-8">
+  <%= form_with model: subscription do |form| %>
 
     <div class="mb-4">
       <%= form.label :name, "Nombre", class: "form-label required" %>
