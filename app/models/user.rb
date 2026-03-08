@@ -1,17 +1,21 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
   mount_base64_uploader :image, ImageUploader
 
   belongs_to :company, optional: true
+  has_many :emergency_contacts, foreign_key: :owner_user_id, dependent: :destroy
+  has_many :emergency_contact_users, class_name: "EmergencyContact", foreign_key: :contact_user_id, dependent: :destroy
 
   validates :name, :lastname, presence: true
 
+  scope :kept, -> { where.not(status: :deleted) }
+  scope :discarded, -> { where(status: :deleted) }
+
   def self.ransackable_associations(_auth_object = nil)
     []
-    end
+  end
     
   def self.ransackable_attributes(_auth_object = nil)
     %w[created_at name email]

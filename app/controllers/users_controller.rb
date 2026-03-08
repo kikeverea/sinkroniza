@@ -5,14 +5,18 @@ class UsersController < ApplicationController
     authorize! :read, User
     @title = "Lista de usuarios"
 
-    if !params[:q].nil?
-          @search = params[:q][:email_or_name_cont]
-        else 
-          @search = ""
-    end
+    @search = params[:q].nil? ? "" : params[:q][:email_or_name_cont]
+    @target = params[:target]
 
     @q = User.includes(:company).ransack(params[:q])
-    @users = @q.result.order("created_at DESC").paginate(:page => params[:page], :per_page => 15)
+
+    result = @q.result
+
+    @users = (@target.nil? || @target == "users") ? result.kept : User.kept
+    @discarded_users = @target == "discarded" ? result.discarded : User.discarded
+
+    @users = @users.order(created_at: :desc).paginate(:page => params[:page], :per_page => 15)
+    @discarded_users = @discarded_users.order(created_at: :desc).paginate(:page => params[:page], :per_page => 15)
   end
 
   def show
@@ -43,14 +47,13 @@ class UsersController < ApplicationController
 
   def update
     authorize! :update, @user
-    # If params password is empty, remove it from the hash
-    if !user_params[:password].present?
-      filtered_params = user_params.except(:password, :password_confirmation)
-    else
-      filtered_params = user_params
-    end
+
+    filtered_params = user_params[:password].present? ?
+      user_params :
+      user_params.except(:password, :password_confirmation)
+
     if @user.update!(filtered_params)
-      redirect_to users_path, notice: "Usuario actualizado correctamente"
+      redirect_to show_user_path(@user), notice: "Usuario actualizado correctamente"
     else
       render :edit, notice: "Error al actualizar el usuario"
     end
@@ -58,7 +61,8 @@ class UsersController < ApplicationController
 
   def destroy
     authorize! :destroy, @user
-    @user.destroy
+    @user.update!(status: :deleted)
+
     redirect_to users_path, notice: "Usuario eliminado correctamente"
   end
 
@@ -74,10 +78,8 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user)
-          .permit(:role, :name, :lastname, :email, :password, :phone, :age, :gender, :height, :weight,
-                  :home_address, :home_address_city, :home_address_province, :home_address_country, :home_address_zip_code,
-                  :billing_address, :billing_address_city, :billing_address_province, :billing_address_country, :billing_address_zip_code,
-                  :company_name, :image)
+    params
+      .require(:user)
+      .permit(:role, :name, :lastname, :nif, :date_expiration_password, :status, :company_id, :email, :password)
   end
 end

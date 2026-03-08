@@ -38,7 +38,7 @@
     <div class="mb-4">
       <%= form.label :status, "Estado", class: "form-label" %>
       <%= form.select :status,
-        options_for_select(Web.statuses.map { |status, _val| [web_status_text(status), status] }),
+        options_for_select(Web.statuses.map { |status, _val| [web_status_text(status), status] }, web.status),
         {},
         class: "form-select"
       %>

@@ -30,8 +30,8 @@
     <div class="mb-4">
       <%= form.label :role, "Rol", class: "form-label" %>
       <%= form.select :role,
-        options_for_select(GroupUser.roles.map { |role, _val| [group_user_role_text(role), role] }),
-        {},
+        options_for_select(GroupUser.roles.map { |role, _val| [group_user_role_text(role), role] }, group_user.role),
+        { include_blank: "Seleccionar rol"},
         class: "form-select"
       %>
     </div>

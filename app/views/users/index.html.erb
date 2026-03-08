@@ -6,121 +6,28 @@
 	</span>
 <% end %>
 
-<div class="card mt-3">
-	<div class="card-body">
-		<div class="text-end mb-3">
-			<small>
-				<%= link_to params.to_unsafe_h.merge(format: :xlsx), {style: 'color: #000000'} do %><i class="far fa-file-excel"></i> Exportar Excel <%end%>
-			</small>
-		</div>
+<ul class="nav nav-tabs nav-line-tabs mt-8 mb-2 mx-4 fs-6">
+	<li class="nav-item">
+		<a class="nav-link <%= "active" if params[:target].nil? || params[:target] == "users" %>" data-bs-toggle="tab" href="#users">
+			Usuarios
+		</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link <%= "active" if params[:target] == "discarded" %>" data-bs-toggle="tab" href="#discarded">
+			Eliminados
+		</a>
+	</li>
+</ul>
 
-	  <%= search_form_for @q, url: users_path do |f| %>
+<div class="tab-content">
 
-			<div class="row">
-				<div class="col col-md-6">
-					<div class="input-group-prepend" style="display: flex; align-items: center">
-						<%= f.search_field :email_or_name_cont, value: @search,
-							class: "form-control h-45px",
-							placeholder: "Email o nombre del usuario",
-							style: "width: 90%;"
-						%>
-						<%= submit_tag "Buscar", class: "btn btn-primary btn-outline-primary ms-2"%>
-					</div>
-				</div>
+	<!-- Users -->
+	<div class="tab-pane fade <%= "show active" if params[:target].nil? || params[:target] == "users" %>" id="users">
+		<%= render "users/index", users: @users, target: "users" %>
+	</div>
 
-				<div class="col col-md-6 text-end" style="display: flex; justify-content: space-between; align-items: center; height: 40px">
-					<div class="col col-md-2 text-end">
-						<small><b> Rango fechas: </b> </small>
-					</div>
-
-					<div class="col col-md-4">
-						<%= f.date_field :created_at_gteq, class: 'form-control', placeholder: "Inicio", style: 'height: 40px' %>
-					</div>
-
-					<div class="col col-md-4">
-						<%= f.date_field :created_at_lteq, class: 'form-control', placeholder: "Fin", style: 'height: 40px' %>
-					</div>
-				</div>
-			</div>
-
-			<div class="separator my-8"></div>
-
-			<div class="row">
-				<div class="col-md-6">
-					<small><b>Ordenar por:</b></small>
-					<span style="margin-left: 5%; color: #000000">
-						<small><%= sort_link(@q, :created_at, '<i class="fa fa-calendar"></i> Fecha'.html_safe, {style: 'color: #000000'}) %></small>
-					</span>
-				</div>
-
-				<div class="col-md-6">
-					<small><b>Mostrar:</b></small>
-					<span style="margin-left: 5%;">
-						<small>
-							<%= link_to users_path, method: 'get', style: "color: #000000" do %>
-								<i class="fa fa-times" aria-hidden="true"></i> Eliminar filtros
-							<% end %>
-						</small>
-					</span>
-				</div>
-			</div>
-  	<% end %>
- 	</div>
+	<!-- Discarded -->
+	<div class="tab-pane fade <%= "show active" if params[:target] == "discarded" %>" id="discarded">
+		<%= render "users/index", users: @discarded_users, target: "discarded" %>
+	</div>
 </div>
-
-<div class="card card-body mt-5">
-
-	<table class="table table-responsive table-hover table-striped gs-7">
-		<thead>
-			<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-				<th class="min-w-125px sorting">User</th>
-				<th class="min-w-125px sorting">Rol</th>
-				<th class="min-w-125px sorting">Email</th>
-				<th class="min-w-125px sorting">Registrado</th>
-				<th class="text-end" rowspan="1" colspan="1" style="width: 121.15px;" aria-label="Acciones"></th>
-			</tr>
-		</thead>
-
-		<tbody class="text-gray-600 fw-semibold">
-			<% @users.each do |user| %>
-				<tr class="h-60px">
-					<td>
-						<%= render "user_item", user: user, link: show_user_path(id: user.id) %>
-					</td>
-					<td>
-						<%= user.role&.titleize %>
-					</td>
-					<td>
-						<%= user.email %>
-					</td>
-					<td>
-						<%= user.created_at.strftime("%d-%m-%Y %H:%M") %>
-					</td>
-					<td class="text-end">
-						<button
-							type="button"
-							class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split"
-							data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-						>
-							Acciones
-						</button>
-						<div class="dropdown-menu">
-							<%= link_to "Ver", show_user_path(user), class: "dropdown-item" %>
-							<%= link_to "Editar", edit_user_path(user), class: "dropdown-item" %>
-							<%= link_to "Eliminar", delete_user_path(user), class:"dropdown-item", data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %>
-						</div>
-					</td>
-				</tr>
-			<% end %>
-		</tbody>
- </table>
-</div>
-
-<div class="digg_pagination mt-3">
-  <%= will_paginate @alerts, container: false %>
-</div>
-
-<script>
-  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-</script>

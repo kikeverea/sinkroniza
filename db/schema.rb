@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_26_100751) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_26_100752) do
   create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "subscription_id", null: false
     t.string "name"
@@ -55,6 +55,21 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100751) do
     t.index ["folder_id"], name: "index_credentials_on_folder_id"
     t.index ["group_id"], name: "index_credentials_on_group_id"
     t.index ["web_id"], name: "index_credentials_on_web_id"
+  end
+
+  create_table "emergency_contacts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "status"
+    t.integer "wait_days"
+    t.text "encrypted_payload"
+    t.string "crypto_version"
+    t.bigint "owner_user_id", null: false
+    t.bigint "contact_user_id", null: false
+    t.bigint "company_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_emergency_contacts_on_company_id"
+    t.index ["contact_user_id"], name: "index_emergency_contacts_on_contact_user_id"
+    t.index ["owner_user_id"], name: "index_emergency_contacts_on_owner_user_id"
   end
 
   create_table "folders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -166,6 +181,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100751) do
   add_foreign_key "credentials", "folders"
   add_foreign_key "credentials", "groups"
   add_foreign_key "credentials", "webs"
+  add_foreign_key "emergency_contacts", "companies"
+  add_foreign_key "emergency_contacts", "users", column: "contact_user_id"
+  add_foreign_key "emergency_contacts", "users", column: "owner_user_id"
   add_foreign_key "folders", "companies"
   add_foreign_key "folders", "folders", column: "parent_folder_id"
   add_foreign_key "group_users", "groups"

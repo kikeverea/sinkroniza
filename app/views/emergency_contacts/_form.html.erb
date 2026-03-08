@@ -1,0 +1,57 @@
+<% if emergency_contact.errors.any? %>
+  <div class="alert alert-danger d-flex align-items-center p-5">
+    <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
+    <div class="d-flex flex-column">
+      <h4 class="mb-1 text-dark">
+        No se ha podido realizar la acción
+      </h4>
+      <span class="ms-4">
+        <% emergency_contact.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </span>
+    </div>
+  </div>
+<% end %>
+
+<div class="card card-body mb-8">
+
+  <%= form_with model: emergency_contact do |form| %>
+
+    <%= form.hidden_field :owner_user_id, value: emergency_contact.owner_user_id %>
+
+    <div class="mb-4">
+      <%= form.label :contact_user_id, "Usuario de contacto", class: "form-label required" %>
+      <%= form.collection_select :contact_user_id,
+        User.where.not(id: emergency_contact.owner_user_id).order(:name), :id, :name,
+        { include_blank: "Seleccionar usuario" },
+        class: "form-select"
+      %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :wait_days, "Días de espera", class: "form-label" %>
+      <%= form.number_field :wait_days, class: "form-control form-control-solid" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :status, "Estado", class: "form-label" %>
+      <%= form.select :status,
+        options_for_select(
+          EmergencyContact.statuses.map { |status, _val| [emergency_contact_status_text(status), status] },
+          emergency_contact.status
+        ),
+        {},
+        class: "form-select"
+      %>
+    </div>
+
+    <div class="mt-8">
+      <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
+      <%= link_to "Cancelar",
+        emergency_contact.persisted? ? emergency_contact : emergency_contacts_path,
+        class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4"
+      %>
+    </div>
+  <% end %>
+</div>

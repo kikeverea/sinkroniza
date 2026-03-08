@@ -4,7 +4,6 @@ module GroupUsersHelper
   end
 
   def group_user_badge(group_user)
-    color = group_user.role == "owner" ? "primary" : "success"
-    "<span class='badge text-white text-bg-#{color}'>#{group_user.role_text}</span>".html_safe
+    badge(group_user.role_text, group_user.role == "owner" ? "primary" : "success")
   end
 end

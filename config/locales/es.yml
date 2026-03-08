@@ -6,6 +6,10 @@ es:
           super_admin: "Super admin"
           admin: "Admin"
           user: "Usuario"
+        status:
+          active: "Activo"
+          inactive: "Inactivo"
+          deleted: "Eliminado"
       web:
         status:
           pending: "Pendiente"
@@ -29,6 +33,11 @@ es:
         role:
           owner: "Dueño"
           shared: "Compartido"
+      emergency_contact:
+        status:
+          invited: "Invitado"
+          active: "Activo"
+          revoked: "Revocado"
     errors:
       messages:
         record_invalid: "El registro es inválido. %{errors}"

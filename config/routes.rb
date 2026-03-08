@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :emergency_contacts
   resources :groups
   resources :group_users
   resources :credentials
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
   get "users/edit/:id", to:"users#edit", as: :edit_user
   get "users/show/:id", to:"users#show", as: :show_user
   patch "users/update/:id", to:"users#update", as: :update_user
+  put "users/update/:id/password", to:"users#change_password", as: :change_user_password
   delete "users/delete/:id", to:"users#destroy", as: :delete_user
 
   get "admin/index"
