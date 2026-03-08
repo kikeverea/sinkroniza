@@ -7,6 +7,7 @@ class User < ApplicationRecord
   belongs_to :company, optional: true
   has_many :emergency_contacts, foreign_key: :owner_user_id, dependent: :destroy
   has_many :emergency_contact_users, class_name: "EmergencyContact", foreign_key: :contact_user_id, dependent: :destroy
+  has_many :emergency_requests, through: :emergency_contacts
 
   validates :name, :lastname, presence: true
 

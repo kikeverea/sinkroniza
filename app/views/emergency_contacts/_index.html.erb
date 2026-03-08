@@ -12,10 +12,10 @@
       <% emergency_contacts.each do |emergency_contact| %>
         <% contact_user = emergency_contact.contact_user %>
         <tr>
-          <td><%= link_to contact_user.full_name, show_user_path(contact_user) %></td>
-          <td><%= emergency_contact_badge emergency_contact %></td>
-          <td><%= emergency_contact.wait_days.presence || "-" %></td>
-          <td class="text-end">
+          <td class="py-3"><%= link_to contact_user.full_name, show_user_path(contact_user) %></td>
+          <td class="py-3"><%= emergency_contact_badge emergency_contact %></td>
+          <td class="py-3"><%= emergency_contact.wait_days.presence || "-" %></td>
+          <td class="py-3 text-end">
             <button
               type="button"
               class="btn btn-sm btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"

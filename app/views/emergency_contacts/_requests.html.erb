@@ -1,0 +1,46 @@
+<table class="table table-hover table-rounded table-striped gy-7 gs-7">
+  <thead>
+    <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
+      <th>Contacto</th>
+      <th>Estado</th>
+      <th>Conceder en</th>
+      <th>Concedida en</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if emergency_requests.any? %>
+      <% emergency_requests.each do |emergency_request| %>
+        <% contact_user = emergency_request.emergency_contact.contact_user %>
+        <tr>
+          <td class="py-3"><%= link_to contact_user.full_name, show_user_path(contact_user) %></td>
+          <td class="py-3"><%= emergency_request_badge emergency_request %></td>
+          <td class="py-3"><%= emergency_request.grant_at.presence&.strftime("%d-%m-%Y – %H:%M") || "-" %></td>
+          <td class="py-3"><%= emergency_request.granted_at.presence&.strftime("%d-%m-%Y – %H:%M") || "-" %></td>
+          <td class="py-3 text-end">
+            <button
+              type="button"
+              class="btn btn-sm btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Acciones
+            </button>
+            <div class="dropdown-menu" style="border: 1px solid #ECECEC">
+              <%= link_to "Ver", emergency_request, class: 'dropdown-item' %>
+              <%= link_to "Editar", edit_emergency_contact_path(emergency_request), class: 'dropdown-item' %>
+              <%= link_to "Eliminar", emergency_request, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="5" class="text-muted text-center fst-italic">
+          No tienes solicitudes de rescate
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

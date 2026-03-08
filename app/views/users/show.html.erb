@@ -4,7 +4,7 @@
   </div>
 
   <div class="col-8">
-    <div class="card card-body">
+    <div class="card card-body mb-6">
       <div class="d-flex justify-content-between align-items-center px-6">
         <span class="fw-bold fs-6">
           Contactos de emergencia
@@ -15,6 +15,13 @@
       </div>
 
       <%= render "emergency_contacts/index", emergency_contacts: @user.emergency_contacts %>
+    </div>
+
+    <div class="card card-body">
+      <span class="fw-bold fs-6 px-6">
+        Solicitudes de rescate
+      </span>
+      <%= render "emergency_contacts/requests", emergency_requests: @user.emergency_requests %>
     </div>
 
     <div class="w-100 ms-2 mt-4">

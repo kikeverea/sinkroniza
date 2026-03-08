@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_26_100752) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_26_100753) do
   create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "subscription_id", null: false
     t.string "name"
@@ -70,6 +70,17 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100752) do
     t.index ["company_id"], name: "index_emergency_contacts_on_company_id"
     t.index ["contact_user_id"], name: "index_emergency_contacts_on_contact_user_id"
     t.index ["owner_user_id"], name: "index_emergency_contacts_on_owner_user_id"
+  end
+
+  create_table "emergency_requests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "emergency_contact_id", null: false
+    t.string "status"
+    t.datetime "manual_ar_at"
+    t.datetime "grant_at"
+    t.datetime "granted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["emergency_contact_id"], name: "index_emergency_requests_on_emergency_contact_id"
   end
 
   create_table "folders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -184,6 +195,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100752) do
   add_foreign_key "emergency_contacts", "companies"
   add_foreign_key "emergency_contacts", "users", column: "contact_user_id"
   add_foreign_key "emergency_contacts", "users", column: "owner_user_id"
+  add_foreign_key "emergency_requests", "emergency_contacts"
   add_foreign_key "folders", "companies"
   add_foreign_key "folders", "folders", column: "parent_folder_id"
   add_foreign_key "group_users", "groups"

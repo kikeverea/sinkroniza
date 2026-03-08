@@ -38,6 +38,14 @@ es:
           invited: "Invitado"
           active: "Activo"
           revoked: "Revocado"
+      emergency_request:
+        status:
+          request: "Solicitada"
+          approved: "Aprobada"
+          rejected: "Rechazada"
+          granted: "Concedida"
+          cancelled: "Cancelada"
+          expired: "Caducada"
     errors:
       messages:
         record_invalid: "El registro es inválido. %{errors}"

@@ -4,6 +4,7 @@ class EmergencyContact < ApplicationRecord
   belongs_to :owner_user, class_name: "User"
   belongs_to :contact_user, class_name: "User"
   belongs_to :company
+  has_many :emergency_requests, dependent: :destroy
 
   validates :owner_user_id, :contact_user_id, :company_id, presence: true
 
@@ -24,6 +25,6 @@ class EmergencyContact < ApplicationRecord
   def set_company
     return unless company_id.nil?
 
-    self.company = owner_user.company
+    self.company = contact_user.company
   end
 end

@@ -5,16 +5,10 @@ webs_then = Web.count
 groups_then = Group.count
 folders_then = Folder.count
 
-user = User.find_or_create_by!(email: "admin@admin.com", role: "admin") do |user|
+super_admin = User.find_or_create_by!(email: "admin@admin.com", role: "super_admin") do |user|
   user.password = "12341234"
   user.name = "Admin"
   user.lastname = "Innobing"
-end
-
-User.find_or_create_by!(email: "user@user.com", role: "user") do |user|
-  user.password = "12341234"
-  user.name = "User"
-  user.lastname = "Test"
 end
 
 subscription = Subscription.find_or_create_by!(name: "Test subscription") do |subscription|
@@ -25,11 +19,23 @@ company = Company.find_or_create_by!(name: "Test company") do |company|
   company.subscription = subscription
 end
 
+5.times do |i|
+  User.find_or_create_by!(email: "user#{i + 1}@user.com", role: "user") do |user|
+    user.password = "12341234"
+    user.name = "User"
+    user.lastname = "Test #{i + 1}"
+    user.company_id = company.id
+  end
+end
+
 web_company = WebCompany.find_or_create_by!(name: "Test web", web_company_type: WebCompany.web_company_types.to_a.sample.first)
 
 Web.find_or_create_by!(name: "Test web") { |web| web.web_company = web_company }
-Group.find_or_create_by!(name: "Test group", company: company, created_by_user_id: user.id)
 Folder.find_or_create_by!(name: "Test folder")
+Group.find_or_create_by!(name: "Test group", company: company, created_by_user_id: super_admin.id) do |group|
+  group.owner_id = super_admin.id
+  group.group_type = :personal
+end
 
 users_now = User.count
 subscriptions_now = User.count

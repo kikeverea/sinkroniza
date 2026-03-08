@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :emergency_contacts
   resources :groups
   resources :group_users
   resources :credentials
@@ -19,6 +18,8 @@ Rails.application.routes.draw do
   delete "users/delete/:id", to:"users#destroy", as: :delete_user
 
   get "admin/index"
+
+
 ## Users
   devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords" }
   devise_scope :user do
@@ -31,6 +32,12 @@ Rails.application.routes.draw do
 ## Folders
   get "folders/name/:name", to: "folders#by_name", as: :folder_by_name
   resources :folders
+
+
+## Emergency contacts
+  get "emergency_contacts/requests", to: "emergency_contacts#requests", as: :emergency_requests
+  post "emergency_contacts/:id/requests", to: "emergency_contacts#emergency_request", as: :add_emergency_request
+  resources :emergency_contacts
 
 
 ## General

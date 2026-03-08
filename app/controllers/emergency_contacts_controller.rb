@@ -18,8 +18,8 @@ class EmergencyContactsController < ApplicationController
     @emergency_contact = EmergencyContact.new(emergency_contact_params)
 
     respond_to do |format|
-      if @emergency_contact.save!
-        format.html { redirect_to @emergency_contact, notice: "Contacto de emergencia creado" }
+      if @emergency_contact.save
+        format.html { redirect_to show_user_path(@emergency_contact.owner_user), notice: "Contacto de emergencia creado" }
         format.json { render :show, status: :created, location: @emergency_contact }
       else
         format.html { render :new, status: :unprocessable_content }

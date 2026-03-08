@@ -23,7 +23,7 @@
     <div class="mb-4">
       <%= form.label :contact_user_id, "Usuario de contacto", class: "form-label required" %>
       <%= form.collection_select :contact_user_id,
-        User.where.not(id: emergency_contact.owner_user_id).order(:name), :id, :name,
+        User.where.not(id: emergency_contact.owner_user_id).order(:name), :id, :full_name,
         { include_blank: "Seleccionar usuario" },
         class: "form-select"
       %>
@@ -49,7 +49,7 @@
     <div class="mt-8">
       <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
       <%= link_to "Cancelar",
-        emergency_contact.persisted? ? emergency_contact : emergency_contacts_path,
+        emergency_contact.persisted? ? emergency_contact : show_user_path(emergency_contact.owner_user),
         class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4"
       %>
     </div>
