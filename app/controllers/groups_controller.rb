@@ -3,7 +3,7 @@ class GroupsController < ApplicationController
 
   def index
     @title = "Grupos"
-    @groups = Group.includes(:company)
+    @groups = Group.includes(:company, group_users: :user)
   end
 
   def show
@@ -62,6 +62,6 @@ class GroupsController < ApplicationController
   end
 
   def group_params
-    params.require(:group).permit(:company_id, :name, :description, :created_by_user_id, :group_type)
+    params.require(:group).permit(:company_id, :name, :owner_id, :description, :created_by_user_id, :group_type)
   end
 end

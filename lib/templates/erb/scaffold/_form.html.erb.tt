@@ -37,7 +37,7 @@
 
     <div class="mt-8">
       <%%= form.button "Guardar", class: "btn btn-success btn-sm" %>
-      <%%= link_to "Cancelar", <%= index_helper %>_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
+      <%%= link_to "Cancelar", <%= singular_table_name %>.persisted? ? <%= singular_table_name %> : <%= index_helper %>_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
     </div>
   <%% end %>
 </div>

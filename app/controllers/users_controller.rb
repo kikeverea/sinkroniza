@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   
   def index
     authorize! :read, User
-    #@users = User.all
     @title = "Lista de usuarios"
 
     if !params[:q].nil?
@@ -12,7 +11,7 @@ class UsersController < ApplicationController
           @search = ""
     end
 
-    @q = User.all.ransack(params[:q])
+    @q = User.includes(:company).ransack(params[:q])
     @users = @q.result.order("created_at DESC").paginate(:page => params[:page], :per_page => 15)
   end
 

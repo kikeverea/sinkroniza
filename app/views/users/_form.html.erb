@@ -54,7 +54,7 @@
 
     <div>
       <%= form.submit "Guardar", class: "btn btn-success btn-sm my-2" %>
-      <%= link_to "Cancelar", users_path, class: "btn btn-color-muted btn-active-color-success btn-sm my-2 ms-2" %>
+      <%= link_to "Cancelar", user.persisted? ? show_user_path(user) : users_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
     </div>
   </div>
 <% end %>

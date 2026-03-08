@@ -34,7 +34,7 @@
 
     <div class="mt-5">
       <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
-      <%= link_to "Cancelar", subscriptions_path, class: "btn btn-sm btn-color-muted btn-active-color-success" %>
+      <%= link_to "Cancelar", subscription.persisted? ? subscription : subscriptions_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
     </div>
   <% end %>
 </div>

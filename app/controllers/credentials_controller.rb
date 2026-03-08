@@ -3,7 +3,7 @@ class CredentialsController < ApplicationController
 
   def index
     @title = "Credenciales"
-    @credentials = Credential.all
+    @credentials = Credential.includes(:company, :web, :group, :folder).order(:name)
   end
 
   def show

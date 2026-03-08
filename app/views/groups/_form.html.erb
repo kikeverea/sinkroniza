@@ -31,6 +31,15 @@
       </div>
 
       <div class="mb-4">
+        <%= form.label :owner_id, "Dueño", class: "form-label required" %>
+        <%= form.collection_select :owner_id,
+          User.order(:name, :lastname), :id, :name,
+          { include_blank: "Seleccionar usuario" },
+          class: "form-select"
+        %>
+      </div>
+
+      <div class="mb-4">
         <%= form.label :group_type, class: "form-label required" %>
         <%= form.select :group_type,
           options_for_select(Group.group_types.map { |type, _val| [group_type_text(type), type] }, group.group_type),
@@ -46,7 +55,7 @@
 
       <div class="mt-8">
         <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
-        <%= link_to "Cancelar", groups_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
+        <%= link_to "Cancelar", group.persisted? ? group : groups_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
       </div>
   <% end %>
 </div>

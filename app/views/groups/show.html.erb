@@ -24,8 +24,9 @@
     </tbody>
   </table>
 </div>
+<%= link_to "Editar", edit_group_path(@group), class: "d-block ms-2 mt-4 mb-6" %>
 
-<div class="flex items-center justify-start mt-4 mb-8">
-  <%= link_to "← Atrás", groups_path, class: "me-1" %> |
-  <%= link_to "Editar", edit_group_path(@group), class: "ms-1" %>
+<div class="card card-body">
+  <%= render "group_users/index", group: @group, group_users: @group.group_users %>
 </div>
+<%= link_to "← Atrás", groups_path, class: "d-block ms-2 mt-4 mb-8" %>

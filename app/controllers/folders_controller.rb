@@ -3,7 +3,7 @@ class FoldersController < ApplicationController
 
   def index
     @title = "Carpetas"
-    @folders = Folder.parents.includes(:child_folders)
+    @folders = Folder.parents.includes(:company, :parent_folder, :child_folders)
   end
 
   def show
@@ -29,7 +29,7 @@ class FoldersController < ApplicationController
     @folder = Folder.new(folder_params)
 
     respond_to do |format|
-      if @folder.save!
+      if @folder.save
         format.html { redirect_to @folder, notice: "Carpeta creada" }
         format.json { render :show, status: :created, location: @folder }
       else

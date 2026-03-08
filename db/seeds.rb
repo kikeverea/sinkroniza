@@ -11,6 +11,12 @@ user = User.find_or_create_by!(email: "admin@admin.com", role: "admin") do |user
   user.lastname = "Innobing"
 end
 
+User.find_or_create_by!(email: "user@user.com", role: "user") do |user|
+  user.password = "12341234"
+  user.name = "User"
+  user.lastname = "Test"
+end
+
 subscription = Subscription.find_or_create_by!(name: "Test subscription") do |subscription|
   subscription.quantity_users = rand(3..10)
 end

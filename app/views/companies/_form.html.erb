@@ -101,7 +101,7 @@
 
     <div class="mt-5">
       <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
-      <%= link_to "Cancelar", companies_path, class: "btn btn-sm btn-link btn-color-muted btn-active-color-success ms-4" %>
+      <%= link_to "Cancelar", company.persisted? ? company : companies_path, class: "btn btn-sm btn-link btn-color-muted btn-active-color-success ms-4" %>
     </div>
   <% end %>
 </div>

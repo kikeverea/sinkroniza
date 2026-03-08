@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :groups
+  resources :group_users
   resources :credentials
   resources :web_companies
   resources :webs

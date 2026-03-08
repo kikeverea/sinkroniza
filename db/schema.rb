@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_26_100750) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_26_100751) do
   create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "subscription_id", null: false
     t.string "name"
@@ -66,6 +66,19 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100750) do
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_folders_on_company_id"
     t.index ["parent_folder_id"], name: "index_folders_on_parent_folder_id"
+  end
+
+  create_table "group_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.text "encrypted_group_key"
+    t.string "crypto_version"
+    t.string "group_type"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_users_on_group_id"
+    t.index ["user_id"], name: "index_group_users_on_user_id"
   end
 
   create_table "groups", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -155,6 +168,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100750) do
   add_foreign_key "credentials", "webs"
   add_foreign_key "folders", "companies"
   add_foreign_key "folders", "folders", column: "parent_folder_id"
+  add_foreign_key "group_users", "groups"
+  add_foreign_key "group_users", "users"
   add_foreign_key "groups", "companies"
   add_foreign_key "users", "companies"
   add_foreign_key "webs", "web_companies"
