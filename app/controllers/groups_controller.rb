@@ -2,29 +2,35 @@ class GroupsController < ApplicationController
   before_action :set_group, only: %i[ show edit update destroy ]
 
   def index
+    authorize! :read, Group
     @title = "Grupos"
-    @groups = Group.includes(:company, group_users: :user)
+    @groups = Group.accessible_by(current_ability).includes(:company, group_users: :user)
   end
 
   def show
+    authorize! :read, @group
     @title = "Grupo"
   end
 
   def new
+    authorize! :create, Group
     @title = "Nuevo grupo"
     @group = Group.new
   end
 
   def edit
+    authorize! :update, @group
     @title = "Editar grupo"
   end
 
   def create
+    authorize! :create, Group
+
     @group = Group.new(group_params)
 
     respond_to do |format|
       if @group.save
-        format.html { redirect_to @group, notice: "Group was successfully created." }
+        format.html { redirect_to @group, notice: "Grupo creado" }
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new, status: :unprocessable_content }
@@ -34,9 +40,11 @@ class GroupsController < ApplicationController
   end
 
   def update
+    authorize! :update, @group
+
     respond_to do |format|
       if @group.update(group_params)
-        format.html { redirect_to @group, notice: "Group was successfully updated.", status: :see_other }
+        format.html { redirect_to @group, notice: "Grupo actualizado", status: :see_other }
         format.json { render :show, status: :ok, location: @group }
       else
         format.html { render :edit, status: :unprocessable_content }
@@ -46,10 +54,12 @@ class GroupsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @group
+
     @group.destroy!
 
     respond_to do |format|
-      format.html { redirect_to groups_path, notice: "Group was successfully destroyed.", status: :see_other }
+      format.html { redirect_to groups_path, notice: "Grupo eliminado", status: :see_other }
       format.json { head :no_content }
     end
   end

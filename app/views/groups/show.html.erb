@@ -5,10 +5,13 @@
         <td><strong>Nombre</strong></td>
         <td><%= @group.name %></td>
       </tr>
-      <tr>
-        <td><strong>Compañía</strong></td>
-        <td><%= @group.company.name %></td>
-      </tr>
+      <% if @show_company %>
+        <tr>
+          <td><strong>Compañía</strong></td>
+          <td><%= @group.company.name %></td>
+        </tr>
+
+      <% end %>
       <tr>
         <td><strong>Tipo</strong></td>
         <td><%= @group.group_type_text %></td>

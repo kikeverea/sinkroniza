@@ -24,18 +24,6 @@
       <%= form.text_field :name, class: "form-control form-control-solid" %>
     </div>
 
-    <% if folder.has_parent? %>
-      <%= form.hidden_field :company_id, value: folder.parent_folder.company_id %>
-    <% else %>
-      <div class="mb-4">
-        <%= form.label :company_id, "Compañía", class: "form-label" %>
-        <%= form.collection_select :company_id,
-          Company.all.order(:name), :id, :name,
-          { include_blank: "Seleccionar compañía" },
-          class: "form-select" %>
-      </div>
-    <% end %>
-
     <div class="mt-5">
       <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
       <%= link_to "Cancelar", folder.persisted? ? folder : folders_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>

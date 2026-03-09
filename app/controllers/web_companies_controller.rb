@@ -2,24 +2,29 @@ class WebCompaniesController < ApplicationController
   before_action :set_web_company, only: %i[ show edit update destroy ]
 
   def index
+    authorize! :read, WebCompany
     @title = "Webs"
-    @web_companies = WebCompany.includes(:webs)
+    @web_companies = WebCompany.accessible_by(current_ability).includes(:webs)
   end
 
   def show
+    authorize! :read, @web_company
     @title = "Web"
   end
 
   def new
+    authorize! :create, WebCompany
     @title = "Nueva web"
     @web_company = WebCompany.new
   end
 
   def edit
+    authorize! :update, @web_company
     @title = "Editar web"
   end
 
   def create
+    authorize! :create, WebCompany
     @web_company = WebCompany.new(web_company_params)
 
     respond_to do |format|
@@ -34,6 +39,7 @@ class WebCompaniesController < ApplicationController
   end
 
   def update
+    authorize! :update, @web_company
     respond_to do |format|
       if @web_company.update(web_company_params)
         format.html { redirect_to @web_company, notice: "Compañía web actualizada", status: :see_other }
@@ -46,6 +52,8 @@ class WebCompaniesController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @web_company
+
     @web_company.destroy!
 
     respond_to do |format|

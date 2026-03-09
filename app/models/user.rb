@@ -1,7 +1,11 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
+  after_create :add_to_group, if: -> { group_id.present? }
+
   attr_accessor :skip_password_validation
+  attr_accessor :group_id
+
   mount_base64_uploader :image, ImageUploader
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
@@ -13,8 +17,8 @@ class User < ApplicationRecord
 
   validates :name, :lastname, presence: true
 
-  scope :kept, -> { where.not(status: :deleted) }
-  scope :discarded, -> { where(status: :deleted) }
+  scope :kept, -> { where.not(status: :deleted).accessible_by(Current.ability) }
+  scope :discarded, -> { where(status: :deleted).accessible_by(Current.ability) }
 
   def password_required?
     return false if skip_password_validation
@@ -51,6 +55,20 @@ class User < ApplicationRecord
     I18n.t("activerecord.enums.user.status.#{status}")
   end
 
+  def creatable_roles
+
+    case role.to_sym
+      when :super_admin
+        %w[super_admin company_admin]
+      when :company_admin
+        %w[user]
+      when :user
+        []
+      else
+        raise "Invalid role: #{role}"
+    end
+  end
+
   def full_name
     "#{self.name} #{self.lastname}"
   end
@@ -63,5 +81,12 @@ class User < ApplicationRecord
       jti: self.jti,
       usr: self.id,
     })
+  end
+
+
+  private
+
+  def add_to_group
+    GroupUser.create!(user: self, group_id: self.group_id)
   end
 end

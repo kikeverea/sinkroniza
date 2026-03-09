@@ -13,6 +13,7 @@ class CompaniesController < ApplicationController
   def new
     @title = "Nueva compañía"
     @company = Company.new
+    @company.build_manager
   end
 
   def edit
@@ -74,7 +75,8 @@ class CompaniesController < ApplicationController
         :logo,
         :manager_id,
         :creator_id,
-        :status
+        :status,
+        manager_attributes: [:id, :role, :name, :lastname, :email, :nif, :phone],
       )
   end
 end

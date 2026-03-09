@@ -11,7 +11,8 @@ class GroupUser < ApplicationRecord
   enum :role, {
     owner: "owner",
     shared: "shared"
-  }
+  },
+  default: :shared
 
   def role_text
     I18n.t("activerecord.enums.group_user.role.#{role}")

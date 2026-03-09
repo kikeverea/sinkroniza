@@ -2,24 +2,30 @@ class CredentialsController < ApplicationController
   before_action :set_credential, only: %i[ show edit update destroy ]
 
   def index
+    authorize! :read, Credential
     @title = "Credenciales"
     @credentials = Credential.includes(:company, :web, :group, :folder).order(:name)
   end
 
   def show
+    authorize! :read, @credential
     @title = "Credencial"
   end
 
   def new
+    authorize! :create, Credential
     @title = "Nueva credencial"
     @credential = Credential.new
   end
 
   def edit
+    authorize! :update, @credential
     @title = "Editar credencial"
   end
 
   def create
+    authorize! :create, Credential
+
     @credential = Credential.new(credential_params)
 
     respond_to do |format|
@@ -34,6 +40,8 @@ class CredentialsController < ApplicationController
   end
 
   def update
+    authorize! :update, @credential
+
     respond_to do |format|
       if @credential.update(credential_params)
         format.html { redirect_to @credential, notice: "Credential was successfully updated.", status: :see_other }

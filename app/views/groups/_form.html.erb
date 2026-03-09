@@ -33,7 +33,7 @@
       <div class="mb-4">
         <%= form.label :owner_id, "Dueño", class: "form-label required" %>
         <%= form.collection_select :owner_id,
-          User.order(:name, :lastname), :id, :name,
+          User.order(:name, :lastname), :id, :full_name,
           { include_blank: "Seleccionar usuario" },
           class: "form-select"
         %>

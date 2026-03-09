@@ -8,4 +8,8 @@ module ApplicationHelper
   def badge(text, color, classes: "")
     "<span class='badge text-white text-bg-#{color} #{classes}'>#{text}</span>".html_safe
   end
+
+  def can_read_user_roles(roles, cancancan)
+    roles.reduce(true) { |can_read, role| can_read && cancancan.call(role) }
+  end
 end

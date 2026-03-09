@@ -18,25 +18,25 @@
   <%= form_with model: user, url: url do |form| %>
 
     <%= hidden_field_tag :target, target %>
+    <% creatable_roles = current_user.creatable_roles %>
 
-    <% if user.company_id? %>
-      <%= form.hidden_field :company_id, value: user.company_id %>
-      <%= form.hidden_field :role, value: :user %>
+    <div class="mb-4">
+      <%= form.label :group_id, "Grupo", class: "form-label" %>
+      <%= form.collection_select :group_id,
+        Group.accessible_by(current_ability).order(:name), :id, :name,
+        { include_blank: "Seleccionar grupo" },
+        class: "form-select"
+      %>
+    </div>
+
+    <% if creatable_roles.count == 1 %>
+      <%= form.hidden_field :role, value: creatable_roles.first %>
     <% else %>
       <div class="mb-4">
         <%= form.label :role, "Rol", class: "form-label" %>
         <%= form.select :role,
-          options_for_select(User.roles.map { |role, _val| [user_role_text(role), role] }, user.role),
+          options_for_select(creatable_roles.map { |role, _val| [user_role_text(role), role] }, user.role),
           {},
-          class: "form-select"
-        %>
-      </div>
-
-      <div class="mb-4">
-        <%= form.label :company_id, "Compañía", class: "form-label" %>
-        <%= form.collection_select :company_id,
-          Company.order(:name), :id, :name,
-          { include_blank: "Seleccionar compañía" },
           class: "form-select"
         %>
       </div>

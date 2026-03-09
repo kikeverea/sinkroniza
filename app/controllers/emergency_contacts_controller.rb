@@ -2,10 +2,13 @@ class EmergencyContactsController < ApplicationController
   before_action :set_emergency_contact, only: %i[ edit update destroy ]
 
   def index
+    authorize! :read, EmergencyContact
     @emergency_contacts = EmergencyContact.all
   end
 
   def new
+    authorize! :create, EmergencyContact
+
     @title = "Nuevo contacto de emergencia"
     @emergency_contact = EmergencyContact.new(owner_user_id: params[:owner_user_id])
   end
@@ -16,6 +19,8 @@ class EmergencyContactsController < ApplicationController
 
   def create
     @emergency_contact = EmergencyContact.new(emergency_contact_params)
+
+    authorize! :create, @emergency_contact
 
     respond_to do |format|
       if @emergency_contact.save

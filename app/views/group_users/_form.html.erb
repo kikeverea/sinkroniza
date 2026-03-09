@@ -21,7 +21,7 @@
     <div class="mb-4">
       <%= form.label :status, "Usuario", class: "form-label required" %>
       <%= form.collection_select :user_id,
-        User.order(:name, :lastname), :id, :name,
+        @available_users, :id, :full_name,
         { include_blank: "Seleccionar usuario"},
         class: "form-select"
       %>

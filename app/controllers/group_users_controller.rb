@@ -1,5 +1,6 @@
 class GroupUsersController < ApplicationController
   before_action :set_group_user, only: %i[ edit update destroy ]
+  before_action :set_available_users, only: %i[ new edit create update ]
 
   def index
     @group_users = GroupUser.includes(:user)
@@ -54,6 +55,10 @@ class GroupUsersController < ApplicationController
 
   def set_group_user
     @group_user = GroupUser.find(params[:id])
+  end
+
+  def set_available_users
+    @available_users = User.where(role: :user).accessible_by(current_ability).order(:name, :lastname)
   end
 
   def group_user_params

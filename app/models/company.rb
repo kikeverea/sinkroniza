@@ -1,17 +1,20 @@
 class Company < ApplicationRecord
-  before_create :set_creator
+  before_validation :set_creator, on: :create
+  after_create :set_manager
+
+  attr_accessor :manager_attributes
 
   belongs_to :subscription
-  belongs_to :manager, class_name: "User"
   belongs_to :creator, class_name: "User"
+  has_one :manager, -> { where(role: :company_admin) }, class_name: "User"
+  has_many :employees, -> { where(role: :user) }, class_name: "User"
   has_many :users, dependent: :destroy
 
   mount_base64_uploader :logo, ImageUploader
 
-  validates :subscription_id, :manager_id, :name, presence: true
-  validate :manager_must_be_company_admin
+  validates :subscription_id, :name, presence: true
+  validates :name, uniqueness: true
 
-  accepts_nested_attributes_for :manager
 
   enum :status, {
     active: "active",
@@ -33,12 +36,20 @@ class Company < ApplicationRecord
 
   private
 
-  def manager_must_be_company_admin
-    errors.add(:manager, "Manager must have the company admin role") unless manager.role == "company_admin"
-  end
-
   def set_creator
     return if Current.user.nil?
     self.creator ||= Current.user
+  end
+
+  def set_manager
+    if manager
+      manager.update!(company: self)
+    elsif manager_attributes.present?
+      manager = User.new(manager_attributes)
+      manager.skip_password_validation = true
+      manager.role = :company_admin
+      manager.company = self
+      manager.save!
+    end
   end
 end

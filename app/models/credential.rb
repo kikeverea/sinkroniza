@@ -1,10 +1,11 @@
 class Credential < ApplicationRecord
-  belongs_to :company
+  company_scoped
+
   belongs_to :web
   belongs_to :folder, optional: true
   belongs_to :group, optional: true
 
-  validates :company_id, :web, :name, :credential_type, presence: true
+  validates :web, :name, :credential_type, presence: true
 
   enum :credential_type, {
     autologin: "autologin",

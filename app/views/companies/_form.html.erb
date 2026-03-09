@@ -19,7 +19,7 @@
     <div class="card card-body">
 
       <div class="mb-4">
-        <%= form.label :subscription_id, "Suscripción", class: "fs-6 fw-semibold mb-2 required" %>
+        <%= form.label :subscription_id, "Suscripción", class: "form-label required" %>
         <%= form.collection_select :subscription_id,
           Subscription.all, :id, :name,
           { include_blank: "Seleccionar suscripción"},
@@ -28,32 +28,32 @@
       </div>
 
       <div class="mb-4">
-        <%= form.label :name, "Nombre", class: "fs-6 fw-semibold mb-2 required" %>
+        <%= form.label :name, "Nombre", class: "form-label required" %>
         <%= form.text_field :name, class: "form-control form-control-solid" %>
       </div>
 
       <div class="mb-4">
-        <%= form.label :legal_name, "Razón social", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.label :legal_name, "Razón social", class: "form-label" %>
         <%= form.text_field :legal_name, class: "form-control form-control-solid" %>
       </div>
 
       <div class="mb-4">
-        <%= form.label :tax_id, "ID Fiscal", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.label :tax_id, "ID Fiscal", class: "form-label" %>
         <%= form.text_field :tax_id, class: "form-control form-control-solid" %>
       </div>
 
       <div class="mb-4">
-        <%= form.label :address, "Dirección", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.label :address, "Dirección", class: "form-label" %>
         <%= form.text_area :address, class: "form-control form-control-solid" %>
       </div>
 
       <div class="mb-4">
-        <%= form.label :cp, "Código postal", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.label :cp, "Código postal", class: "form-label" %>
         <%= form.text_field :cp, class: "form-control form-control-solid" %>
       </div>
 
       <div class="mb-4">
-        <%= form.label :status, "Estado", class: "fs-6 fw-semibold mb-2 required" %>
+        <%= form.label :status, "Estado", class: "form-label required" %>
         <%= form.select :status,
           options_for_select(Company.statuses.map { |status, _val| [company_status_text(status), status]}, company.status),
           {},
@@ -62,7 +62,7 @@
       </div>
 
       <div class="mb-4">
-        <%= form.label :logo, "Logo", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.label :logo, "Logo", class: "form-label" %>
         <%= form.file_field :logo, accept: "image/*", class: "d-block" %>
       </div>
 
@@ -74,32 +74,35 @@
     </div>
 
     <div class="card card-body mt-8">
-      <h4 class="mb-4">Manager</h4>
+      <h4 class="mb-6">Manager</h4>
 
-      <div class="mb-4">
-        <%= form.label :manager_name, "Nombre", class: "fs-6 fw-semibold mb-2" %>
-        <%= form.text_field :manager_name, class: "form-control form-control-solid" %>
-      </div>
+      <%= form.fields_for :manager do |manager_form| %>
 
-      <div class="mb-4">
-        <%= form.label :manager_lastname, "Apellido", class: "fs-6 fw-semibold mb-2" %>
-        <%= form.text_field :manager_lastname, class: "form-control form-control-solid" %>
-      </div>
+        <div class="mb-4">
+          <%= manager_form.label :name, "Nombre", class: "form-label required" %>
+          <%= manager_form.text_field :name, class: "form-control form-control-solid" %>
+        </div>
 
-      <div class="mb-4">
-        <%= form.label :manager_email, "Correo Electrónico", class: "fs-6 fw-semibold mb-2" %>
-        <%= form.text_field :manager_email, class: "form-control form-control-solid" %>
-      </div>
+        <div class="mb-4">
+          <%= manager_form.label :lastname, "Apellido", class: "form-label required" %>
+          <%= manager_form.text_field :lastname, class: "form-control form-control-solid" %>
+        </div>
 
-      <div class="mb-4">
-        <%= form.label :manager_nif, "NIF", class: "fs-6 fw-semibold mb-2" %>
-        <%= form.text_field :manager_nif, class: "form-control form-control-solid" %>
-      </div>
+        <div class="mb-4">
+          <%= manager_form.label :email, "Correo Electrónico", class: "form-label required" %>
+          <%= manager_form.text_field :email, class: "form-control form-control-solid" %>
+        </div>
 
-      <div class="mb-4">
-        <%= form.label :manager_phone, "Teléfono", class: "fs-6 fw-semibold mb-2" %>
-        <%= form.text_field :manager_phone, class: "form-control form-control-solid" %>
-      </div>
+        <div class="mb-4">
+          <%= manager_form.label :nif, "NIF", class: "form-label" %>
+          <%= manager_form.text_field :nif, class: "form-control form-control-solid" %>
+        </div>
+
+        <div class="mb-4">
+          <%= manager_form.label :phone, "Teléfono", class: "form-label" %>
+          <%= manager_form.text_field :phone, class: "form-control form-control-solid" %>
+        </div>
+      <% end %>
     </div>
 
 

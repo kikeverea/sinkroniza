@@ -1,4 +1,7 @@
 class Group < ApplicationRecord
+
+  company_scoped
+
   before_create :set_creator_user
   after_save :set_owner
   after_update :update_users_group_type
@@ -6,11 +9,10 @@ class Group < ApplicationRecord
   attr_accessor :owner_id
   attr_accessor :allows_owner_destroy
 
-  belongs_to :company
   has_many :group_users, dependent: :destroy
   has_many :users, through: :group_users
 
-  validates :name, :company_id, :owner_id, :group_type, presence: true
+  validates :name, :owner_id, :group_type, presence: true
 
   enum :group_type, {
     personal: "personal",

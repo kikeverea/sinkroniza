@@ -45,8 +45,10 @@
 		<div id="user-details" class="collapse show">
 			<div class="py-5 fs-6">
 
-				<div class="fw-bold mt-5">Compañía</div>
-				<div class="text-gray-600"><%= @user.company.presence&.name || "-" %></div>
+        <% if @show_company %>
+          <div class="fw-bold mt-5">Compañía</div>
+          <div class="text-gray-600"><%= @user.company.presence&.name || "-" %></div>
+        <% end %>
 
 				<div class="fw-bold mt-5">NIF</div>
 				<div class="text-gray-600"><%= @user.nif.presence || "-" %></div>

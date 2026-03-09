@@ -39,7 +39,7 @@ end
 web_company = WebCompany.find_or_create_by!(name: "Test web", web_company_type: WebCompany.web_company_types.to_a.sample.first)
 
 Web.find_or_create_by!(name: "Test web") { |web| web.web_company = web_company }
-Folder.find_or_create_by!(name: "Test folder")
+Folder.find_or_create_by!(name: "Test folder", company: company)
 Group.find_or_create_by!(name: "Test group", company: company, created_by_user_id: admin.id) do |group|
   group.owner_id = admin.id
   group.group_type = :personal

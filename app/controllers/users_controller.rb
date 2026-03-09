@@ -12,13 +12,13 @@ class UsersController < ApplicationController
 
     @q = User.includes(:company).ransack(params[:q])
 
-    result = @q.result
+    result = @q.result.accessible_by(current_ability)
 
     @users = (@target.nil? || @target == "users") ? result.kept : User.kept
     @discarded_users = @target == "discarded" ? result.discarded : User.discarded
 
-    @users = @users.order(created_at: :desc).paginate(:page => params[:page], :per_page => 15)
-    @discarded_users = @discarded_users.order(created_at: :desc).paginate(:page => params[:page], :per_page => 15)
+    @users = @users.order(:role, :name, :lastname).paginate(:page => params[:page], :per_page => 15)
+    @discarded_users = @discarded_users.order(:role, :name, :lastname).paginate(:page => params[:page], :per_page => 15)
   end
 
   def show
@@ -86,12 +86,24 @@ class UsersController < ApplicationController
   end
 
   def set_target
-    @target = params[:target].to_sym
+    @target = params[:target]&.to_sym
   end
 
   def user_params
     params
       .require(:user)
-      .permit(:role, :name, :lastname, :nif, :date_expiration_password, :status, :company_id, :email, :phone, :password)
+      .permit(
+        :role,
+        :name,
+        :lastname,
+        :nif,
+        :date_expiration_password,
+        :status,
+        :company_id,
+        :group_id,
+        :email,
+        :phone,
+        :password
+      )
   end
 end

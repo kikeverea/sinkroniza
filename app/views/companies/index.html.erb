@@ -15,7 +15,7 @@
         <th>Nombre legal</th>
         <th>ID Fiscal</th>
         <th>Dirección</th>
-        <th>Manager</th>
+        <th>Administrador</th>
         <th>Creada por</th>
         <th>Estado</th>
         <th></th>
@@ -31,7 +31,7 @@
           <td><%= company.legal_name.present? ? company.legal_name : "-" %></td>
           <td><%= company.tax_id.present? ? company.tax_id : "-" %></td>
           <td><%= company.full_address.presence || "-" %></td>
-          <td><%= company.manager.full_name %></td>
+          <td><%= company.manager&.full_name || "-" %></td>
           <td><%= company.creator.full_name %></td>
           <td><%= company_status_badge company %></td>
 

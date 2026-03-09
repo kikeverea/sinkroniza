@@ -140,12 +140,11 @@
           <div class="dropdown d-inline-block user-dropdown">
             <button
               type="button"
-              class="btn header-item waves-effect" id="page-header-user-dropdown"
-              data-controller="dropdown"
-              data-action="click->dropdown#toggle blur->dropdown#handleBlur"
+              class="btn header-item waves-effect dropdown-toggle dropdown-toggle-split"
+              data-bs-toggle="dropdown"
             >
-
               <%= image_tag current_user.image.url, class: 'rounded-circle header-profile-user' if current_user.image? %>
+
               <% unless current_user.image? %>
                 <img class="rounded-circle header-profile-user" src="https://ui-avatars.com/api/?background=random&rounded=true&name=<%= current_user.name %>+<%= current_user.lastname %>">
               <%  end %>
@@ -163,7 +162,7 @@
               <div class="dropdown-divider"></div>
               <%= link_to logout_path,
                   class:"dropdown-item text-danger",
-                  data: { turbo_prefetch: false, turbo_stream: false, turbo: true, turbo_method: :delete } do
+                  data: { turbo_prefetch: false, turbo_stream: false, turbo: true } do
               %>
                 <i class="ri-shut-down-line align-middle me-1 text-danger"></i> Cerrar Sesión
               <% end %>
@@ -181,76 +180,88 @@
 
       <!--- Sidemenu -->
       <div id="sidebar-menu">
-        <!-- Left Menu Start -->
         <ul class="metismenu list-unstyled" id="side-menu">
 
           <li class="menu-title">Menu</li>
 
-          <!-- Users -->
-          <li class="py-1">
-            <%= link_to users_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
-              <i class="fa-solid fa-user"></i>
-              <span>Usuarios</span>
-            <% end %>
-          </li>
+          <!-- Companies -->
+          <% if can? :read, Company %>
+            <li class="py-1">
+              <%= link_to companies_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+                <i class="fa-solid fa-building"></i>
+                <span>Compañías</span>
+              <% end %>
+            </li>
+          <% end %>
 
           <!-- Subscriptions -->
-          <li class="py-1">
-            <%= link_to subscriptions_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
-              <i class="fa-solid fa-file-contract"></i>
-              <span>Suscripciones</span>
-            <% end %>
-          </li>
+          <% if can? :read, Subscription %>
+            <li class="py-1">
+              <%= link_to subscriptions_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+                <i class="fa-solid fa-file-contract"></i>
+                <span>Suscripciones</span>
+              <% end %>
+            </li>
+          <% end %>
 
-          <!-- Companies -->
-          <li class="py-1">
-            <%= link_to companies_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
-              <i class="fa-solid fa-building"></i>
-              <span>Compañías</span>
-            <% end %>
-          </li>
-
-          <!-- Webs -->
-          <li class="py-1">
-            <%= link_to web_companies_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
-              <i class="fa-solid fa-globe"></i>
-              <span>Web</span>
-            <% end %>
-          </li>
-
-          <!-- Credentials -->
-          <li class="py-1">
-            <%= link_to credentials_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
-              <i class="fa-solid fa-key"></i>
-              <span>Credenciales</span>
-            <% end %>
-          </li>
-
-          <!-- Groups -->
-          <li class="py-1">
-            <%= link_to groups_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
-              <i class="fa-solid fa-users"></i>
-              <span>Grupos</span>
-            <% end %>
-          </li>
+          <!-- Webs (WebCompany) -->
+          <% if can? :read, WebCompany %>
+            <li class="py-1">
+              <%= link_to web_companies_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+                <i class="fa-solid fa-globe"></i>
+                <span>Webs</span>
+              <% end %>
+            </li>
+          <% end %>
 
           <!-- Folders -->
-          <li class="py-1">
-            <%= link_to folders_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
-              <i class="fa-solid fa-folder-open"></i>
-              <span>Carpetas</span>
-            <% end %>
-          </li>
+          <% if can? :read, Folder %>
+            <li class="py-1">
+              <%= link_to folders_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Carpetas</span>
+              <% end %>
+            </li>
+          <% end %>
 
-          <li>
-            <%= link_to "javascript: void(0);", class: "waves-effect has-arrow", style: "text-decoration: none" do %>
-              <i class="fa-solid fa-gear"></i>
-              <span>Configuración</span>
-            <% end %>
+          <!-- Groups -->
+          <% if can? :read, Group %>
+            <li class="py-1">
+              <%= link_to groups_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+                <i class="fa-solid fa-users"></i>
+                <span>Grupos</span>
+              <% end %>
+            </li>
+          <% end %>
 
-            <ul class="sub-menu mm-collapse" aria-expanded="false">
-            </ul>
-          </li>
+          <!-- Users -->
+          <% if current_user.company_admin? %>
+            <li class="py-1">
+              <%= link_to users_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+                <i class="fa-solid fa-user"></i>
+                <span>Usuarios</span>
+              <% end %>
+            </li>
+          <% end %>
+
+          <!-- Credentials -->
+<!--          <li class="py-1">-->
+            <%#= link_to credentials_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+<!--              <i class="fa-solid fa-key"></i>-->
+<!--              <span>Credenciales</span>-->
+            <%# end %>
+<!--          </li>-->
+
+          <!-- Config -->
+<!--          <li>-->
+            <%#= link_to "javascript: void(0);", class: "waves-effect has-arrow", style: "text-decoration: none" do %>
+<!--              <i class="fa-solid fa-gear"></i>-->
+<!--              <span>Configuración</span>-->
+            <%# end %>
+
+<!--            <ul class="sub-menu mm-collapse" aria-expanded="false">-->
+<!--            </ul>-->
+<!--          </li>-->
 
         </ul>
       </div>

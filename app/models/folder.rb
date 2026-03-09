@@ -1,8 +1,9 @@
 class Folder < ApplicationRecord
-  before_save :update_child_folders
+
+  company_scoped optional: true
+
   before_save :set_path
 
-  belongs_to :company, optional: true
   belongs_to :parent_folder, class_name: "Folder", optional: true
   has_many :child_folders, class_name: "Folder", foreign_key: "parent_folder_id", dependent: :destroy
 
@@ -21,11 +22,6 @@ class Folder < ApplicationRecord
 
 
   private
-
-  def update_child_folders
-    return unless will_save_change_to_company_id?
-    child_folders.each { |child| child.update!(company_id: company_id) }
-  end
 
   def set_path
     return if parent_folder_id.nil?

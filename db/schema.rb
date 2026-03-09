@@ -20,12 +20,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100753) do
     t.string "logo"
     t.string "status"
     t.bigint "subscription_id", null: false
-    t.bigint "manager_id", null: false
     t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_companies_on_creator_id"
-    t.index ["manager_id"], name: "index_companies_on_manager_id"
     t.index ["subscription_id"], name: "index_companies_on_subscription_id"
   end
 
@@ -186,7 +184,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100753) do
 
   add_foreign_key "companies", "subscriptions"
   add_foreign_key "companies", "users", column: "creator_id"
-  add_foreign_key "companies", "users", column: "manager_id"
   add_foreign_key "credentials", "companies"
   add_foreign_key "credentials", "folders"
   add_foreign_key "credentials", "groups"

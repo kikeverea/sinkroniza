@@ -11,7 +11,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def new
-    @title = "Nueva Subscripción"
+    @title = "Nueva Suscripción"
     @subscription = Subscription.new
   end
 

@@ -9,8 +9,10 @@
         <span class="fw-bold fs-6">
           Contactos de emergencia
         </span>
-        <%= link_to new_emergency_contact_path(owner_user_id: @user.id), class: "btn btn-sm btn-primary" do %>
-          <i class="fa fa-plus"></i> Añadir contacto
+        <% if can? :create, EmergencyContact %>
+          <%= link_to new_emergency_contact_path(owner_user_id: @user.id), class: "btn btn-sm btn-primary" do %>
+            <i class="fa fa-plus"></i> Añadir contacto
+          <% end %>
         <% end %>
       </div>
 

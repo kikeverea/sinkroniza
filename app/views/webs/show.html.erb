@@ -9,10 +9,12 @@
           <td><strong>Alias</strong></td>
           <td><%= @web.alias.present? ? @web.alias : "-" %></td>
         </tr>
-        <tr>
-          <td><strong>Compañía</strong></td>
-          <td><%= @web.web_company.name %></td>
-        </tr>
+        <% if @show_company %>
+          <tr>
+            <td><strong>Compañía</strong></td>
+            <td><%= @web.web_company.name %></td>
+          </tr>
+        <% end %>
         <tr>
           <td><strong>Tipo compañía</strong></td>
           <td><%= @web.web_company_type.present? ? @web.web_company_type : "-" %></td>
