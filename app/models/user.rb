@@ -1,8 +1,10 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
+  attr_accessor :skip_password_validation
   mount_base64_uploader :image, ImageUploader
+
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
   belongs_to :company, optional: true
   has_many :emergency_contacts, foreign_key: :owner_user_id, dependent: :destroy
@@ -14,6 +16,11 @@ class User < ApplicationRecord
   scope :kept, -> { where.not(status: :deleted) }
   scope :discarded, -> { where(status: :deleted) }
 
+  def password_required?
+    return false if skip_password_validation
+    super
+  end
+
   def self.ransackable_associations(_auth_object = nil)
     []
   end
@@ -24,7 +31,7 @@ class User < ApplicationRecord
 
   enum :role, {
     super_admin: "super_admin",
-    admin: "admin",
+    company_admin: "company_admin",
     user: "user"
   },
   default: :user

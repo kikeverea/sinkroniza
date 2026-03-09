@@ -110,7 +110,7 @@
         </button>
 
         <div class="d-flex align-items-center flex-grow-1">
-          <% if current_user.admin? && (request.url == root_url || request.url == show_user_url(current_user)) %>
+          <% if request.url == root_url || request.url == show_user_url(current_user) %>
             <div class="d-flex gap-4 ms-4 h-100 align-items-center">
               <div class="symbol symbol-40px symbol-circle">
                 <% if current_user.image? %>
@@ -128,7 +128,7 @@
                 </div>
 
                 <div class="fs-8 fw-semibold text-muted">
-                  <%= current_user.role %>
+                  <%= current_user.role_text %>
                 </div>
               </div>
             </div>
@@ -194,6 +194,14 @@
             <% end %>
           </li>
 
+          <!-- Subscriptions -->
+          <li class="py-1">
+            <%= link_to subscriptions_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+              <i class="fa-solid fa-file-contract"></i>
+              <span>Suscripciones</span>
+            <% end %>
+          </li>
+
           <!-- Companies -->
           <li class="py-1">
             <%= link_to companies_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
@@ -215,14 +223,6 @@
             <%= link_to credentials_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
               <i class="fa-solid fa-key"></i>
               <span>Credenciales</span>
-            <% end %>
-          </li>
-
-          <!-- Subscriptions -->
-          <li class="py-1">
-            <%= link_to subscriptions_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
-              <i class="fa-solid fa-file-contract"></i>
-              <span>Suscripciones</span>
             <% end %>
           </li>
 

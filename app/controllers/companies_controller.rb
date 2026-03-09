@@ -3,7 +3,7 @@ class CompaniesController < ApplicationController
 
   def index
     @title = "Compañías"
-    @companies = Company.includes(:subscription)
+    @companies = Company.includes(:subscription, :creator, :manager)
   end
 
   def show
@@ -62,6 +62,19 @@ class CompaniesController < ApplicationController
   end
 
   def company_params
-    params.require(:company).permit(:subscription_id, :name, :legal_name, :tax_id, :address, :cp, :logo, :manager_name, :manager_lastname, :manager_email, :manager_nif, :manager_phone, :active, :creator_user_id, :creator_user_name, :status)
+    params
+      .require(:company)
+      .permit(
+        :subscription_id,
+        :name,
+        :legal_name,
+        :tax_id,
+        :address,
+        :cp,
+        :logo,
+        :manager_id,
+        :creator_id,
+        :status
+      )
   end
 end

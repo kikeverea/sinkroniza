@@ -16,28 +16,31 @@
 
 <div class="card card-body px-4 mb-6">
   <%= form_with model: user, url: url do |form| %>
-    <div class="mb-4">
-      <%= form.label :role, "Rol", class: "form-label" %>
-      <%= form.select :role,
-        options_for_select(User.roles.map { |role, _val| [user_role_text(role), role] }, user.role),
-        {},
-        class: "form-select"
-      %>
-    </div>
 
-    <div class="mb-4">
-      <%= form.label :company_id, "Compañía", class: "form-label" %>
-      <%= form.collection_select :company_id,
-        Company.order(:name), :id, :name,
-        { include_blank: "Seleccionar compañía" },
-        class: "form-select"
-      %>
-    </div>
+    <%= hidden_field_tag :target, target %>
 
-    <div class="mb-4">
-      <%= form.label :email, "Email", class: "form-label required" %>
-      <%= form.email_field :email, class: "form-control form-control-solid" %>
-    </div>
+    <% if user.company_id? %>
+      <%= form.hidden_field :company_id, value: user.company_id %>
+      <%= form.hidden_field :role, value: :user %>
+    <% else %>
+      <div class="mb-4">
+        <%= form.label :role, "Rol", class: "form-label" %>
+        <%= form.select :role,
+          options_for_select(User.roles.map { |role, _val| [user_role_text(role), role] }, user.role),
+          {},
+          class: "form-select"
+        %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :company_id, "Compañía", class: "form-label" %>
+        <%= form.collection_select :company_id,
+          Company.order(:name), :id, :name,
+          { include_blank: "Seleccionar compañía" },
+          class: "form-select"
+        %>
+      </div>
+    <% end %>
 
     <div class="mb-4">
       <%= form.label :name, "Nombre", class: "form-label required" %>
@@ -47,6 +50,16 @@
     <div class="mb-4">
       <%= form.label :lastname, "Apellido", class: "form-label required" %>
       <%= form.text_field :lastname, class: "form-control form-control-solid" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :email, "Email", class: "form-label required" %>
+      <%= form.email_field :email, class: "form-control form-control-solid" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :phone, "Teléfono", class: "form-label" %>
+      <%= form.phone_field :phone, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-4">
@@ -70,7 +83,10 @@
 
     <div class="mt-6">
       <%= form.submit "Guardar", class: "btn btn-success btn-sm my-2" %>
-      <%= link_to "Cancelar", user.persisted? ? show_user_path(user) : users_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
+      <%= link_to "Cancelar",
+        target == :company ? user.company : (user.persisted? ? show_user_path(user) : users_path),
+        class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4"
+      %>
     </div>
   <% end %>
 </div>

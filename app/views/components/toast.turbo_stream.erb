@@ -1,0 +1,43 @@
+<!--
+  Types:
+    success,
+    update,
+    info,
+    break
+    warning,
+    error,
+    deleted
+-->
+
+<% type = local_assigns.fetch(:type, "success") %>
+<% data = local_assigns.fetch(:data, nil) %>
+<% manual_trigger = local_assigns.fetch(:manual_trigger, false) %>
+<% color = local_assigns.fetch(:color,
+  if type == "success"
+    "success"
+  else
+    type == "warning" ? "warning" : "danger"
+  end
+) %>
+
+<%= turbo_stream.replace "turbo-consumer" do %>
+  <div id="turbo-consumer">
+    <div
+      class="toast align-items-center text-bg-<%= color %> text-white border-0"
+      id="toast-message"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      data-controller="toast"
+      data-toast-manual-value="<%= manual_trigger %>"
+      <%= data&.map { |key, value| "data-#{key.to_s.dasherize}=#{value}"}&.join(" ") %>
+    >
+      <div class="d-flex">
+        <div class="toast-body">
+          <%= message %>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -3,7 +3,7 @@ class CreateSubscriptions < ActiveRecord::Migration[7.1]
     create_table :subscriptions do |t|
       t.string :name
       t.text :description
-      t.integer :quantity_users
+      t.integer :max_users
       t.string :status
 
       t.timestamps

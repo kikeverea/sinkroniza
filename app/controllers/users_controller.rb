@@ -1,12 +1,14 @@
 class UsersController < ApplicationController
+  include Toast
+
+  before_action :set_target
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  
+
   def index
     authorize! :read, User
     @title = "Lista de usuarios"
 
     @search = params[:q].nil? ? "" : params[:q][:email_or_name_cont]
-    @target = params[:target]
 
     @q = User.includes(:company).ransack(params[:q])
 
@@ -27,7 +29,8 @@ class UsersController < ApplicationController
   def new
     authorize! :create, User
     @title = "Nuevo usuario"
-    @user = User.new
+    @target = :company if params[:company_id]
+    @user = User.new(company_id: params[:company_id])
   end
 
   def edit
@@ -37,11 +40,16 @@ class UsersController < ApplicationController
 
   def create
     authorize! :create, User
+
     @user = User.new(user_params)
-    if @user.save
-      redirect_to users_path, notice: "Usuario creado correctamente"
+    @user.skip_password_validation = true
+
+    return toast("Límite de usuarios excedido", :error) unless @user.company_id.nil? || @user.company.can_add_user?
+
+    if @user.save!
+      redirect_to params[:target] == "company" ? @user.company : users_path, notice: "Usuario creado"
     else
-      render :new
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -53,7 +61,7 @@ class UsersController < ApplicationController
       user_params.except(:password, :password_confirmation)
 
     if @user.update!(filtered_params)
-      redirect_to show_user_path(@user), notice: "Usuario actualizado correctamente"
+      redirect_to params[:target] == "company" ? @user.company : show_user_path(@user), notice: "Usuario actualizado"
     else
       render :edit, notice: "Error al actualizar el usuario"
     end
@@ -63,7 +71,7 @@ class UsersController < ApplicationController
     authorize! :destroy, @user
     @user.update!(status: :deleted)
 
-    redirect_to users_path, notice: "Usuario eliminado correctamente"
+    redirect_to params[:target] == "company" ? @user.company : users_path, notice: "Usuario eliminado"
   end
 
   def logout
@@ -77,9 +85,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def set_target
+    @target = params[:target].to_sym
+  end
+
   def user_params
     params
       .require(:user)
-      .permit(:role, :name, :lastname, :nif, :date_expiration_password, :status, :company_id, :email, :password)
+      .permit(:role, :name, :lastname, :nif, :date_expiration_password, :status, :company_id, :email, :phone, :password)
   end
 end

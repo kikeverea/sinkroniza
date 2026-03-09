@@ -12,24 +12,20 @@
 
 ActiveRecord::Schema[7.1].define(version: 2026_06_26_100753) do
   create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "subscription_id", null: false
     t.string "name"
     t.string "legal_name"
     t.string "tax_id"
     t.text "address"
     t.string "cp"
     t.string "logo"
-    t.string "manager_name"
-    t.string "manager_lastname"
-    t.string "manager_email"
-    t.string "manager_nif"
-    t.string "manager_phone"
-    t.boolean "active", default: true
-    t.integer "creator_user_id"
-    t.string "creator_user_name"
     t.string "status"
+    t.bigint "subscription_id", null: false
+    t.bigint "manager_id", null: false
+    t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_companies_on_creator_id"
+    t.index ["manager_id"], name: "index_companies_on_manager_id"
     t.index ["subscription_id"], name: "index_companies_on_subscription_id"
   end
 
@@ -132,7 +128,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100753) do
   create_table "subscriptions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.integer "quantity_users"
+    t.integer "max_users"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -148,6 +144,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100753) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "lastname"
+    t.string "phone"
     t.string "image"
     t.string "jti"
     t.string "nif"
@@ -188,6 +185,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100753) do
   end
 
   add_foreign_key "companies", "subscriptions"
+  add_foreign_key "companies", "users", column: "creator_id"
+  add_foreign_key "companies", "users", column: "manager_id"
   add_foreign_key "credentials", "companies"
   add_foreign_key "credentials", "folders"
   add_foreign_key "credentials", "groups"

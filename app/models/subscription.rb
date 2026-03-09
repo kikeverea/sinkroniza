@@ -2,5 +2,5 @@ class Subscription < ApplicationRecord
 
   has_many :companies, dependent: :nullify
 
-  validates :name, :quantity_users, presence: true
+  validates :name, :max_users, presence: true
 end

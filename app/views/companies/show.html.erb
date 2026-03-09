@@ -1,56 +1,131 @@
-<!-- lib/templates/erb/scaffold/show.html.erb.tt -->
-
-<div class="card card-body">
-    <p><strong>Subscription:</strong></p>
-  <p><%= @company.subscription %></p>
-
-    <p><strong>Name:</strong></p>
-  <p><%= @company.name %></p>
-
-    <p><strong>Legal name:</strong></p>
-  <p><%= @company.legal_name %></p>
-
-    <p><strong>Tax:</strong></p>
-  <p><%= @company.tax_id %></p>
-
-    <p><strong>Address:</strong></p>
-  <p><%= @company.address %></p>
-
-    <p><strong>Cp:</strong></p>
-  <p><%= @company.cp %></p>
-
-    <p><strong>Logo:</strong></p>
-  <p><%= @company.logo %></p>
-
-    <p><strong>Manager name:</strong></p>
-  <p><%= @company.manager_name %></p>
-
-    <p><strong>Manager lastname:</strong></p>
-  <p><%= @company.manager_lastname %></p>
-
-    <p><strong>Manager email:</strong></p>
-  <p><%= @company.manager_email %></p>
-
-    <p><strong>Manager nif:</strong></p>
-  <p><%= @company.manager_nif %></p>
-
-    <p><strong>Manager phone:</strong></p>
-  <p><%= @company.manager_phone %></p>
-
-    <p><strong>Active:</strong></p>
-  <p><%= @company.active %></p>
-
-    <p><strong>Creator user:</strong></p>
-  <p><%= @company.creator_user_id %></p>
-
-    <p><strong>Creator user name:</strong></p>
-  <p><%= @company.creator_user_name %></p>
-
-    <p><strong>Status:</strong></p>
-  <p><%= @company.status %></p>
-
-    <div class="flex items-center justify-start mt-6">
-    <%= link_to 'Edit', edit_company_path(@company) %> |
-    <%= link_to 'Back', companies_path %>
+<div class="row">
+  <div class="col-12 col-xl-4">
+    <div class="card card-body mb-6">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="fw-semibold fs-5">Detalles</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% subscription = @company.subscription %>
+          <tr>
+            <td><strong>Suscripción</strong></td>
+            <td>
+              <%= link_to subscription do %>
+                <%= subscription.name %>
+                <em class="fs-7">(max <%= subscription.max_users %> usuarios)</em>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Nombre</strong></td>
+            <td><%= @company.name %></td>
+          </tr>
+          <tr>
+            <td><strong>Razón Social</strong></td>
+            <td><%= @company.legal_name.presence || "-" %></td>
+          </tr>
+          <tr>
+            <td><strong>ID Fiscal</strong></td>
+            <td><%= @company.tax_id.presence || "-" %></td>
+          </tr>
+          <tr>
+            <td><strong>Dirección</strong></td>
+            <td>
+              <%= @company.address.presence || "-" %>
+              <%= "#{", #{@company.cp}" if @company.address.present? && @company.cp.present?}" %>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Creada por</strong></td>
+            <td><%= @company.creator.full_name %></td>
+          </tr>
+          <tr>
+            <td><strong>Estado</strong></td>
+            <td><%= company_status_badge @company %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+  <div class="col-12 col-xl-4">
+    <% manager = @company.manager %>
+
+    <div class="card card-body mb-6 h-250px">
+      <table class="table">
+        <thead>
+        <tr>
+          <th class="fw-semibold fs-5">Encargado</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Nombre</strong></td>
+            <td><%= link_to manager.full_name, show_user_path(manager) %></td>
+          </tr>
+          <tr>
+            <td><strong>Email</strong></td>
+            <td><%= manager.email %></td>
+          </tr>
+          <tr>
+            <td><strong>Teléfono</strong></td>
+            <td><%= manager.phone.presence || "-" %></td>
+          </tr>
+          <tr>
+            <td><strong>NIF</strong></td>
+            <td><%= manager.nif.presence || "-" %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-12 col-xl-4">
+    <% if @company.logo? %>
+      <%= image_tag @company.logo.url, class: "mh-250px w-100" %>
+    <% else %>
+      <div class="rounded border border-gray-300 bg-gray-200 d-flex justify-content-center align-items-center h-250px w-100">
+        <em class="text-muted">sin logo</em>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="card card-body">
+      <div class="fw-semibold fs-5 d-flex justify-content-between align-items-center mx-6 mb-4">
+        <ul class="nav nav-tabs nav-line-tabs mb-2 fs-6 flex-grow-1 me-16">
+          <li class="nav-item">
+            <a class="nav-link <%= "active" if params[:target].nil? || params[:target] == "users" %>" data-bs-toggle="tab" href="#users">
+              Usuarios
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link <%= "active" if params[:target] == "discarded" %>" data-bs-toggle="tab" href="#discarded">
+              Eliminados
+            </a>
+          </li>
+        </ul>
+
+        <%= link_to new_user_path(company_id: @company.id), class: "btn btn-sm btn-primary" do %>
+          <i class="fa fa-plus"></i> Añadir usuario
+        <% end %>
+      </div>
+
+      <div class="tab-content">
+        <div class="tab-pane fade <%= "show active" if params[:target].nil? || params[:target] == "users" %>" id="users">
+          <%= render "users/table", users: @company.users.kept, hide_role: true, target: :company %>
+        </div>
+        
+        <div class="tab-pane fade <%= "show active" if params[:target] == "discarded" %>" id="discarded">
+          <%= render "users/table", users: @company.users.discarded, hide_role: true, target: :company %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="flex items-center justify-start mt-4 mb-8">
+  <%= link_to "← Atrás", companies_path, class: "me-1" %> |
+  <%= link_to "Editar", edit_company_path(@company), class: "ms-1" %>
 </div>

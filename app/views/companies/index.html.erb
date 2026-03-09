@@ -15,9 +15,7 @@
         <th>Nombre legal</th>
         <th>ID Fiscal</th>
         <th>Dirección</th>
-        <th>Código postal</th>
         <th>Manager</th>
-        <th>Activa</th>
         <th>Creada por</th>
         <th>Estado</th>
         <th></th>
@@ -32,12 +30,10 @@
           <td><%= link_to subscription.name, subscription %></td>
           <td><%= company.legal_name.present? ? company.legal_name : "-" %></td>
           <td><%= company.tax_id.present? ? company.tax_id : "-" %></td>
-          <td><%= company.address.present? ? company.address : "-" %></td>
-          <td><%= company.cp.present? ? company.cp : "-" %></td>
-          <td><%= company.manager_full_name.present? ? company.manager_full_name.present? : "-" %></td>
-          <td><%= boolean_icon company.active %></td>
-          <td><%= company.creator_user_name %></td>
-          <td><%= company.status %></td>
+          <td><%= company.full_address.presence || "-" %></td>
+          <td><%= company.manager.full_name %></td>
+          <td><%= company.creator.full_name %></td>
+          <td><%= company_status_badge company %></td>
 
           <td class="text-end">
             <button

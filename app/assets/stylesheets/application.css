@@ -52,6 +52,15 @@
   bottom: 0;
 }
 
+.toast {
+  position: fixed !important;
+  bottom: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1080; /* above most elements, below modals */
+  padding: 0 16px;
+  font-size: 14px;
+}
 
 .digg_pagination {
    display: flex;

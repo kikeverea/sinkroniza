@@ -16,7 +16,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
 
     fill_in "Description", with: @subscription.description
     fill_in "Name", with: @subscription.name
-    fill_in "Quantity users", with: @subscription.quantity_users
+    fill_in "Quantity users", with: @subscription.max_users
     fill_in "Status", with: @subscription.status
     click_on "Create Subscription"
 
@@ -30,7 +30,7 @@ class SubscriptionsTest < ApplicationSystemTestCase
 
     fill_in "Description", with: @subscription.description
     fill_in "Name", with: @subscription.name
-    fill_in "Quantity users", with: @subscription.quantity_users
+    fill_in "Quantity users", with: @subscription.max_users
     fill_in "Status", with: @subscription.status
     click_on "Update Subscription"
 

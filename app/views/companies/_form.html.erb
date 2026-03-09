@@ -52,9 +52,13 @@
         <%= form.text_field :cp, class: "form-control form-control-solid" %>
       </div>
 
-      <div class="mb-3 mt-3">
-        <%= form.label :active, "Activa", class: "fs-6 fw-semibold mb-2 me-2" %>
-        <%= form.check_box :active %>
+      <div class="mb-4">
+        <%= form.label :status, "Estado", class: "fs-6 fw-semibold mb-2 required" %>
+        <%= form.select :status,
+          options_for_select(Company.statuses.map { |status, _val| [company_status_text(status), status]}, company.status),
+          {},
+          class: "form-select"
+        %>
       </div>
 
       <div class="mb-4">

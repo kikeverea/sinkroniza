@@ -5,18 +5,26 @@ webs_then = Web.count
 groups_then = Group.count
 folders_then = Folder.count
 
-super_admin = User.find_or_create_by!(email: "admin@admin.com", role: "super_admin") do |user|
+super_admin = User.find_or_create_by!(email: "super@admin.com", role: "super_admin") do |user|
+  user.password = "12341234"
+  user.name = "Super"
+  user.lastname = "Admin"
+end
+
+admin = User.find_or_create_by!(email: "admin@admin.com", role: "company_admin") do |user|
   user.password = "12341234"
   user.name = "Admin"
-  user.lastname = "Innobing"
+  user.lastname = "Test"
 end
 
 subscription = Subscription.find_or_create_by!(name: "Test subscription") do |subscription|
-  subscription.quantity_users = rand(3..10)
+  subscription.max_users = rand(3..10)
 end
 
 company = Company.find_or_create_by!(name: "Test company") do |company|
   company.subscription = subscription
+  company.creator = super_admin
+  company.manager = admin
 end
 
 5.times do |i|
@@ -32,8 +40,8 @@ web_company = WebCompany.find_or_create_by!(name: "Test web", web_company_type: 
 
 Web.find_or_create_by!(name: "Test web") { |web| web.web_company = web_company }
 Folder.find_or_create_by!(name: "Test folder")
-Group.find_or_create_by!(name: "Test group", company: company, created_by_user_id: super_admin.id) do |group|
-  group.owner_id = super_admin.id
+Group.find_or_create_by!(name: "Test group", company: company, created_by_user_id: admin.id) do |group|
+  group.owner_id = admin.id
   group.group_type = :personal
 end
 
