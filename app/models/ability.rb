@@ -10,6 +10,7 @@ class Ability
       can :manage, Company
       can :manage, Subscription
       can :manage, WebCompany
+      can :manage, Web
       can [:read, :create], User, role: [:super_admin, :company_admin]
       return
     end
