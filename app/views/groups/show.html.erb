@@ -27,9 +27,12 @@
     </tbody>
   </table>
 </div>
-<%= link_to "Editar", edit_group_path(@group), class: "d-block ms-2 mt-4 mb-6" %>
 
-<div class="card card-body">
+<% if can? :manage, Group %>
+  <%= link_to "Editar", edit_group_path(@group), class: "d-block ms-2 mt-4" %>
+<% end %>
+
+<div class="card card-body mt-6">
   <%= render "group_users/index", group: @group, group_users: @group.group_users %>
 </div>
 <%= link_to "← Atrás", groups_path, class: "d-block ms-2 mt-4 mb-8" %>

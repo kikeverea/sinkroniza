@@ -121,8 +121,10 @@
               </button>
               <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
                 <%= link_to "Ver", group, class: 'dropdown-item' %>
-                <%= link_to "Editar", edit_group_path(group), class: 'dropdown-item' %>
-                <%= link_to "Eliminar", group, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
+                <% if can? :manage, Group %>
+                  <%= link_to "Editar", edit_group_path(group), class: 'dropdown-item' %>
+                  <%= link_to "Eliminar", group, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
+                <% end %>
               </div>
             </td>
           </tr>

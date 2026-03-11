@@ -1,7 +1,9 @@
 <div class="d-flex align-items-center justify-content-between mx-4">
   <h4>Usuarios</h4>
-  <%= link_to new_group_user_path(group_id: group.id), class: "btn btn-sm btn-primary btn-sm" do %>
-    <i class="fa fa-plus"></i> Añadir usuario
+  <% if can?(:manage, Group) && can?(:manage, GroupUser) %>
+    <%= link_to new_group_user_path(group_id: group.id), class: "btn btn-sm btn-primary btn-sm" do %>
+      <i class="fa fa-plus"></i> Añadir usuario
+    <% end %>
   <% end %>
 </div>
 
