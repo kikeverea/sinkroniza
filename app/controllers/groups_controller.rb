@@ -3,8 +3,14 @@ class GroupsController < ApplicationController
 
   def index
     authorize! :read, Group
+
     @title = "Grupos"
-    @groups = Group.accessible_by(current_ability).where(group_type: :company).includes(:company, group_users: :user)
+
+    @search = params[:q].nil? ? "" : params[:q][:name_cont]
+
+    @q = Group.includes(:company).ransack(params[:q])
+
+    @groups = @q.result.accessible_by(current_ability).order(:name).paginate(:page => params[:page], :per_page => 15)
   end
 
   def show

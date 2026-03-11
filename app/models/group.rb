@@ -17,6 +17,14 @@ class Group < ApplicationRecord
   validates :group_type, :creator_id, presence: true
   validates :name, presence: true, if: -> { group_type.to_sym == :company }
 
+  def self.ransackable_associations(_auth_object = nil)
+    []
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at name]
+  end
+
   enum :group_type, {
     personal: "personal",
     company: "company"

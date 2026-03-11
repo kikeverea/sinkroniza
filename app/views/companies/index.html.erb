@@ -1,8 +1,91 @@
-<div class="card card-body" id="companies">
+<%= link_to new_company_path, class: "btn btn-success btn-sm w-200px" do %>
+  <i class="fa fa-plus"></i> Nueva Compañía
+<% end %>
 
-  <%= link_to new_company_path, class: "btn btn-success btn-sm mw-200px" do %>
-    <i class="fa fa-plus"></i> Nueva Compañía
-  <% end %>
+<div class="card mt-3">
+  <div class="card-body pt-4">
+    <div class="text-end mb-4">
+      <small>
+        <%= link_to params.to_unsafe_h.merge(format: :xlsx),
+          class: "btn btn-flush btn-active-color-success fs-7" do
+        %>
+          <i class="far fa-file-excel"></i> Exportar Excel
+        <% end %>
+      </small>
+    </div>
+
+    <%= search_form_for @q, url: companies_path do |f| %>
+
+      <div class="row">
+        <!-- Search bar -->
+        <div class="col-12 col-xl-6">
+          <div class="input-group-prepend d-flex align-items-center gap-2">
+            <%= f.search_field :name_or_legal_name_cont, value: @search || "",
+              class: "form-control h-45px flex-grow-1",
+              placeholder: "Nombre on razón fiscal de la compañía"
+            %>
+            <%= submit_tag "Buscar", class: "btn btn-primary btn-outline-primary ms-2"%>
+          </div>
+        </div>
+
+        <!-- Date range -->
+        <div class="col-12 col-xl-6 ps-4 ps-xl-6 pt-2 pb-6">
+          <div class="d-flex align-items-center gap-4 h-40px mt-4 mt-xl-0">
+            <small class="w-100 w-xl-auto">
+              <b>Rango fechas:</b>
+            </small>
+            <div class="flex-grow-1">
+              <%= f.date_field :created_at_gteq, class: "form-control h-40px", placeholder: "Inicio" %>
+            </div>
+            <div class="flex-grow-1">
+              <%= f.date_field :created_at_lteq, class: "form-control h-40px", placeholder: "Fin" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="separator my-4"></div>
+
+      <div class="row">
+        <div class="col-12 col-xl-6">
+          <div class="d-flex flex-wrap align-items-center gap-8 mt-8 mt-xl-0 px-2">
+            <small>
+              <b>Ordenar por:</b>
+            </small>
+            <small>
+              <%= sort_link(@q, :name, '<i class="fa-solid fa-building me-1"></i> Nombre'.html_safe, class: "text-dark") %>
+            </small>
+            <small>
+              <%= sort_link(@q, :legal_name, '<i class="fa-solid fa-building me-1"></i> Nombre legal'.html_safe, class: "text-dark") %>
+            </small>
+            <small>
+              <%= sort_link(@q, :creator_name, '<i class="fa-solid fa-user me-1"></i> Creador'.html_safe, class: "text-dark") %>
+            </small>
+            <small>
+              <%= sort_link(@q, :created_at, '<i class="fa-solid fa-calendar me-1"></i> Fecha Registro'.html_safe, class: "text-dark") %>
+            </small>
+          </div>
+        </div>
+
+        <div class="col-12 col-xl-6">
+          <div class="d-flex flex-wrap align-items-center gap-8 px-2">
+            <small>
+              <b>Mostrar:</b>
+            </small>
+
+            <small class="flex-grow-1 text-end">
+              <%= link_to companies_path, class: "btn btn-flush btn-active-color-danger fs-7" do %>
+                <i class="fa fa-times" aria-hidden="true"></i> Eliminar filtros
+              <% end %>
+            </small>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="card card-body mt-5">
 
   <div class="separator my-10"></div>
 
@@ -12,7 +95,7 @@
         <th>Logo</th>
         <th>Nombre</th>
         <th>Suscripción</th>
-        <th>Nombre legal</th>
+        <th>Razón fiscal</th>
         <th>ID Fiscal</th>
         <th>Dirección</th>
         <th>Administrador</th>

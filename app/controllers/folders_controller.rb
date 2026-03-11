@@ -3,9 +3,12 @@ class FoldersController < ApplicationController
 
   def index
     authorize! :read, Folder
-
     @title = "Carpetas"
-    @folders = Folder.parents.includes(:company, :parent_folder, :child_folders)
+
+    @search = params[:q].nil? ? "" : params[:q][:name_cont]
+    @q = Folder.includes(:company).ransack(params[:q])
+
+    @folders = @q.result.accessible_by(current_ability).parents.order(:name).paginate(:page => params[:page], :per_page => 15)
   end
 
   def show

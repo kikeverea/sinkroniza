@@ -2,8 +2,17 @@ class CompaniesController < ApplicationController
   before_action :set_company, only: %i[ show edit update destroy ]
 
   def index
+    authorize! :read, Company
     @title = "Compañías"
-    @companies = Company.includes(:subscription, :creator, :manager)
+
+    @search = params[:q].nil? ? "" : params[:q][:name_or_legal_name_cont]
+    @q = Company.ransack(params[:q])
+
+    @companies = @q.result
+      .accessible_by(current_ability)
+      .includes(:subscription, :creator, :manager)
+      .order(:name)
+      .paginate(:page => params[:page], :per_page => 15)
   end
 
   def show

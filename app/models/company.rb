@@ -15,6 +15,13 @@ class Company < ApplicationRecord
   validates :subscription_id, :name, presence: true
   validates :name, uniqueness: true
 
+  def self.ransackable_associations(_auth_object = nil)
+    %w[ subscription creator ]
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[ name legal_name created_at ]
+  end
 
   enum :status, {
     active: "active",
