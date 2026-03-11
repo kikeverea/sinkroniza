@@ -5,6 +5,14 @@ class WebCompaniesController < ApplicationController
     authorize! :read, WebCompany
     @title = "Compañías Web"
     @web_companies = WebCompany.accessible_by(current_ability).includes(:webs)
+    @query = WebCompany.ransack(params[:q])
+  end
+
+  def ransack
+    @query = WebCompany.ransack(params[:q])
+    @web_companies = @query.result.accessible_by(current_ability).order(:name).paginate(page: params[:page], per_page: 15)
+
+    render turbo_stream: turbo_stream.replace("web-companies-index", partial: "web_companies/index")
   end
 
   def show
@@ -68,6 +76,6 @@ class WebCompaniesController < ApplicationController
     end
 
     def web_company_params
-      params.require(:web_company).permit(:name, :logo, :web_company_type)
+      params.require(:web_company).permit(:name, :logo, :favicon, :web_company_type)
     end
 end

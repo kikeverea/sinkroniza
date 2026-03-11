@@ -10,12 +10,9 @@ class TagsController < ApplicationController
 
   def ransack
     @query = Tag.ransack(params[:q])
-    @tags = @query.result.order(:name).paginate(page: params[:page], per_page: 15)
+    @tags = @query.result.accessible_by(current_ability).order(:name).paginate(page: params[:page], per_page: 15)
 
-    render turbo_stream: turbo_stream.replace(
-      "tags-index",
-      partial: "tags/index"
-    )
+    render turbo_stream: turbo_stream.replace("tags-index", partial: "tags/index")
   end
 
 

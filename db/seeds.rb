@@ -40,9 +40,9 @@ end
   end
 end
 
-web_company = WebCompany.find_or_create_by!(name: "Test web", web_company_type: WebCompany.web_company_types.to_a.sample.first)
+web_company = WebCompany.find_or_create_by!(name: "Innobing", web_company_type: :other)
 
-Web.find_or_create_by!(name: "Test web") { |web| web.web_company = web_company }
+Web.find_or_create_by!(name: "Test web", access_url: "https://www.innobing.com/en/") { |web| web.web_company = web_company }
 Tag.find_or_create_by!(name: "Test tag", color: "#41C29E")
 Group.find_or_create_by!(name: "Test group", company: company, creator: admin)
 

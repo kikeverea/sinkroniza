@@ -1,22 +1,28 @@
 class Web < ApplicationRecord
-  before_create :set_creator
+  company_scoped optional: true
+
+  before_validation :set_creator, on: :create
   before_save :set_web_company_type
 
   mount_base64_uploader :logo, ImageUploader
+  mount_base64_uploader :favicon, FaviconUploader
 
+  belongs_to :creator, class_name: "User"
   belongs_to :web_company
 
-  validates :name, presence: true
-
-  enum :status, {
-    pending: "pending",
-    active: "active",
-    rejected: "rejected"
-  },
-  default: :pending
+  validates :name, :access_url, presence: true
 
   def status_text
     I18n.t("activerecord.enums.web.status.#{status}")
+  end
+
+  def favicon
+    value = super
+    value.present? ? value : web_company.favicon
+  end
+
+  def favicon?
+    favicon.present?
   end
 
 
@@ -24,9 +30,7 @@ class Web < ApplicationRecord
 
   def set_creator
     return if Current.user.nil?
-
-    self.creator_user_id = Current.user.id
-    self.creator_user_name = Current.user.full_name
+    self.creator = Current.user
   end
 
   def set_web_company_type

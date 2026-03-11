@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   resources :groups
   resources :group_users
   resources :credentials
-  resources :web_companies
   resources :webs
   resources :companies
   resources :subscriptions
@@ -27,6 +26,11 @@ Rails.application.routes.draw do
      post "/login", to:"users/sessions#create" # Para obtener el token de inicio de sesión
   end
   get :logout, to: "users#logout", as: :logout
+
+
+## Web companies
+  get "web_companies/ransack", to: "web_companies#ransack", as: :ransack_web_companies
+  resources :web_companies
 
 
 ## Tags

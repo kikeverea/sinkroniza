@@ -36,6 +36,11 @@
       <%= form.file_field :logo, accept: "image/*", class: "d-block" %>
     </div>
 
+    <div class="mb-4">
+      <%= form.label :favicon, "Favicon", class: "fs-6 fw-semibold mb-2" %>
+      <%= form.file_field :favicon, accept: ".ico,.png,image/vnd.microsoft.icon,.svg,image/x-icon,image/png,image/svg+xml", class: "d-block" %>
+    </div>
+
     <% if web_company.logo? %>
       <div class="mb-4">
         <%= image_tag web_company.logo.url, class: "w-200px" %>

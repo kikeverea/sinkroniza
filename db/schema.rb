@@ -134,7 +134,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100755) do
   create_table "tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "color"
-    t.bigint "company_id"
+    t.bigint "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_tags_on_company_id"
@@ -168,25 +168,29 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100755) do
   create_table "web_companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "logo"
+    t.string "favicon"
     t.string "web_company_type"
+    t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_web_companies_on_company_id"
   end
 
   create_table "webs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "web_company_id", null: false
     t.string "web_company_type"
     t.string "name"
-    t.string "alias"
     t.string "logo"
+    t.string "favicon"
     t.string "access_url"
     t.boolean "active", default: true
-    t.integer "creator_user_id"
-    t.string "creator_user_name"
-    t.string "status"
     t.string "send_button"
+    t.bigint "company_id"
+    t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_webs_on_company_id"
+    t.index ["creator_id"], name: "index_webs_on_creator_id"
     t.index ["web_company_id"], name: "index_webs_on_web_company_id"
   end
 
@@ -208,5 +212,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100755) do
   add_foreign_key "groups", "users", column: "creator_id"
   add_foreign_key "tags", "companies"
   add_foreign_key "users", "companies"
+  add_foreign_key "web_companies", "companies"
+  add_foreign_key "webs", "companies"
+  add_foreign_key "webs", "users", column: "creator_id"
   add_foreign_key "webs", "web_companies"
 end

@@ -35,15 +35,6 @@
       <%= form.text_field :access_url, class: "form-control form-control-solid" %>
     </div>
 
-    <div class="mb-4">
-      <%= form.label :status, "Estado", class: "form-label" %>
-      <%= form.select :status,
-        options_for_select(Web.statuses.map { |status, _val| [web_status_text(status), status] }, web.status),
-        {},
-        class: "form-select"
-      %>
-    </div>
-
     <div class="mb-3 mt-6">
       <%= form.label :active, "Activa", class: "form-label" %>
       <%= form.check_box :active, class: "ms-2" %>
@@ -52,6 +43,11 @@
     <div class="mb-4">
       <%= form.label :logo, "Logo", class: "form-label" %>
       <%= form.file_field :logo, accept: "image/*", class: "d-block" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :favicon, "Favicon", class: "form-label" %>
+      <%= form.file_field :favicon, accept: "image/*", class: "d-block" %>
     </div>
 
     <% if web.logo? %>

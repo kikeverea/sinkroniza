@@ -1,17 +1,20 @@
-<div id="<%= dom_id web_company %>">
-  <p>
-    <strong>Name:</strong>
-    <%= web_company.name %>
-  </p>
-
-  <p>
-    <strong>Logo:</strong>
-    <%= web_company.logo %>
-  </p>
-
-  <p>
-    <strong>Web company type:</strong>
-    <%= web_company.web_company_type %>
-  </p>
-
-</div>
+<%= link_to web_company, class: "btn btn-flush w-100 w-sm-325px h-100px hover-elevate-up" do %>
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex align-items-center gap-4">
+        <div class="pb-2">
+          <%= image_tag web_company.favicon? ? web_company.favicon.url : asset_path("logo-sm.png"),
+              class: "w-30px h-30px"
+          %>
+        </div>
+        <h4><%= web_company.name %></h4>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-2 text-start fs-7 gap-8">
+        <span class="text-primary text-nowrap"><%= web_company.webs.count %> webs</span>
+        <% if @show_company %>
+          <span class="overflow-hidden text-nowrap text-overflow-ellipsis"><%= web_company.company&.name %></span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

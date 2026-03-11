@@ -1,5 +1,5 @@
 class Tag < ApplicationRecord
-  belongs_to :company
+  company_scoped optional: true
 
   has_many :credential_tags, dependent: :destroy
   has_many :credentials, through: :credential_tags

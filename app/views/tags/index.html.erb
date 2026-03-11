@@ -1,31 +1,9 @@
 <div class="d-flex justify-content-between align-items-center mb-8 gap-8">
-  <%= search_form_for @query,
-    url: ransack_tags_path,
-    data: {
-      controller: "ransack",
-      ransack_ransack_query_value: @query.present?,
-      turbo_stream: true,
-      turbo_frame: "ransack-index",
-    } do |form|
+  <%= render "components/ransack",
+    search: :name_cont,
+    search_placeholder: "Buscar etiquetas",
+    ransack_path: ransack_tags_path
   %>
-    <%= hidden_field_tag :page, params[:page] || 1 %>
-    <%= hidden_field_tag :per_page, params[:per_page] || 15, data: { ransack_target: "perPage" } %>
-
-    <div class="position-relative w-450px">
-      <%= form.text_field :name_cont,
-        class: "form-control ps-12",
-        placeholder: "Buscar etiquetas",
-        data: { action: "ransack#search", ransack_target: "searchInput" }
-      %>
-      <i class="fa-solid fa-magnifying-glass position-absolute start-0 ms-4 top-50 translate-middle-y fs-5"></i>
-      <div class="position-absolute d-flex align-items-center z-index-2 top-0 end-0 h-40px me-4">
-        <span
-          class="spinner-border spinner-border-sm text-primary d-none"
-          data-ransack-target="indicator"
-        ></span>
-      </div>
-    </div>
-  <% end %>
   <%= link_to new_tag_path, class: "btn btn-success btn-sm w-200px" do %>
     <i class="fa fa-plus"></i> Nueva etiqueta
   <% end %>

@@ -66,6 +66,14 @@ es:
         company: Compañía
         password: Contraseña
         password_confirmation: Confirmar contraseña
+      webs:
+        web_company: Compañía web
+        web_company_type: Tipo
+        name: Nombre
+        logo: Logo
+        favicon: Favicon
+        access_url: URL
+        active: Activa
       group:
         name: Nombre
         description: Descripción
@@ -96,6 +104,7 @@ es:
       odd: "debe ser un número impar"
       greater_than: "debe ser mayor que %{count}"
       less_than: "debe ser menor que %{count}"
+      extension_allowlist_error: "extensión no permitida"
   activemodel:
     errors:
       format: "%{attribute}: %{message}"
@@ -113,3 +122,4 @@ es:
         odd: "debe ser un número impar"
         greater_than: "debe ser mayor que %{count}"
         less_than: "debe ser menor que %{count}"
+        extension_allowlist_error: "extensión no permitida"

@@ -1,9 +1,20 @@
 class WebCompany < ApplicationRecord
+  company_scoped optional: true
+
   mount_base64_uploader :logo, ImageUploader
+  mount_base64_uploader :favicon, FaviconUploader
 
   has_many :webs, dependent: :destroy
 
   validates :name, :web_company_type, presence: true
+
+  def self.ransackable_associations(_auth_object = nil)
+    []
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[ name created_at ]
+  end
 
   enum :web_company_type, {
     bank: "bank",

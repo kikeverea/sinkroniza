@@ -1,23 +1,14 @@
-<div class="card card-body w-100 w-xl-50 mb-8">
-  <table class="table">
-    <tbody>
-      <tr>
-        <td><strong>Name</strong></td>
-        <td><%= @web_company.name %></td>
-      </tr>
-      <tr>
-        <td><strong>Tipo</strong></td>
-        <td><%= @web_company.type_text %></td>
-      </tr>
-      <tr>
-        <td><strong>Logo</strong></td>
-        <td><%= @web_company.logo? ? image_tag(@web_company.logo.url, class: "w-200px") : "-" %></td>
-      </tr>
-    </tbody>
-  </table>
+<div class="mb-8">
+  <% if @web_company.logo? %>
+    <%= image_tag @web_company.logo.url, class: "w-300px" %>
+  <% else %>
+    <div class="w-300px h-100px bg-gray-200 rounded border border-gray-300 d-flex justify-content-center align-items-center">
+      <em class="text-muted">Sin logo</em>
+    </div>
+  <% end %>
 </div>
 
-<div class="card card-body">
+<div class="card card-body w-100 w-xl-50">
   <%= render "webs/index", web_company: @web_company, webs: @web_company.webs %>
 </div>
 
