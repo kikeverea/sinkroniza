@@ -17,7 +17,7 @@ class Users::SessionsController < Devise::SessionsController
       user.update!(last_connection: Time.current)
 
       respond_to do |format|
-        format.html  { redirect_to users_path }
+        format.html  { redirect_to root_path }
         format.json  { render json: user.as_json }
       end
     else
