@@ -1,7 +1,9 @@
 <div class="d-flex align-items-center justify-content-between mx-4">
   <h4>Webs asociadas</h4>
-  <%= link_to new_web_path(web_company_id: web_company.id), class: "btn btn-primary btn-sm w-200px" do %>
-    <i class="fa fa-plus"></i> Añadir web
+  <% if can? :create, Web  %>
+    <%= link_to new_web_path(web_company_id: web_company.id), class: "btn btn-primary btn-sm w-200px" do %>
+      <i class="fa fa-plus"></i> Añadir web
+    <% end %>
   <% end %>
 </div>
 
@@ -16,7 +18,9 @@
       <th>Activa</th>
       <th>Creada por</th>
       <th>Estado</th>
-      <th></th>
+      <% if can? :manage, Web  %>
+        <th></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
@@ -29,22 +33,24 @@
         <td><%= boolean_icon(web.active) %></td>
         <td><%= web.creator_user_name %></td>
         <td><%= web.status_text %></td>
-        <td class="text-end">
-          <button
-            type="button"
-            class="btn btn-sm btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
-            data-bs-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Acciones
-          </button>
-          <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
-            <%= link_to "Ver", web, class: 'dropdown-item' %>
-            <%= link_to "Editar", edit_web_path(web), class: 'dropdown-item' %>
-            <%= link_to "Eliminar", web, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
-          </div>
-        </td>
+        <% if can? :manage, Web  %>
+          <td class="text-end">
+            <button
+              type="button"
+              class="btn btn-sm btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Acciones
+            </button>
+            <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
+              <%= link_to "Ver", web, class: 'dropdown-item' %>
+              <%= link_to "Editar", edit_web_path(web), class: 'dropdown-item' %>
+              <%= link_to "Eliminar", web, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
+            </div>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

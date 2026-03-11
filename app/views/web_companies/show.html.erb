@@ -22,6 +22,8 @@
 </div>
 
 <div class="flex items-center justify-start mt-4 mb-8">
-  <%= link_to "← Atrás", web_companies_path, class: "me-1" %> |
-  <%= link_to "Editar", edit_web_company_path(@web_company), class: "ms-1" %>
+  <%= link_to "← Atrás", web_companies_path, class: "me-1" %>
+  <% if can? :manage, Web  %>
+    | <%= link_to "Editar", edit_web_company_path(@web_company), class: "ms-1" %>
+  <% end %>
 </div>
