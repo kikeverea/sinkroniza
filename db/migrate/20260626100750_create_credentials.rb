@@ -15,7 +15,6 @@ class CreateCredentials < ActiveRecord::Migration[7.1]
       t.references :company, null: false, foreign_key: true
       t.references :web, null: false, foreign_key: true
       t.references :group, null: true, foreign_key: true
-      t.references :folder, null: true, foreign_key: true
 
       t.timestamps
     end

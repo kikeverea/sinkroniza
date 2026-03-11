@@ -1,0 +1,9 @@
+<div
+  id="tags-index"
+  class="d-flex flex-wrap justify-content-center justify-content-sm-start gap-4"
+  data-controller="ransack"
+>
+  <% @tags.each do |tag| %>
+    <%= render tag %>
+  <% end %>
+</div>

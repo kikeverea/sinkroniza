@@ -189,7 +189,7 @@
             <li class="py-1">
               <%= link_to companies_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
                 <i class="fa-solid fa-building"></i>
-                <span>Compañías</span>
+                <span>Clientes</span>
               <% end %>
             </li>
           <% end %>
@@ -214,12 +214,12 @@
             </li>
           <% end %>
 
-          <!-- Folders -->
-          <% if can? :read, Folder %>
+          <!-- Tags -->
+          <% if can? :read, Tag %>
             <li class="py-1">
-              <%= link_to folders_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
-                <i class="fa-solid fa-folder-open"></i>
-                <span>Carpetas</span>
+              <%= link_to tags_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
+                <i class="fa-solid fa-tag"></i>
+                <span>Etiquetas</span>
               <% end %>
             </li>
           <% end %>

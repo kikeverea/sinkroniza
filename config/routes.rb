@@ -29,10 +29,9 @@ Rails.application.routes.draw do
   get :logout, to: "users#logout", as: :logout
 
 
-## Folders
-  get "folders/name/:name", to: "folders#by_name", as: :folder_by_name
-  resources :folders
-
+## Tags
+  get "tags/ransack", to: "tags#ransack", as: :ransack_tags
+  resources :tags
 
 ## Emergency contacts
   get "emergency_contacts/requests", to: "emergency_contacts#requests", as: :emergency_requests

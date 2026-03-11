@@ -20,7 +20,6 @@ class CredentialsTest < ApplicationSystemTestCase
     fill_in "Credential type", with: @credential.credential_type
     fill_in "description", with: @credential.description
     fill_in "Encrypted blob", with: @credential.encrypted_blob
-    fill_in "Folder", with: @credential.folder_id
     fill_in "Group", with: @credential.group_id
     fill_in "Mediator code", with: @credential.mediator_code
     fill_in "Name", with: @credential.name
@@ -45,7 +44,6 @@ class CredentialsTest < ApplicationSystemTestCase
     fill_in "Credential type", with: @credential.credential_type
     fill_in "description", with: @credential.description
     fill_in "Encrypted blob", with: @credential.encrypted_blob
-    fill_in "Folder", with: @credential.folder_id
     fill_in "Group", with: @credential.group_id
     fill_in "Mediator code", with: @credential.mediator_code
     fill_in "Name", with: @credential.name

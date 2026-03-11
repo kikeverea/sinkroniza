@@ -3,7 +3,7 @@ class CompaniesController < ApplicationController
 
   def index
     authorize! :read, Company
-    @title = "Compañías"
+    @title = "Clientes"
 
     @search = params[:q].nil? ? "" : params[:q][:name_or_legal_name_cont]
     @q = Company.ransack(params[:q])
@@ -16,17 +16,17 @@ class CompaniesController < ApplicationController
   end
 
   def show
-    @title = "Compañía"
+    @title = "Cliente"
   end
 
   def new
-    @title = "Nueva compañía"
+    @title = "Nueva cliente"
     @company = Company.new
     @company.build_manager
   end
 
   def edit
-    @title = "Editar compañía"
+    @title = "Editar cliente"
   end
 
   def create
@@ -34,7 +34,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
-        format.html { redirect_to @company, notice: "Compañía creada" }
+        format.html { redirect_to @company, notice: "Cliente creado" }
         format.json { render :show, status: :created, location: @company }
       else
         format.html { render :new, status: :unprocessable_content }
@@ -46,7 +46,7 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
-        format.html { redirect_to @company, status: :see_other, notice: "Compañía actualizada" }
+        format.html { redirect_to @company, status: :see_other, notice: "Cliente actualizado" }
         format.json { render :show, status: :ok, location: @company }
       else
         format.html { render :edit, status: :unprocessable_content }
@@ -59,7 +59,7 @@ class CompaniesController < ApplicationController
     @company.destroy!
 
     respond_to do |format|
-      format.html { redirect_to companies_path, status: :see_other, notice: "Compañía eliminada" }
+      format.html { redirect_to companies_path, status: :see_other, notice: "Cliente eliminado" }
       format.json { head :no_content }
     end
   end

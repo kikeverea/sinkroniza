@@ -1,0 +1,32 @@
+<div class="card card-body w-100 w-xl-50">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong>Nombre</strong></td>
+        <td><%= @tag.name %></td>
+      </tr>
+      <tr>
+        <td><strong>Color</strong></td>
+        <td>
+          <% if @tag.color.present? %>
+            <div
+              class="rounded w-20px h-20px"
+              style="background-color: <%= @tag.color %>"
+            ></div>
+          <% end %>
+        </td>
+      </tr>
+      <% if @show_company %>
+        <tr>
+          <td><strong>Compañía</strong></td>
+          <td><%= @tag.company.presence&.name || "-" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="flex items-center justify-start mt-4 mb-8">
+  <%= link_to "← Atrás", tags_path, class: "me-1" %> |
+  <%= link_to "Editar", edit_tag_path(@tag), class: "ms-1" %>
+</div>

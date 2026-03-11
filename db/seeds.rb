@@ -3,7 +3,7 @@ subscriptions_then = User.count
 companies_then = User.count
 webs_then = Web.count
 groups_then = Group.count
-folders_then = Folder.count
+tags_then = Tag.count
 
 super_admin = User.find_or_create_by!(email: "super@admin.com", role: "super_admin") do |user|
   user.password = "12341234"
@@ -43,7 +43,7 @@ end
 web_company = WebCompany.find_or_create_by!(name: "Test web", web_company_type: WebCompany.web_company_types.to_a.sample.first)
 
 Web.find_or_create_by!(name: "Test web") { |web| web.web_company = web_company }
-Folder.find_or_create_by!(name: "Test folder", company: company)
+Tag.find_or_create_by!(name: "Test tag", color: "#41C29E")
 Group.find_or_create_by!(name: "Test group", company: company, creator: admin)
 
 users_now = User.count
@@ -51,11 +51,11 @@ subscriptions_now = User.count
 companies_now = User.count
 webs_now = Web.count
 groups_now = Group.count
-folders_now = Folder.count
+tags_now = Tag.count
 
 puts "Users in db: #{users_now} (#{users_now - users_then} users seeded)"
 puts "Subscriptions in db: #{subscriptions_now} (#{subscriptions_now - subscriptions_then} subscriptions seeded)"
 puts "Companies in db: #{companies_now} (#{companies_now - companies_then} companies seeded)"
 puts "Webs in db: #{webs_now} (#{webs_now - webs_then} webs seeded)"
 puts "Groups in db: #{groups_now} (#{groups_now - groups_then} groups seeded)"
-puts "Folders in db: #{folders_now} (#{folders_now - folders_then} folders seeded)"
+puts "Tags in db: #{tags_now} (#{tags_now - tags_then} tags seeded)"

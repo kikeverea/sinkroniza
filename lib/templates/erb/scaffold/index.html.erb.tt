@@ -1,7 +1,7 @@
 <!-- lib/templates/erb/scaffold/index.html.erb.tt -->
 <div class="card card-body" id="<%= plural_table_name %>">
   <%%= link_to new_<%= singular_route_name %>_path, class: "btn btn-success btn-sm w-200px" do %>
-    <i class="fa fa-plus"></i> Nuevo <%= singular_table_name.titleize %>
+    <i class="fa fa-plus"></i> Nuevo <%= I18n.t("activerecord.models.#{file_name}.other", default: file_name.pluralize.humanize) %>
   <%% end %>
 
   <div class="separator mt-10 mb-3"></div>
@@ -9,9 +9,8 @@
   <table class="table table-hover table-rounded table-striped gy-7 gs-7">
     <thead>
       <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
-        <th>ID</th>
         <% attributes.reject(&:password_digest?).each do |attribute| -%>
-          <th><%= attribute.human_name %></th>
+          <th><%= I18n.t("activerecord.attributes.#{file_name}.#{attribute.column_name}", default: attribute.column_name.humanize) %></th>
         <% end %>
         <th></th>
       </tr>
@@ -19,7 +18,6 @@
     <tbody>
       <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
       <tr>
-          <td><%%= <%= singular_table_name %>.id %></td>
           <% attributes.reject(&:password_digest?).each do |attribute| -%>
             <td><%%= <%= singular_table_name %>.<%= attribute.column_name %> %></td>
           <% end %>
@@ -35,9 +33,9 @@
             Acciones
           </button>
           <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
-            <%%= link_to "Ver", <%= singular_table_name %>, class: 'dropdown-item' %>
-            <%%= link_to "Editar", edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'dropdown-item' %>
-            <%%= link_to "Eliminar", <%= singular_table_name %>, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
+            <%%= link_to "Ver", <%= singular_table_name %>, class: "dropdown-item" %>
+            <%%= link_to "Editar", edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: "dropdown-item" %>
+            <%%= link_to "Eliminar", <%= singular_table_name %>, class: "dropdown-item", data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %>
           </div>
         </td>
       </tr>

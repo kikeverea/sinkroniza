@@ -2,8 +2,9 @@ class Credential < ApplicationRecord
   company_scoped
 
   belongs_to :web
-  belongs_to :folder, optional: true
   belongs_to :group, optional: true
+  has_many :credential_tags, dependent: :destroy
+  has_many :tags, through: :credential_tags
 
   validates :web, :name, :credential_type, presence: true
 

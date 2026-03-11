@@ -17,8 +17,8 @@ es:
           rejected: "Rechazada"
       company:
         status:
-          active: "Activa"
-          inactive: "Inactiva"
+          active: "Activo"
+          inactive: "Inactivo"
       web_company:
         web_company_type:
           bank: "Banco"
@@ -50,6 +50,8 @@ es:
           granted: "Concedida"
           cancelled: "Cancelada"
           expired: "Caducada"
+    models:
+      tag: Etiqueta
     attributes:
       user:
         name: Nombre
@@ -69,6 +71,11 @@ es:
         description: Descripción
         group_type: Tipo
         creator: Creador
+      tag:
+        name: Nombre
+        color: Color
+        company: Compañía
+
       subscription:
         name: Nombre
         description: Descripción

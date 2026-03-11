@@ -4,7 +4,7 @@ class CredentialsController < ApplicationController
   def index
     authorize! :read, Credential
     @title = "Credenciales"
-    @credentials = Credential.includes(:company, :web, :group, :folder).order(:name)
+    @credentials = Credential.includes(:company, :web, :group, :tags).order(:name)
   end
 
   def show
@@ -76,7 +76,7 @@ class CredentialsController < ApplicationController
         :group_id,
         :company_id,
         :web_id,
-        :folder_id,
+        :tags_ids,
         :credential_type,
         :web_company_type,
         :name,

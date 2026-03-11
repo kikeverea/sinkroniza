@@ -5,7 +5,7 @@
     <tbody>
       <% attributes.reject(&:password_digest?).each do |attribute| -%>
         <tr>
-          <td><strong><%= attribute.human_name %></strong></td>
+          <td><strong><%%= <%= singular_table_name %>.<%= attribute.column_name %> %></strong></td>
           <td><%%= @<%= singular_table_name %>.<%= attribute.name %>.presence || "-" %></td>
         </tr>
       <% end -%>

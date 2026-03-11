@@ -26,6 +26,10 @@
   border: 1px solid #ECECEC !important
 }
 
+.text-overflow-ellipsis {
+    text-overflow: ellipsis;
+}
+
 .btn-sinkroniza {
   color: #fff;
   background-color: #4E94BD;
