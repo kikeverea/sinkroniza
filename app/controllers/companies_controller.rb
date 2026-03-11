@@ -24,7 +24,7 @@ class CompaniesController < ApplicationController
     @company = Company.new(company_params)
 
     respond_to do |format|
-      if @company.save!
+      if @company.save
         format.html { redirect_to @company, notice: "Compañía creada" }
         format.json { render :show, status: :created, location: @company }
       else
@@ -37,7 +37,7 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
-        format.html { redirect_to @company, notice: "Compañía actualizada", status: :see_other }
+        format.html { redirect_to @company, status: :see_other, notice: "Compañía actualizada" }
         format.json { render :show, status: :ok, location: @company }
       else
         format.html { render :edit, status: :unprocessable_content }
@@ -50,7 +50,7 @@ class CompaniesController < ApplicationController
     @company.destroy!
 
     respond_to do |format|
-      format.html { redirect_to companies_path, notice: "Compañía eliminada", status: :see_other }
+      format.html { redirect_to companies_path, status: :see_other, notice: "Compañía eliminada" }
       format.json { head :no_content }
     end
   end

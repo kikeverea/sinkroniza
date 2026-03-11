@@ -15,6 +15,7 @@ FactoryBot.define do
 
     trait :user do
       role { :user }
+      company
     end
   end
 end

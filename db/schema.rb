@@ -105,11 +105,12 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100753) do
     t.bigint "company_id", null: false
     t.string "name"
     t.text "description"
-    t.integer "created_by_user_id"
     t.string "group_type"
+    t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_groups_on_company_id"
+    t.index ["creator_id"], name: "index_groups_on_creator_id"
   end
 
   create_table "logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -197,6 +198,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100753) do
   add_foreign_key "group_users", "groups"
   add_foreign_key "group_users", "users"
   add_foreign_key "groups", "companies"
+  add_foreign_key "groups", "users", column: "creator_id"
   add_foreign_key "users", "companies"
   add_foreign_key "webs", "web_companies"
 end

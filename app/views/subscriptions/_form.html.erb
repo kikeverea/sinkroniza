@@ -2,7 +2,7 @@
   <div class="alert alert-danger d-flex align-items-center p-5">
     <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
     <div class="d-flex flex-column">
-      <h4 class="mb-1 text-dark">
+      <h4 class="mb-1 text-danger">
         No se ha podido realizar la acción
       </h4>
       <span class="ms-4">
@@ -15,20 +15,20 @@
 <% end %>
 
 <div class="card card-body mb-8">
-  <%= form_with model: subscription do |form| %>
+  <%= form_with model: subscription, data: { turbo: false } do |form| %>
 
     <div class="mb-4">
-      <%= form.label :name, "Nombre", class: "form-label required" %>
+      <%= form.label :name, class: "form-label required" %>
       <%= form.text_field :name, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :max_users, "Cantidad de usuarios", class: "form-label required" %>
+      <%= form.label :max_users, class: "form-label required" %>
       <%= form.number_field :max_users, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :description, "Descripción", class: "form-label" %>
+      <%= form.label :description, class: "form-label" %>
       <%= form.text_area :description, class: "form-control form-control-solid" %>
     </div>
 

@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
     return toast("Límite de usuarios excedido", :error) unless @user.company_id.nil? || @user.company.can_add_user?
 
-    if @user.save!
+    if @user.save
       redirect_to params[:target] == "company" ? @user.company : users_path, notice: "Usuario creado"
     else
       render :new, status: :unprocessable_content
@@ -69,7 +69,12 @@ class UsersController < ApplicationController
 
   def destroy
     authorize! :destroy, @user
-    @user.update!(status: :deleted)
+
+    if @user.status == "deleted"
+      @user.destroy!
+    else
+      @user.update!(status: :deleted)
+    end
 
     redirect_to params[:target] == "company" ? @user.company : users_path, notice: "Usuario eliminado"
   end

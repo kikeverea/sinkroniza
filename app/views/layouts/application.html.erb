@@ -204,12 +204,12 @@
             </li>
           <% end %>
 
-          <!-- Webs (WebCompany) -->
+          <!-- Web Companies -->
           <% if can? :read, WebCompany %>
             <li class="py-1">
               <%= link_to web_companies_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
                 <i class="fa-solid fa-globe"></i>
-                <span>Webs</span>
+                <span>Compañías Web</span>
               <% end %>
             </li>
           <% end %>
@@ -287,11 +287,11 @@
           <div class="alert alert-danger alert-dismissible d-flex p-5 gap-4">
             <i class="fa-solid fa-circle-exclamation text-danger fs-1"></i>
             <div class="d-flex flex-column">
-                    <span style="margin-left: 10px;">
-                      <% flash[:errors].each do |error| %>
-                        <li><%= error %></li>
-                      <% end %>
-                    </span>
+              <span style="margin-left: 10px;">
+                <% flash[:errors].each do |error| %>
+                  <li><%= error %></li>
+                <% end %>
+              </span>
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>

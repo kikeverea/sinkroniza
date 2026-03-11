@@ -2,7 +2,7 @@
   <div class="alert alert-danger d-flex align-items-center p-5">
     <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
     <div class="d-flex flex-column">
-      <h4 class="mb-1 text-dark">
+      <h4 class="mb-1 text-danger">
         No se ha podido realizar la acción
       </h4>
       <span class="ms-4">
@@ -15,7 +15,7 @@
 <% end %>
 
 <div class="card card-body px-4 mb-6">
-  <%= form_with model: user, url: url do |form| %>
+  <%= form_with model: user, url: url, data: { turbo: false } do |form| %>
 
     <%= hidden_field_tag :target, target %>
     <% creatable_roles = current_user.creatable_roles %>
@@ -33,7 +33,7 @@
       <%= form.hidden_field :role, value: creatable_roles.first %>
     <% else %>
       <div class="mb-4">
-        <%= form.label :role, "Rol", class: "form-label" %>
+        <%= form.label :role, class: "form-label" %>
         <%= form.select :role,
           options_for_select(creatable_roles.map { |role, _val| [user_role_text(role), role] }, user.role),
           {},
@@ -43,37 +43,37 @@
     <% end %>
 
     <div class="mb-4">
-      <%= form.label :name, "Nombre", class: "form-label required" %>
+      <%= form.label :name, class: "form-label required" %>
       <%= form.text_field :name, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :lastname, "Apellido", class: "form-label required" %>
+      <%= form.label :lastname, class: "form-label required" %>
       <%= form.text_field :lastname, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :email, "Email", class: "form-label required" %>
+      <%= form.label :email, class: "form-label required" %>
       <%= form.email_field :email, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :phone, "Teléfono", class: "form-label" %>
+      <%= form.label :phone, class: "form-label" %>
       <%= form.phone_field :phone, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :nif, "NIF", class: "form-label" %>
+      <%= form.label :nif, class: "form-label" %>
       <%= form.text_field :nif, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :date_expiration_password, "Caducidad contraseña", class: "form-label" %>
+      <%= form.label :date_expiration_password,  class: "form-label" %>
       <%= form.date_field :date_expiration_password, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :status, "Estado", class: "form-label" %>
+      <%= form.label :status, class: "form-label" %>
       <%= form.select :status,
         options_for_select(User.statuses.map { |status, _val| [user_status_text(status), status] }, user.status),
         {},
@@ -92,15 +92,15 @@
 </div>
 
 <% if user == current_user %>
-  <%= form_with model: user, url: change_user_password_path(user), method: :put do |form| %>
+  <%= form_with model: user, url: change_user_password_path(user), method: :put, data: { turbo: false } do |form| %>
     <div class="card card-body px-4 mb-8">
       <div class="mb-4">
-        <%= form.label "Contraseña", class: "form-label" %>
+        <%= form.label :password, class: "form-label" %>
         <%= form.password_field :password, class: "form-control form-control-solid" %>
       </div>
 
       <div class="mb-4">
-        <%= form.label "Confirmar Contraseña", class: "fs-6 fw-semibold mb-2" %>
+        <%= form.label :password_confirmation, class: "fs-6 fw-semibold mb-2" %>
         <%= form.password_field :password_confirmation, class: "form-control form-control-solid" %>
       </div>
 

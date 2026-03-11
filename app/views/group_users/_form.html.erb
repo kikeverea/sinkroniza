@@ -2,7 +2,7 @@
   <div class="alert alert-danger d-flex align-items-center p-5">
     <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
     <div class="d-flex flex-column">
-      <h4 class="mb-1 text-dark">
+      <h4 class="mb-1 text-danger">
         No se ha podido realizar la acción
       </h4>
       <span class="ms-4">
@@ -15,8 +15,9 @@
 <% end %>
 
 <div class="card card-body mb-8">
-  <%= form_with model: group_user do |form| %>
+  <%= form_with model: group_user, data: { turbo: false } do |form| %>
     <%= form.hidden_field :group_id, value: group_user.group_id %>
+    <%= form.hidden_field :role, value: :shared %>
 
     <div class="mb-4">
       <%= form.label :status, "Usuario", class: "form-label required" %>
@@ -27,15 +28,6 @@
       %>
     </div>
 
-    <div class="mb-4">
-      <%= form.label :role, "Rol", class: "form-label" %>
-      <%= form.select :role,
-        options_for_select(GroupUser.roles.map { |role, _val| [group_user_role_text(role), role] }, group_user.role),
-        { include_blank: "Seleccionar rol"},
-        class: "form-select"
-      %>
-    </div>
-    
     <div class="mt-8">
       <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
       <%= link_to "Cancelar", group_user.group, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>

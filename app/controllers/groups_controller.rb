@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
   def index
     authorize! :read, Group
     @title = "Grupos"
-    @groups = Group.accessible_by(current_ability).includes(:company, group_users: :user)
+    @groups = Group.accessible_by(current_ability).where(group_type: :company).includes(:company, group_users: :user)
   end
 
   def show
@@ -72,6 +72,6 @@ class GroupsController < ApplicationController
   end
 
   def group_params
-    params.require(:group).permit(:company_id, :name, :owner_id, :description, :created_by_user_id, :group_type)
+    params.require(:group).permit(:company_id, :name, :owner_id, :description, :creator_id, :group_type)
   end
 end

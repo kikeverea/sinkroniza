@@ -18,7 +18,7 @@
       </tr>
       <tr>
         <td><strong>Creado por</strong></td>
-        <td><%= User.find(@group.created_by_user_id).full_name %></td>
+        <td><%= User.find(@group.creator_id).full_name %></td>
       </tr>
       <tr>
         <td><strong>Descripción</strong></td>

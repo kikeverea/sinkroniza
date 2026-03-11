@@ -15,7 +15,7 @@ class GroupsTest < ApplicationSystemTestCase
     click_on "New group"
 
     fill_in "Company", with: @group.company_id
-    fill_in "Created by user", with: @group.created_by_user_id
+    fill_in "Created by user", with: @group.creator_id
     fill_in "description", with: @group.description
     fill_in "Group type", with: @group.group_type
     fill_in "Name", with: @group.name
@@ -30,7 +30,7 @@ class GroupsTest < ApplicationSystemTestCase
     click_on "Edit this group", match: :first
 
     fill_in "Company", with: @group.company_id
-    fill_in "Created by user", with: @group.created_by_user_id
+    fill_in "Created by user", with: @group.creator_id
     fill_in "description", with: @group.description
     fill_in "Group type", with: @group.group_type
     fill_in "Name", with: @group.name

@@ -14,10 +14,10 @@ class FoldersController < ApplicationController
   end
 
   def by_name
-    authorize! :read, @folder
-
     @title = "Carpeta"
     @folder = Folder.find_by(name: params[:name])
+
+    authorize! :read, @folder
     render :show
   end
 

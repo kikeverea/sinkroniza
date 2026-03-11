@@ -16,6 +16,6 @@ class ApplicationController < ActionController::Base
     end
 
     def set_show_company
-      @show_company = current_user.company.nil?
+      @show_company = current_user&.company&.nil?
     end
 end

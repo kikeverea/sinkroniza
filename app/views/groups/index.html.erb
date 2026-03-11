@@ -33,7 +33,7 @@
               </td>
             <% end %>
             <td><%= group.group_users.count %></td>
-            <td><%= User.find(group.created_by_user_id).full_name %></td>
+            <td><%= User.find(group.creator_id).full_name %></td>
             <td><%= group.group_type_text %></td>
 
             <td class="text-end">

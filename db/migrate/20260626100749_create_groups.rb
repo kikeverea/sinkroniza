@@ -4,8 +4,8 @@ class CreateGroups < ActiveRecord::Migration[7.1]
       t.references :company, null: false, foreign_key: true
       t.string :name
       t.text :description
-      t.integer :created_by_user_id
       t.string :group_type
+      t.references :creator, null: false, foreign_key: { to_table: :users }
 
       t.timestamps
     end

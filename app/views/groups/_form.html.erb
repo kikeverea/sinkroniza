@@ -2,7 +2,7 @@
   <div class="alert alert-danger d-flex align-items-center p-5">
     <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
     <div class="d-flex flex-column">
-      <h4 class="mb-1 text-dark">
+      <h4 class="mb-1 text-danger">
         No se ha podido realizar la acción
       </h4>
       <span class="ms-4">
@@ -15,37 +15,13 @@
 <% end %>
 
 <div class="card card-body mb-8">
-  <%= form_with model: group  do |form| %>
+  <%= form_with model: group , data: { turbo: false } do |form| %>
+
+      <%= form.hidden_field :group_type, value: :company %>
+
       <div class="mb-4">
         <%= form.label :name, "Nombre", class: "form-label required" %>
         <%= form.text_field :name, class: "form-control form-control-solid" %>
-      </div>
-
-      <div class="mb-4">
-        <%= form.label :company_id, "Compañía", class: "form-label required" %>
-        <%= form.collection_select :company_id,
-          Company.order(:name), :id, :name,
-          { include_blank: "Seleccionar compañía" },
-          class: "form-select"
-        %>
-      </div>
-
-      <div class="mb-4">
-        <%= form.label :owner_id, "Dueño", class: "form-label required" %>
-        <%= form.collection_select :owner_id,
-          User.order(:name, :lastname), :id, :full_name,
-          { include_blank: "Seleccionar usuario" },
-          class: "form-select"
-        %>
-      </div>
-
-      <div class="mb-4">
-        <%= form.label :group_type, class: "form-label required" %>
-        <%= form.select :group_type,
-          options_for_select(Group.group_types.map { |type, _val| [group_type_text(type), type] }, group.group_type),
-          { include_blank: "Seleccionar tipo" },
-          class: "form-select"
-        %>
       </div>
 
       <div class="mb-4">

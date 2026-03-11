@@ -8,7 +8,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test "sets its creator" do
     group = create(:group)
-    assert_equal Current.user.id, group.created_by_user_id
+    assert_equal Current.user.id, group.creator_id
   end
 
   test "creates an owner user" do

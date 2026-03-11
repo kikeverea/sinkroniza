@@ -3,24 +3,24 @@ class WebCompaniesController < ApplicationController
 
   def index
     authorize! :read, WebCompany
-    @title = "Webs"
+    @title = "Compañías Web"
     @web_companies = WebCompany.accessible_by(current_ability).includes(:webs)
   end
 
   def show
     authorize! :read, @web_company
-    @title = "Web"
+    @title = "Compañía Web"
   end
 
   def new
     authorize! :create, WebCompany
-    @title = "Nueva web"
+    @title = "Nueva compañía web"
     @web_company = WebCompany.new
   end
 
   def edit
     authorize! :update, @web_company
-    @title = "Editar web"
+    @title = "Editar compañía web"
   end
 
   def create

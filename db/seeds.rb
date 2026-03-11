@@ -11,11 +11,7 @@ super_admin = User.find_or_create_by!(email: "super@admin.com", role: "super_adm
   user.lastname = "Admin"
 end
 
-admin = User.find_or_create_by!(email: "admin@admin.com", role: "company_admin") do |user|
-  user.password = "12341234"
-  user.name = "Admin"
-  user.lastname = "Test"
-end
+Current.user = super_admin
 
 subscription = Subscription.find_or_create_by!(name: "Test subscription") do |subscription|
   subscription.max_users = rand(3..10)
@@ -24,7 +20,15 @@ end
 company = Company.find_or_create_by!(name: "Test company") do |company|
   company.subscription = subscription
   company.creator = super_admin
-  company.manager = admin
+end
+
+Current.company = company
+
+admin = User.find_or_create_by!(email: "admin@admin.com", role: "company_admin") do |user|
+  user.password = "12341234"
+  user.name = "Admin"
+  user.lastname = "Test"
+  user.company = company
 end
 
 5.times do |i|
@@ -40,10 +44,7 @@ web_company = WebCompany.find_or_create_by!(name: "Test web", web_company_type: 
 
 Web.find_or_create_by!(name: "Test web") { |web| web.web_company = web_company }
 Folder.find_or_create_by!(name: "Test folder", company: company)
-Group.find_or_create_by!(name: "Test group", company: company, created_by_user_id: admin.id) do |group|
-  group.owner_id = admin.id
-  group.group_type = :personal
-end
+Group.find_or_create_by!(name: "Test group", company: company, creator: admin)
 
 users_now = User.count
 subscriptions_now = User.count

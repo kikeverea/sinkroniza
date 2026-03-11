@@ -43,7 +43,14 @@
           <div class="dropdown-menu">
             <%= link_to "Ver", show_user_path(user, target: target), class: "dropdown-item" %>
             <%= link_to "Editar", edit_user_path(user, target: target), class: "dropdown-item" %>
-            <%= link_to "Eliminar", delete_user_path(user, target: target), class:"dropdown-item", data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %>
+            <%= link_to "Eliminar",
+              delete_user_path(user, target: target),
+              class:"dropdown-item",
+              data: {
+                turbo_method: :delete,
+                turbo_confirm: user.status == "deleted" "El usuario será destruido. Esta acción no es reversible ¿Estás seguro?"
+              }
+            %>
           </div>
         </td>
       </tr>

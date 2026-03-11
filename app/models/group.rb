@@ -2,22 +2,26 @@ class Group < ApplicationRecord
 
   company_scoped
 
-  before_create :set_creator_user
+  before_validation :set_creator_user, on: :create
   after_save :set_owner
   after_update :update_users_group_type
 
   attr_accessor :owner_id
   attr_accessor :allows_owner_destroy
 
+  belongs_to :creator, class_name: "User"
   has_many :group_users, dependent: :destroy
   has_many :users, through: :group_users
+  has_one :owner, -> { where(role: :owner) }, class_name: "GroupUser"
 
-  validates :name, :owner_id, :group_type, presence: true
+  validates :group_type, :creator_id, presence: true
+  validates :name, presence: true, if: -> { group_type.to_sym == :company }
 
   enum :group_type, {
     personal: "personal",
     company: "company"
-  }
+  },
+  default: :company
 
   #noinspection RubyRedundantSafeNavigation
   def owner_id
@@ -36,7 +40,7 @@ class Group < ApplicationRecord
   private
 
   def set_creator_user
-    self.created_by_user_id ||= Current.user.id
+    self.creator ||= Current.user
   end
 
   #noinspection RubyRedundantSafeNavigation

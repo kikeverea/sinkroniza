@@ -20,7 +20,7 @@ class GroupUsersController < ApplicationController
 
     respond_to do |format|
       if @group_user.save
-        format.html { redirect_to @group_user.group, notice: "Usuario de grupo creada" }
+        format.html { redirect_to @group_user.group, notice: "Usuario de grupo creado" }
         format.json { render :show, status: :created, location: @group_user }
       else
         format.html { render :new, status: :unprocessable_content }
@@ -32,7 +32,7 @@ class GroupUsersController < ApplicationController
   def update
     respond_to do |format|
       if @group_user.update(group_user_params)
-        format.html { redirect_to @group_user.group, notice: "Usuario de grupo actualizada" }
+        format.html { redirect_to @group_user.group, notice: "Usuario de grupo actualizado" }
         format.json { render :show, status: :ok, location: @group_user }
       else
         format.html { render :edit, status: :unprocessable_content }
@@ -45,7 +45,7 @@ class GroupUsersController < ApplicationController
     @group_user.destroy!
 
     respond_to do |format|
-      format.html { redirect_to @group_user.group, notice: "Usuario de grupo eliminada" }
+      format.html { redirect_to @group_user.group, notice: "Usuario de grupo eliminado" }
       format.json { head :no_content }
     end
   end

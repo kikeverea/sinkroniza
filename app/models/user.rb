@@ -1,7 +1,9 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
-  after_create :add_to_group, if: -> { group_id.present? }
+  company_scoped optional: true
+
+  after_create :add_to_group
 
   attr_accessor :skip_password_validation
   attr_accessor :group_id
@@ -10,12 +12,12 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
-  belongs_to :company, optional: true
   has_many :emergency_contacts, foreign_key: :owner_user_id, dependent: :destroy
   has_many :emergency_contact_users, class_name: "EmergencyContact", foreign_key: :contact_user_id, dependent: :destroy
   has_many :emergency_requests, through: :emergency_contacts
 
   validates :name, :lastname, presence: true
+  validate :company_presence
 
   scope :kept, -> { where.not(status: :deleted).accessible_by(Current.ability) }
   scope :discarded, -> { where(status: :deleted).accessible_by(Current.ability) }
@@ -28,9 +30,13 @@ class User < ApplicationRecord
   def self.ransackable_associations(_auth_object = nil)
     []
   end
-    
+
   def self.ransackable_attributes(_auth_object = nil)
-    %w[created_at name email]
+    %w[created_at full_name email role]
+  end
+
+  ransacker :full_name do
+    Arel.sql("LOWER(CONCAT(users.name, ' ', users.lastname))")
   end
 
   enum :role, {
@@ -87,6 +93,16 @@ class User < ApplicationRecord
   private
 
   def add_to_group
-    GroupUser.create!(user: self, group_id: self.group_id)
+    if group_id
+      GroupUser.create!(user: self, group_id: self.group_id)
+    elsif role == "user"
+      Group.create!(group_type: :personal, owner_id: self.id)
+    end
+  end
+
+  def company_presence
+    errors.add(:company_id, "El super admin no puede pertenecer a una compañía") if !company_id.nil? && role == "super_admin"
+    # errors.add(:company_id, "El admin de compañía debe pertenecer a la compañía") if company_id.nil? && role == "company_admin"
+    errors.add(:company_id, "Los usuarios deben pertenecer a una compañía") if company_id.nil? && role == "user"
   end
 end
