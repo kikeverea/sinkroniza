@@ -2,19 +2,13 @@ class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: %i[ show edit update destroy ]
 
   def index
-    authorize! :read, Folder
-    @title = "Subscripciones"
+    authorize! :read, Subscription
+    @title = "Suscripciones"
 
     @search = params[:q].nil? ? "" : params[:q][:name_cont]
-    @q = Folder.includes(:company).ransack(params[:q])
+    @q = Subscription.ransack(params[:q])
 
-    @folders = @q.result.accessible_by(current_ability).parents.order(:name).paginate(:page => params[:page], :per_page => 15)
-  end
-  def index
-    authorize! :read, Subscription
-
-    @title = "Subscripciones"
-    @subscriptions = Subscription.all
+    @subscriptions = @q.result.accessible_by(current_ability).order(:name).paginate(:page => params[:page], :per_page => 15)
   end
 
   def show

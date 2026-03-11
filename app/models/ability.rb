@@ -29,6 +29,8 @@ class Ability
       can :read, User, company_id: user.company_id, role: :user
       can :read, GroupUser, user_id: user.id
       can :read, Group, group_users: { user_id: user.id }
+      can :read, WebCompany
+      can :read, Web
 
       can :create, EmergencyRequest, contact_id: user.id
     end
