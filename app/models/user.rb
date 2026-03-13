@@ -12,6 +12,14 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
+  has_many :group_users, dependent: :destroy
+  has_many :groups, through: :group_users
+
+  has_one :personal_group_user, -> { joins(:group).where(groups: { group_type: :personal }) }, class_name: "GroupUser"
+  has_one :personal_group, through: :personal_group_user, source: :group
+
+  has_many :credentials, through: :groups
+
   has_many :emergency_contacts, foreign_key: :owner_user_id, dependent: :destroy
   has_many :emergency_contact_users, class_name: "EmergencyContact", foreign_key: :contact_user_id, dependent: :destroy
   has_many :emergency_requests, through: :emergency_contacts
@@ -89,6 +97,9 @@ class User < ApplicationRecord
     })
   end
 
+  def as_json(_options = nil)
+    super.merge(company_name: company&.name)
+  end
 
   private
 

@@ -1,0 +1,10 @@
+### User login
+POST http://localhost:3000/login.json
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "user1@user.com",
+    "password": "12341234"
+  }
+}

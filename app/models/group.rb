@@ -10,8 +10,11 @@ class Group < ApplicationRecord
   attr_accessor :allows_owner_destroy
 
   belongs_to :creator, class_name: "User"
+
+  has_many :credentials
   has_many :group_users, dependent: :destroy
   has_many :users, through: :group_users
+
   has_one :owner, -> { where(role: :owner) }, class_name: "GroupUser"
 
   validates :group_type, :creator_id, presence: true

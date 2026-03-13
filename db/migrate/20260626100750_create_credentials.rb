@@ -9,7 +9,7 @@ class CreateCredentials < ActiveRecord::Migration[7.1]
       t.string :mediator_code
       t.string :priority
       t.string :owner
-      t.boolean :visible_extension
+      t.boolean :visible_extension, default: true
       t.boolean :active, default: true
       t.string :credential_type
       t.references :company, null: false, foreign_key: true

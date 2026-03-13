@@ -31,18 +31,25 @@ admin = User.find_or_create_by!(email: "admin@admin.com", role: "company_admin")
   user.company = company
 end
 
+web_company = WebCompany.find_or_create_by!(name: "Innobing", web_company_type: :other)
+web = Web.find_or_create_by!(name: "Test web", access_url: "https://www.innobing.com/en/") { |web| web.web_company = web_company }
+
 5.times do |i|
-  User.find_or_create_by!(email: "user#{i + 1}@user.com", role: "user") do |user|
+  user = User.find_or_create_by!(email: "user#{i + 1}@user.com", role: "user") do |user|
     user.password = "12341234"
     user.name = "User"
     user.lastname = "Test #{i + 1}"
     user.company_id = company.id
   end
+  Credential.create!(
+    name: "Test credential #{i}",
+    web: web,
+    credential_type: :regular,
+    group: user.personal_group,
+    company: company
+  )
 end
 
-web_company = WebCompany.find_or_create_by!(name: "Innobing", web_company_type: :other)
-
-Web.find_or_create_by!(name: "Test web", access_url: "https://www.innobing.com/en/") { |web| web.web_company = web_company }
 Tag.find_or_create_by!(name: "Test tag", color: "#41C29E")
 Group.find_or_create_by!(name: "Test group", company: company, creator: admin)
 

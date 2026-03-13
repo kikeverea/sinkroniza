@@ -1,5 +1,7 @@
 class CredentialsController < ApplicationController
-  before_action :set_credential, only: %i[ show edit update destroy ]
+  skip_before_action :verify_authenticity_token, only: %i[ api_change_credential_password ]
+  before_action :set_credential, only: %i[ show edit update destroy api_credential api_change_credential_password ]
+
 
   def index
     authorize! :read, Credential
@@ -62,6 +64,25 @@ class CredentialsController < ApplicationController
     end
   end
 
+
+  ## API
+  def api_credentials
+    render json: current_user.credentials.where(visible_extension: true)
+  end
+
+  def api_credential
+    render json: @credential
+  end
+
+  def api_change_credential_password
+    password_param = params.require(:credential).permit(:password)
+
+    if @credential.update(encrypted_blob: password_param[:password])
+      render json: { updated: true }, status: :ok
+    else
+      render json: { updated: false }, status: :unprocessable_content
+    end
+  end
 
   private
 

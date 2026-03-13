@@ -47,7 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100755) do
     t.string "mediator_code"
     t.string "priority"
     t.string "owner"
-    t.boolean "visible_extension"
+    t.boolean "visible_extension", default: true
     t.boolean "active", default: true
     t.string "credential_type"
     t.bigint "company_id", null: false

@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
   resources :groups
   resources :group_users
-  resources :credentials
   resources :webs
   resources :companies
   resources :subscriptions
   resources :logs
+
+## Users
+  devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords" }
+  devise_scope :user do
+     post "/signup", to: "users/registrations#create"
+     post "/login", to:"users/sessions#create" # Para obtener el token de inicio de sesión
+  end
 
   get "users/index", to:"users#index", as: :users
   post "users/create", to:"users#create", as: :create_user
@@ -17,14 +23,6 @@ Rails.application.routes.draw do
   delete "users/delete/:id", to:"users#destroy", as: :delete_user
 
   get "admin/index"
-
-
-## Users
-  devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords" }
-  devise_scope :user do
-     post "/signup", to: "users/registrations#create"
-     post "/login", to:"users/sessions#create" # Para obtener el token de inicio de sesión
-  end
   get :logout, to: "users#logout", as: :logout
 
 
@@ -33,9 +31,19 @@ Rails.application.routes.draw do
   resources :web_companies
 
 
+## Credentials
+  ### API
+  get "api/me/credentials", to: "credentials#api_credentials"
+  get "api/me/credentials/:id", to: "credentials#api_credential"
+  put "api/me/credentials/:id", to: "credentials#api_change_credential_password"
+
+  resources :credentials
+
+
 ## Tags
   get "tags/ransack", to: "tags#ransack", as: :ransack_tags
   resources :tags
+
 
 ## Emergency contacts
   get "emergency_contacts/requests", to: "emergency_contacts#requests", as: :emergency_requests
