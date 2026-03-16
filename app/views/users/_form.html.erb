@@ -23,7 +23,7 @@
     <div class="mb-4">
       <%= form.label :group_id, "Grupo", class: "form-label" %>
       <%= form.collection_select :group_id,
-        Group.accessible_by(current_ability).order(:name), :id, :name,
+        Group.company.accessible_by(current_ability).order(:name), :id, :name,
         { include_blank: "Seleccionar grupo" },
         class: "form-select"
       %>

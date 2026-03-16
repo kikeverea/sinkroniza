@@ -1,27 +1,39 @@
-<div id="<%= dom_id group %>">
-  <p>
-    <strong>Company:</strong>
-    <%= group.company_id %>
-  </p>
+<% users = group.users %>
+<% max_user_avatars = 8 %>
 
-  <p>
-    <strong>Name:</strong>
-    <%= group.name %>
-  </p>
-
-  <p>
-    <strong>description:</strong>
-    <%= group.description %>
-  </p>
-
-  <p>
-    <strong>Created by user:</strong>
-    <%= group.creator_id %>
-  </p>
-
-  <p>
-    <strong>Group type:</strong>
-    <%= group.group_type %>
-  </p>
-
-</div>
+<%= link_to group, class: "btn btn-flush w-100 w-sm-325px h-100px hover-elevate-up" do %>
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center gap-4">
+        <h4><%= group.name %></h4>
+        <span class="fs-7"><%= users.count %> usuarios</span>
+      </div>
+      <div class="position-relative overflow-hidden h-40px mt-4">
+        <% if users.any? %>
+          <% users.first(max_user_avatars).each_with_index do |user, index| %>
+            <div class="position-absolute w-40px h-40px" style="top: 0; left: <%= 25 * index %>px;">
+              <% if user.image? %>
+                <%= image_tag user.image.url, class: "rounded-circle" if user.image? %>
+              <% else %>
+                <img
+                  src="https://ui-avatars.com/api/?background=random&rounded=true&name=<%= user.name %>+<%= user.lastname %>"
+                  alt="usuario <%= user.full_name %>"
+                  class="w-40px h-40px"
+                >
+              <% end %>
+            </div>
+            <% if index == (max_user_avatars - 1) && users.count > max_user_avatars %>
+              <div class="position-absolute" style="bottom: -6px; left: <%= 25 * index + 40 + 8 %>px;">
+                <i class="fa-solid fa-ellipsis text-dark fs-5"></i>
+              </div>
+            <% end %>
+          <% end %>
+        <% else %>
+          <div class="h-40px w-100 d-flex align-items-center fs-7">
+            <em class="text-muted">sin usuarios</em>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

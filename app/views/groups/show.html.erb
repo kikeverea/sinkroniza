@@ -10,15 +10,10 @@
           <td><strong>Compañía</strong></td>
           <td><%= @group.company.name %></td>
         </tr>
-
       <% end %>
       <tr>
-        <td><strong>Tipo</strong></td>
-        <td><%= @group.group_type_text %></td>
-      </tr>
-      <tr>
         <td><strong>Creado por</strong></td>
-        <td><%= User.find(@group.creator_id).full_name %></td>
+        <td><%= @group.creator.full_name %></td>
       </tr>
       <tr>
         <td><strong>Descripción</strong></td>
@@ -33,6 +28,11 @@
 <% end %>
 
 <div class="card card-body mt-6">
-  <%= render "group_users/index", group: @group, group_users: @group.group_users %>
+  <%= render "group_users/index", group: @group, group_users: @group.group_users, embedded: true %>
 </div>
-<%= link_to "← Atrás", groups_path, class: "d-block ms-2 mt-4 mb-8" %>
+
+<div class="ms-2 mt-4 mb-8">
+  <%= link_to "← Atrás", groups_path %>
+</div>
+
+<%= render "components/turbo_modal", channel: :group_user, title: "Añadir usuario" %>

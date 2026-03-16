@@ -17,11 +17,10 @@ class Ability
     end
 
     can :manage, Credential, company_id: user.company_id
-    can :manage, Tag, company_id: user.company_id
 
     if user.company_admin?
       can :update, Company, id: user.company_id
-      can :manage, [User, Group, Tag], company_id: user.company_id
+      can :manage, [User, Group], company_id: user.company_id
       cannot :create, User, role: :super_admin
       return
     end

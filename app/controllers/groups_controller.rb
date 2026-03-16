@@ -8,9 +8,25 @@ class GroupsController < ApplicationController
 
     @search = params[:q].nil? ? "" : params[:q][:name_cont]
 
-    @q = Group.includes(:company).ransack(params[:q])
+    @query = Group.ransack(params[:q])
 
-    @groups = @q.result.accessible_by(current_ability).where(group_type: :company).order(:name).paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
+    @groups = @query.result
+      .includes(:company, :users)
+      .accessible_by(current_ability)
+      .where(group_type: :company)
+      .order(:name).paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
+  end
+
+  def ransack
+    @query = Group.ransack(params[:q])
+    @groups = @query.result
+      .includes(:company, :users)
+      .accessible_by(current_ability)
+      .where(group_type: :company)
+      .order(:name)
+      .paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
+
+    render turbo_stream: turbo_stream.replace("group-index", partial: "groups/index")
   end
 
   def show

@@ -1,36 +1,47 @@
-<% if group_user.errors.any? %>
-  <div class="alert alert-danger d-flex align-items-center p-5">
-    <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
-    <div class="d-flex flex-column">
-      <h4 class="mb-1 text-danger">
-        No se ha podido realizar la acción
-      </h4>
-      <span class="ms-4">
-        <% group_user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </span>
-    </div>
-  </div>
-<% end %>
+<% modal ||= false %>
+<% group_user ||= @group_user %>
 
-<div class="card card-body mb-8">
-  <%= form_with model: group_user, data: { turbo: false } do |form| %>
-    <%= form.hidden_field :group_id, value: group_user.group_id %>
-    <%= form.hidden_field :role, value: :shared %>
-
-    <div class="mb-4">
-      <%= form.label :status, "Usuario", class: "form-label required" %>
-      <%= form.collection_select :user_id,
-        @available_users, :id, :full_name,
-        { include_blank: "Seleccionar usuario"},
-        class: "form-select"
-      %>
-    </div>
-
-    <div class="mt-8">
-      <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
-      <%= link_to "Cancelar", group_user.group, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
+<div id="group-user-modal-outlet">
+  <% if group_user.errors.any? %>
+    <div class="alert alert-danger d-flex align-items-center p-5">
+      <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
+      <div class="d-flex flex-column">
+        <h4 class="mb-1 text-danger">
+          No se ha podido realizar la acción
+        </h4>
+        <span class="ms-4">
+          <% group_user.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </span>
+      </div>
     </div>
   <% end %>
+
+  <div class="<%= "card card-body mb-8" unless modal%>">
+    <%= form_with model: group_user, data: { turbo: false } do |form| %>
+      <%= form.hidden_field :group_id, value: group_user.group_id %>
+      <%= form.hidden_field :role, value: :shared %>
+
+      <div class="mb-4">
+        <%= form.label :status, "Usuario", class: "form-label required" %>
+        <%= form.collection_select :user_id,
+          @available_users, :id, :full_name,
+          { include_blank: "Seleccionar usuario"},
+          class: "form-select"
+        %>
+      </div>
+
+      <div class="mt-8">
+        <%= form.button "Guardar", class: "btn btn-success btn-sm", data: { bs_dismiss: "modal"} %>
+        <%= link_to "Cancelar",
+          modal ? "#" : group_user.group,
+          class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4",
+          data: { bs_dismiss: "modal"}
+        %>
+      </div>
+    <% end %>
+  </div>
 </div>
+
+

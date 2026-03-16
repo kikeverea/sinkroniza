@@ -1,7 +1,10 @@
 <div class="d-flex align-items-center justify-content-between mx-4">
   <h4>Usuarios</h4>
-  <% if can?(:manage, Group) && can?(:manage, GroupUser) %>
-    <%= link_to new_group_user_path(group_id: group.id), class: "btn btn-sm btn-primary btn-sm" do %>
+  <% if can?(:manage, Group) %>
+    <%= link_to new_group_user_path(group_id: group.id),
+      class: "btn btn-sm btn-primary btn-sm",
+      data: { turbo_stream: true } do
+    %>
       <i class="fa fa-plus"></i> Añadir usuario
     <% end %>
   <% end %>
@@ -17,26 +20,30 @@
   </thead>
   <tbody>
     <% group_users.each do |group_user| %>
+      <% user = group_user.user %>
       <tr>
-        <td><%= group_user.user.full_name %></td>
-        <td><%= group_user_badge group_user %></td>
-        <td class="text-end">
-          <button
-            type="button"
-            class="btn btn-sm btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
-            data-bs-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Acciones
-          </button>
-          <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
-            <%= link_to "Ver", show_user_path(group_user.user), class: 'dropdown-item' %>
-            <%= link_to "Editar", edit_web_path(group_user), class: 'dropdown-item' %>
-            <%= link_to "Eliminar", group_user, class:'dropdown-item', data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } %>
-          </div>
-        </td>
-      </tr>
+          <td><%= render "users/item", user: user, link: show_user_path(user) %></td>
+          <td><%= group_user_badge group_user %></td>
+          <td class="text-end">
+            <button
+              type="button"
+              class="btn btn-sm btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Acciones
+            </button>
+            <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
+              <%= link_to "Ver", show_user_path(group_user.user), class: "dropdown-item" %>
+              <%= link_to "Sacar de grupo",
+                group_user,
+                class: "dropdown-item",
+                data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" }
+              %>
+            </div>
+          </td>
+        </tr>
     <% end %>
   </tbody>
 </table>

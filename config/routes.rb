@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :groups
   resources :group_users
   resources :webs
   resources :companies
@@ -25,7 +24,7 @@ Rails.application.routes.draw do
   get :logout, to: "users#logout", as: :logout
 
 
-## Web companies
+## Subscriptions
   get "subscriptions/ransack", to: "subscriptions#ransack", as: :ransack_subscriptions
   resources :subscriptions
 
@@ -33,6 +32,11 @@ Rails.application.routes.draw do
 ## Web companies
   get "web_companies/ransack", to: "web_companies#ransack", as: :ransack_web_companies
   resources :web_companies
+
+
+## Groups
+  get "groups/ransack", to: "groups#ransack", as: :ransack_groups
+  resources :groups
 
 
 ## Credentials

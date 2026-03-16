@@ -1,0 +1,26 @@
+<% action ||= "show" %>
+<% message ||= nil %>
+<% partial ||= nil %>
+<% side_effect ||= nil %>
+
+<% if partial %>
+  <%= turbo_stream.replace "#{channel.to_s.dasherize}-modal-outlet" do %>
+    <%= render partial, modal: true %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "turbo-consumer" do %>
+  <%= render "components/turbo_modal_action", modal_id: "#{channel.to_s.dasherize}-modal", action: action %>
+<% end %>
+
+<% if message %>
+  <%= turbo_stream.replace "turbo-message-consumer" do %>
+    <%= render "components/turbo_message", id: "turbo-message-consumer", message: message %>
+  <% end %>
+<% end %>
+
+<% if side_effect %>
+  <%= turbo_stream.replace side_effect[:id] do %>
+    <%= render side_effect[:partial] %>
+  <% end %>
+<% end %>

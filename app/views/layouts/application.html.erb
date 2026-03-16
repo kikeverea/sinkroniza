@@ -215,7 +215,7 @@
           <% end %>
 
           <!-- Tags -->
-          <% if can? :read, Tag %>
+          <% if can? :manage, Tag %>
             <li class="py-1">
               <%= link_to tags_path, class: "waves-effect fs-7", style: "text-decoration: none" do %>
                 <i class="fa-solid fa-tag"></i>
