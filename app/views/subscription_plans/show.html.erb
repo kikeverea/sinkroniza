@@ -1,0 +1,35 @@
+<div class="card card-body">
+
+  <div class="mb-5">
+    <div class="form-label">
+      <strong>Nombre</strong>
+    </div>
+    <div><%= @subscription_plan.name %></div>
+  </div>
+
+  <div class="mb-5">
+    <div class="form-label">
+      <strong>Descripción</strong>
+    </div>
+    <div><%= @subscription_plan.description %></div>
+  </div>
+
+  <div class="mb-5">
+    <div class="form-label">
+      <strong>Cantidad de usuarios</strong>
+    </div>
+    <div><%= @subscription_plan.max_users %></div>
+  </div>
+
+  <div class="mb-5">
+    <div class="form-label">
+      <strong>Estado</strong>
+    </div>
+    <div><%= @subscription_plan.status.present? ? @subscription_plan.status : "-" %></div>
+  </div>
+
+  <div class="flex items-center justify-start mt-6">
+    <%= link_to "← Ir a subscripciones", subscriptions_path, class: "me-1" %> |
+    <%= link_to "Editar", edit_subscription_path(@subscription_plan), class: "ms-1" %>
+  </div>
+</div>

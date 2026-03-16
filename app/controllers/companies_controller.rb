@@ -12,7 +12,7 @@ class CompaniesController < ApplicationController
       .accessible_by(current_ability)
       .includes(:subscription, :creator, :manager)
       .order(:name)
-      .paginate(:page => params[:page], :per_page => 15)
+      .paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
   end
 
   def show

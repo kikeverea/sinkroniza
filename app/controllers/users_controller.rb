@@ -17,8 +17,8 @@ class UsersController < ApplicationController
     @users = (@target.nil? || @target == "users") ? result.kept : User.kept
     @discarded_users = @target == "discarded" ? result.discarded : User.discarded
 
-    @users = @users.order(:role, :name, :lastname).paginate(:page => params[:page], :per_page => 15)
-    @discarded_users = @discarded_users.order(:role, :name, :lastname).paginate(:page => params[:page], :per_page => 15)
+    @users = @users.order(:role, :name, :lastname).paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
+    @discarded_users = @discarded_users.order(:role, :name, :lastname).paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
   end
 
   def show

@@ -28,17 +28,6 @@
     </div>
 
     <div class="mb-4">
-      <%= form.label :status, class: "form-label" %>
-      <%= form.select :status,
-        options_for_select(Subscription.statuses.map { |status, _val| [subscription_status_text(status), status] },
-          subscription.status
-        ),
-        {},
-        class: "form-select"
-      %>
-    </div>
-
-    <div class="mb-4">
       <%= form.label :description, class: "form-label" %>
       <%= form.text_area :description, class: "form-control form-control-solid" %>
     </div>

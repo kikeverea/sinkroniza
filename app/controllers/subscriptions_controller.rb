@@ -6,9 +6,16 @@ class SubscriptionsController < ApplicationController
     @title = "Suscripciones"
 
     @search = params[:q].nil? ? "" : params[:q][:name_cont]
-    @q = Subscription.ransack(params[:q])
+    @query = Subscription.ransack(params[:q])
 
-    @subscriptions = @q.result.accessible_by(current_ability).order(:name).paginate(:page => params[:page], :per_page => 15)
+    @subscriptions = @query.result.accessible_by(current_ability).order(:name).paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
+  end
+
+  def ransack
+    @query = Subscription.ransack(params[:q])
+    @subscriptions = @query.result.accessible_by(current_ability).order(:name).paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
+
+    render turbo_stream: turbo_stream.replace("subscriptions-index", partial: "subscriptions/index")
   end
 
   def show

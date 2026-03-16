@@ -10,6 +10,10 @@ es:
           active: "Activo"
           inactive: "Inactivo"
           deleted: "Eliminado"
+      subscription:
+        status:
+          active: "Activa"
+          inactive: "Inactiva"
       web:
         status:
           pending: "Pendiente"
@@ -83,7 +87,6 @@ es:
         name: Nombre
         color: Color
         company: Compañía
-
       subscription:
         name: Nombre
         description: Descripción

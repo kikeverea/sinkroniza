@@ -10,7 +10,7 @@ class WebCompaniesController < ApplicationController
 
   def ransack
     @query = WebCompany.ransack(params[:q])
-    @web_companies = @query.result.accessible_by(current_ability).order(:name).paginate(page: params[:page], per_page: 15)
+    @web_companies = @query.result.accessible_by(current_ability).order(:name).paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
 
     render turbo_stream: turbo_stream.replace("web-companies-index", partial: "web_companies/index")
   end

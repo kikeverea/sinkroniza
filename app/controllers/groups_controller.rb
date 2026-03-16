@@ -10,7 +10,7 @@ class GroupsController < ApplicationController
 
     @q = Group.includes(:company).ransack(params[:q])
 
-    @groups = @q.result.accessible_by(current_ability).where(group_type: :company).order(:name).paginate(:page => params[:page], :per_page => 15)
+    @groups = @q.result.accessible_by(current_ability).where(group_type: :company).order(:name).paginate(page: params[:page] || 1, per_page: params[:per_page] || 15)
   end
 
   def show

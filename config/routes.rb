@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   resources :group_users
   resources :webs
   resources :companies
-  resources :subscriptions
   resources :logs
 
 ## Users
@@ -24,6 +23,11 @@ Rails.application.routes.draw do
 
   get "admin/index"
   get :logout, to: "users#logout", as: :logout
+
+
+## Web companies
+  get "subscriptions/ransack", to: "subscriptions#ransack", as: :ransack_subscriptions
+  resources :subscriptions
 
 
 ## Web companies

@@ -1,14 +1,8 @@
-class Subscription < ApplicationRecord
+class SubscriptionPlan < ApplicationRecord
 
   has_many :companies, dependent: :nullify
 
   validates :name, :max_users, presence: true
-
-  enum :status, {
-    active: "active",
-    inactive: "inactive"
-  },
-  default: :active
 
 
   def self.ransackable_associations(_auth_object = nil)
@@ -17,9 +11,5 @@ class Subscription < ApplicationRecord
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[ name status created_at ]
-  end
-
-  def status_text
-    I18n.t("activerecord.enums.subscription.status.#{status}")
   end
 end

@@ -1,35 +1,40 @@
-<div class="card card-body">
-
-  <div class="mb-5">
-    <div class="form-label">
-      <strong>Nombre</strong>
-    </div>
-    <div><%= @subscription.name %></div>
+<div class="col-12 col-xl-6">
+  <div class="card card-body mb-6">
+    <table class="table">
+      <thead>
+      <tr>
+        <th class="fw-semibold fs-5">Detalles</th>
+        <th class="text-end pe-4">
+          <%= link_to edit_subscription_path(@subscription), class: "btn btn-flush btn-color-muted btn-active-color-success" do %>
+            <i class="fa-solid fa-pen fs-7"></i>
+          <% end %>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Nombre</strong></td>
+          <td><%= @subscription.name %></td>
+        </tr>
+        <tr>
+          <td><strong>Descripción</strong></td>
+          <td><%= @subscription.description.presence || "-" %></td>
+        </tr>
+        <tr>
+          <td><strong>Límite de usuarios</strong></td>
+          <td><%= @subscription.max_users %></td>
+        </tr>
+        <tr>
+          <td><strong>Estado</strong></td>
+          <td>
+            <%= subscription_status_badge @subscription %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</div>
 
-  <div class="mb-5">
-    <div class="form-label">
-      <strong>Descripción</strong>
-    </div>
-    <div><%= @subscription.description %></div>
-  </div>
-
-  <div class="mb-5">
-    <div class="form-label">
-      <strong>Cantidad de usuarios</strong>
-    </div>
-    <div><%= @subscription.max_users %></div>
-  </div>
-
-  <div class="mb-5">
-    <div class="form-label">
-      <strong>Estado</strong>
-    </div>
-    <div><%= @subscription.status.present? ? @subscription.status : "-" %></div>
-  </div>
-
-  <div class="flex items-center justify-start mt-6">
-    <%= link_to "← Ir a subscripciones", subscriptions_path, class: "me-1" %> |
-    <%= link_to "Editar", edit_subscription_path(@subscription), class: "ms-1" %>
-  </div>
+<div class="flex items-center justify-start mt-4 mb-8">
+  <%= link_to "← Atrás", :back %>
 </div>
