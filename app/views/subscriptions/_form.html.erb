@@ -28,6 +28,11 @@
     </div>
 
     <div class="mb-4">
+      <%= form.label :price, class: "form-label required" %>
+      <%= form.number_field :price, class: "form-control form-control-solid", step: 0.01, min: 0 %>
+    </div>
+
+    <div class="mb-4">
       <%= form.label :status, class: "form-label" %>
       <%= form.select :status,
         options_for_select(Subscription.statuses.map { |status, _val| [subscription_status_text(status), status] },

@@ -89,8 +89,9 @@ es:
         company: Compañía
       subscription:
         name: Nombre
-        description: Descripción
+        price: Precio
         max_users: Límite de usuarios
+        description: Descripción
         status: Estado
   errors:
     messages:

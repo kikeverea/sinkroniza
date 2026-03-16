@@ -124,8 +124,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100755) do
 
   create_table "subscriptions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
-    t.text "description"
+    t.float "price"
     t.integer "max_users"
+    t.text "description"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

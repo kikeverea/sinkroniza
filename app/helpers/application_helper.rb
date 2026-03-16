@@ -12,4 +12,8 @@ module ApplicationHelper
   def can_read_user_roles(roles, cancancan)
     roles.reduce(true) { |can_read, role| can_read && cancancan.call(role) }
   end
+
+  def to_currency(amount)
+    "#{number_to_currency(amount, unit: '', separator: ',', delimiter: '.', precision: 2)} €"
+  end
 end
