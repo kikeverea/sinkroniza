@@ -4,7 +4,7 @@ class TagsController < ApplicationController
   def index
     authorize! :read, Tag
     @title = "Etiquetas"
-    @tags = Tag.includes(:credentials, :company).accessible_by(current_ability)
+    @tags = Tag.includes(:taggings, :company).accessible_by(current_ability)
     @query = Tag.ransack
   end
 

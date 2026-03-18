@@ -12,33 +12,58 @@
 </div>
 
 
-<table class="table table-striped gs-7">
+<table class="table gs-7">
   <tbody>
-    <% webs.each do |web| %>
+    <% web_count = webs.count %>
+    <% webs.each_with_index do |web, i| %>
+      <% tags = web.tags %>
       <tr>
-        <td>
-          <%= image_tag web.favicon? ? web.favicon.url : asset_path("logo-sm.png"),
-            class: "w-30px h-30px"
-          %>
+        <td class="pb-1">
+          <%= image_tag web.favicon? ? web.favicon.url : asset_path("logo-sm.png"), class: "w-30px h-30px" %>
         </td>
-        <td><%= link_to web.name, web %></td>
-        <td><%= web.access_url.present? ? web.access_url : "-" %></td>
-        <td><%= boolean_icon(web.active) %></td>
+        <td class="pb-1"><%= link_to web.name, web %></td>
+        <td class="pb-1"><%= web.access_url.present? ? web.access_url : "-" %></td>
         <% if can? :manage, Web  %>
-          <td class="text-end">
-            <div class="d-flex justify-content-end gap-4">
-              <%= link_to edit_web_path(web), class: "btn btn-flush btn-color-muted btn-active-color-success" do %>
-                <i class="fa-solid fa-pen fs-6"></i>
-              <% end %>
-              <%= link_to web, class: "btn btn-flush btn-color-muted btn-active-color-danger",
-                data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } do
-              %>
-                <i class="fa-solid fa-xmark-circle fs-6"></i>
+          <td class="text-end pb-1 pe-5">
+            <div class="d-flex justify-content-end gap-2">
+              <% if can? :manage, web %>
+                <%= link_to edit_web_path(web),
+                  class: "btn btn-flush btn-color-muted btn-active-color-success",
+                  data: { turbo_stream: true } do
+                %>
+                  <i class="fa-solid fa-pen fs-5"></i>
+                <% end %>
+                <%= link_to web, class: "btn btn-flush btn-color-muted btn-active-color-danger",
+                  data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } do
+                %>
+                  <i class="fa-solid fa-xmark-circle fs-5"></i>
+                <% end %>
               <% end %>
             </div>
           </td>
         <% end %>
       </tr>
+      <% if tags.any? %>
+        <tr>
+          <td class="pt-0"></td>
+          <td colspan="2" class="pt-0">
+            <div class="d-flex flex-wrap align-items-center gap-2">
+              <% tags.each do |tag| %>
+                <%= tag_badge tag %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+      <% unless i == (web_count -1) %>
+        <tr>
+          <td colspan="4" class="py-3">
+            <div class="separator"></div>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
+
+<%= render "components/turbo_modal", channel: :web, title: "Nueva web" %>

@@ -19,23 +19,12 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100755) do
     t.string "cp"
     t.string "logo"
     t.string "status"
-    t.bigint "subscription_id", null: false
+    t.bigint "subscription_id"
     t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_companies_on_creator_id"
     t.index ["subscription_id"], name: "index_companies_on_subscription_id"
-  end
-
-  create_table "credential_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "credential_id", null: false
-    t.bigint "tag_id", null: false
-    t.bigint "company_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_credential_tags_on_company_id"
-    t.index ["credential_id"], name: "index_credential_tags_on_credential_id"
-    t.index ["tag_id"], name: "index_credential_tags_on_tag_id"
   end
 
   create_table "credentials", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -132,10 +121,20 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100755) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "taggings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.string "taggable_type", null: false
+    t.bigint "taggable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable"
+  end
+
   create_table "tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "color"
-    t.bigint "company_id", null: false
+    t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_tags_on_company_id"
@@ -185,7 +184,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100755) do
     t.string "favicon"
     t.string "access_url"
     t.boolean "active", default: true
-    t.string "send_button"
+    t.string "send_button_id"
+    t.string "username_input_id"
+    t.string "password_input_id"
     t.bigint "company_id"
     t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
@@ -197,9 +198,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100755) do
 
   add_foreign_key "companies", "subscriptions"
   add_foreign_key "companies", "users", column: "creator_id"
-  add_foreign_key "credential_tags", "companies"
-  add_foreign_key "credential_tags", "credentials"
-  add_foreign_key "credential_tags", "tags"
   add_foreign_key "credentials", "companies"
   add_foreign_key "credentials", "groups"
   add_foreign_key "credentials", "webs"
@@ -211,6 +209,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100755) do
   add_foreign_key "group_users", "users"
   add_foreign_key "groups", "companies"
   add_foreign_key "groups", "users", column: "creator_id"
+  add_foreign_key "taggings", "tags"
   add_foreign_key "tags", "companies"
   add_foreign_key "users", "companies"
   add_foreign_key "web_companies", "companies"

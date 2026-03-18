@@ -73,7 +73,7 @@ class WebsController < ApplicationController
           :creator_user_id,
           :creator_user_name,
           :status,
-          :send_button
+          tag_ids: []
         )
     end
 end

@@ -1,43 +1,74 @@
-<% if web.errors.any? %>
-  <div class="alert alert-danger d-flex align-items-center p-5">
-    <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
-    <div class="d-flex flex-column">
-      <h4 class="mb-1 text-danger">
-        No se ha podido realizar la acción
-      </h4>
-      <span class="ms-4">
+<% web ||= @web %>
+
+<div id="web-modal-outlet">
+  <% if web.errors.any? %>
+    <div class="alert alert-danger d-flex align-items-center p-5">
+      <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
+      <div class="d-flex flex-column">
+        <h4 class="mb-1 text-danger">
+          No se ha podido realizar la acción
+        </h4>
+        <span class="ms-4">
         <% web.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </span>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 
-<div class="card card-body mb-8">
-  <%= form_with model: web, data: { turbo: false } do |form| %>
+  <%= form_with model: web do |form| %>
     <%= form.hidden_field :web_company_id, value: web.web_company_id %>
 
     <div class="mb-4">
-      <div class="mb-4">
-        <%= form.label :name, "Nombre", class: "form-label required" %>
-        <%= form.text_field :name, class: "form-control form-control-solid" %>
-      </div>
-
-      <div class="mb-4">
-        <%= form.label :alias, "Alias", class: "form-label" %>
-        <%= form.text_field :alias, class: "form-control form-control-solid" %>
-      </div>
+      <%= form.label :name, class: "form-label required" %>
+      <%= form.text_field :name, class: "form-control form-control-solid" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :access_url, "Url", class: "form-label" %>
+      <%= form.label :access_url, class: "form-label required" %>
       <%= form.text_field :access_url, class: "form-control form-control-solid" %>
     </div>
 
+    <div class="mb-4">
+      <%= form.label :username_input_id, class: "form-label" %>
+      <%= form.text_field :username_input_id, class: "form-control form-control-solid" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :password_input_id, class: "form-label" %>
+      <%= form.text_field :password_input_id, class: "form-control form-control-solid" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :send_button_id, class: "form-label" %>
+      <%= form.text_field :send_button_id, class: "form-control form-control-solid" %>
+    </div>
+
     <div class="mb-3 mt-6">
-      <%= form.label :active, "Activa", class: "form-label" %>
+      <%= form.label :active, class: "form-label" %>
       <%= form.check_box :active, class: "ms-2" %>
+    </div>
+
+    <div class="mb-3 mt-6">
+      <%= form.label :tag_ids, "Etiquetas", class: "form-label" %>
+      <%= form.select :tag_ids,
+        options_for_select(
+          Tag.accessible_by(current_ability).order(:name).map { |tag| [tag.name, tag.id] },
+          web.tag_ids
+        ),
+        { selected: web.tag_ids},
+        { class: "form-select",
+          multiple: true,
+          data: {
+            controller: "select2",
+            select_placeholder: "Añade etiquetas",
+            hide_search: true,
+            value: web.tag_ids,
+            container_css_selector: "#web-modal-body"
+          }
+        }
+      %>
     </div>
 
     <div class="mb-4">

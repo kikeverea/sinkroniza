@@ -15,12 +15,20 @@ Current.user = super_admin
 
 subscription = Subscription.find_or_create_by!(name: "Test subscription") do |subscription|
   subscription.max_users = rand(3..10)
+  subscription.price = 100
 end
+
+web_company = WebCompany.find_or_create_by!(name: "Innobing", web_company_type: :other)
+web = Web.find_or_create_by!(name: "Test web", access_url: "https://www.innobing.com/en/") {
+  |web| web.web_company = web_company
+}
 
 company = Company.find_or_create_by!(name: "Test company") do |company|
   company.subscription = subscription
   company.creator = super_admin
 end
+
+Tag.find_or_create_by!(name: "Test tag", color: "#41C29E")
 
 Current.company = company
 
@@ -31,8 +39,6 @@ admin = User.find_or_create_by!(email: "admin@admin.com", role: "company_admin")
   user.company = company
 end
 
-web_company = WebCompany.find_or_create_by!(name: "Innobing", web_company_type: :other)
-web = Web.find_or_create_by!(name: "Test web", access_url: "https://www.innobing.com/en/") { |web| web.web_company = web_company }
 
 5.times do |i|
   user = User.find_or_create_by!(email: "user#{i + 1}@user.com", role: "user") do |user|
@@ -50,7 +56,6 @@ web = Web.find_or_create_by!(name: "Test web", access_url: "https://www.innobing
   )
 end
 
-Tag.find_or_create_by!(name: "Test tag", color: "#41C29E")
 Group.find_or_create_by!(name: "Test group", company: company, creator: admin)
 
 users_now = User.count

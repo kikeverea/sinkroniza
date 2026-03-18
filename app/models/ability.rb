@@ -9,13 +9,19 @@ class Ability
     if user.super_admin?
       can :manage, Company
       can :manage, Subscription
-      can :manage, WebCompany
-      can :manage, Web
-      can :manage, Tag
+      can :manage, WebCompany, company_id: nil
+      can :manage, Web, company_id: nil
+      can :manage, Tag, company_id: nil
       can [:read, :create], User, role: [:super_admin, :company_admin]
       return
     end
 
+    can :read, WebCompany, company_id: nil
+    can :read, Web, company_id: nil
+    can :read, Tag, company_id: nil
+    can :manage, WebCompany, company_id: user.company_id
+    can :manage, Web, company_id: user.company_id
+    can :manage, Tag, company_id: user.company_id
     can :manage, Credential, company_id: user.company_id
 
     if user.company_admin?
@@ -31,6 +37,7 @@ class Ability
       can :read, User, company_id: user.company_id, role: :user
       can :read, GroupUser, user_id: user.id
       can :read, Group, group_users: { user_id: user.id }
+      cannot :manage, WebCompany
       can :read, WebCompany
       can :read, Web
 
