@@ -7,7 +7,7 @@ class Web < ApplicationRecord
   before_save :set_web_company_type
 
   mount_base64_uploader :logo, ImageUploader
-  mount_base64_uploader :favicon, FaviconUploader
+  mount_uploader :favicon, FaviconUploader
 
   belongs_to :creator, class_name: "User"
   belongs_to :web_company

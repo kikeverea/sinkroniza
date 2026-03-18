@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   resources :group_users
-  resources :webs
   resources :companies
   resources :logs
 
@@ -32,6 +31,11 @@ Rails.application.routes.draw do
 ## Web companies
   get "web_companies/ransack", to: "web_companies#ransack", as: :ransack_web_companies
   resources :web_companies
+
+
+## Web companies
+  post "webs/scrape", to: "webs#scrape_web", as: :scrape_web
+  resources :webs
 
 
 ## Groups

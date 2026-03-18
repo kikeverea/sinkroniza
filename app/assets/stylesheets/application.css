@@ -22,6 +22,66 @@
   font-family: Montserrat;
 }
 
+/* Dropzone container */
+.filezone {
+    border: 2px dashed #ccc;
+    border-radius: 0.5rem;
+    background-color: #f9fafb;
+    padding: 1.2rem;
+    text-align: center;
+    color: #6b7280;
+    transition: background-color 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+/* On hover */
+.filezone:hover {
+    background-color: #f3f4f6;
+    border-color: #6366f1;
+    color: #374151;
+}
+
+/* Dragging over */
+.filezone.dz-drag-hover {
+    background-color: #eef2ff;
+    border-color: #4f46e5;
+}
+
+/* Text inside */
+.filezone .fz-message {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* File preview */
+.dropzone .dz-preview {
+    margin-top: 1rem;
+}
+
+/* Image previews */
+.dropzone .dz-image img {
+    border-radius: 0.25rem;
+    width: 100px;
+    height: auto;
+    object-fit: cover;
+}
+
+.dz-details {
+    padding-top: 8px;
+}
+
+.dz-error-message {
+    padding-top: 8px;
+}
+
+.dz-success-mark {
+    display: none;
+}
+
+.dz-error-mark {
+    display: none;
+}
+
 .card {
   border: 1px solid #ECECEC !important
 }

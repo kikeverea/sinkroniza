@@ -8,4 +8,8 @@ class FaviconUploader < CarrierWave::Uploader::Base
   def extension_allowlist
     %w[ico png svg]
   end
+
+  def content_type_allowlist
+    [/image\//]
+  end
 end

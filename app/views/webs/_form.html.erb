@@ -17,7 +17,24 @@
     </div>
   <% end %>
 
+  <% if @scrape_result&.any? %>
+    <div class="alert atext-warning d-flex align-items-center p-5">
+      <i class="fa-solid fa-xmark-circle fs-2x text-warning me-4"></i>
+      <div class="d-flex flex-column">
+        <h4 class="mb-1 text-warning">
+          Resultado automatización
+        </h4>
+        <span class="ms-4">
+        <% @scrape_result.each do |result| %>
+          <li><%= result %></li>
+        <% end %>
+      </span>
+      </div>
+    </div>
+  <% end %>
+
   <%= form_with model: web do |form| %>
+    <%= hidden_field_tag :web_id, web.id %>
     <%= form.hidden_field :web_company_id, value: web.web_company_id %>
 
     <div class="mb-4">
@@ -25,9 +42,35 @@
       <%= form.text_field :name, class: "form-control form-control-solid" %>
     </div>
 
-    <div class="mb-4">
+    <div class="mb-4" data-controller="web-scrape">
       <%= form.label :access_url, class: "form-label required" %>
-      <%= form.text_field :access_url, class: "form-control form-control-solid" %>
+
+      <div class="d-flex gap-2">
+        <%= form.text_field :access_url,
+          class: "form-control form-control-solid",
+          data: { web_scrape_target: "urlInput", action: "web-scrape#urlChange" }
+        %>
+        <button
+          type="button"
+          class="btn btn-sm btn-success w-100px"
+          data-action="web-scrape#scrape"
+          data-web-scrape-target="scrapeButton"
+        >
+          Auto
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-success w-100px disabled d-none"
+          data-web-scrape-target="scrapeLoader"
+        >
+           <span
+             class="spinner-border spinner-border-sm text-white"
+             data-ransack-target="indicator"
+           ></span>
+        </button>
+      </div>
+      <div class="text-danger mt-1" data-web-scrape-target="urlInputError">
+      </div>
     </div>
 
     <div class="mb-4">
@@ -45,9 +88,30 @@
       <%= form.text_field :send_button_id, class: "form-control form-control-solid" %>
     </div>
 
-    <div class="mb-3 mt-6">
-      <%= form.label :active, class: "form-label" %>
-      <%= form.check_box :active, class: "ms-2" %>
+    <div class="d-flex gap-16 mt-6">
+      <div>
+        <%= form.label :logo, class: "form-label" %>
+        <%= render "components/single_file_drop",
+          id: "file-drop",
+          no_file_message: "Arrastra archivos o haz click",
+          form: form,
+          attribute: :logo,
+          accepted_files: "image/*",
+          uploaded_file: ({ name: web.logo.identifier, url: web.logo.url } if web.logo?)
+        %>
+      </div>
+
+      <div>
+        <%= form.label :favicon, "Favicon", class: "form-label" %>
+        <%= render "components/single_file_drop",
+          id: "file-drop",
+          no_file_message: "Arrastra archivos o haz click",
+          form: form,
+          attribute: :favicon,
+          accepted_files: "image/*",
+          uploaded_file: ({ name: web.favicon.identifier, url: web.favicon.url } if web.favicon?)
+        %>
+      </div>
     </div>
 
     <div class="mb-3 mt-6">
@@ -71,21 +135,10 @@
       %>
     </div>
 
-    <div class="mb-4">
-      <%= form.label :logo, "Logo", class: "form-label" %>
-      <%= form.file_field :logo, accept: "image/*", class: "d-block" %>
+    <div class="mb-3 mt-6">
+      <%= form.label :active, class: "form-label" %>
+      <%= form.check_box :active, class: "ms-2" %>
     </div>
-
-    <div class="mb-4">
-      <%= form.label :favicon, "Favicon", class: "form-label" %>
-      <%= form.file_field :favicon, accept: "image/*", class: "d-block" %>
-    </div>
-
-    <% if web.logo? %>
-      <div class="mb-4">
-        <%= image_tag web.logo.url, class: "w-200px" %>
-      </div>
-    <% end %>
 
     <div class="mt-8 text-end">
       <%= link_to "Cancelar",
