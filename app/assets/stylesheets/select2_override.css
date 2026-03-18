@@ -1,0 +1,240 @@
+/* Single select */
+.select2-container .select2-selection--single{
+  background-color:#fff !important;
+  border:1px solid #aaa !important;
+  border-radius:4px !important;
+  height:34px !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered{
+  color:#444 !important;
+  line-height:34px !important;
+  padding-left:8px !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__placeholder{
+  color:#999 !important;
+}
+
+.select2-container--default .select2-search--dropdown {
+  background-color: white !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__arrow{
+  height:32px !important;
+  width:20px !important;
+  right:6px !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__arrow b{
+  border-color:#888 transparent transparent transparent !important;
+  border-style:solid !important;
+  border-width:5px 4px 0 4px !important;
+}
+
+/* Results list (kills bullets + template spacing) */
+.select2-results__options{
+  list-style:none !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+.select2-results__option{
+  padding:6px 8px !important;
+}
+
+/* Highlight + selected states (default-ish Select2 look) */
+.select2-results__option--highlighted.select2-results__option--selectable{
+  background-color:#F9F9F9 !important;
+  color:#fff !important;
+}
+
+.select2-results__option--selected{
+  background-color:#e6e6e6 !important;
+  color:#444 !important;
+}
+
+/* Multiple select (if you use it) */
+.select2-container .select2-selection--multiple{
+  background-color:#fff !important;
+  border:1px solid #aaa !important;
+  border-radius:4px !important;
+  min-height:34px !important;
+}
+
+.select2-container .select2-selection--multiple .select2-selection__rendered{
+  padding:2px 6px !important;
+}
+
+.select2-container .select2-selection--multiple .select2-search__field{
+  border:0 !important;
+  outline:none !important;
+  height: 2.65rem
+}
+
+/* Load this AFTER app.min.css */
+
+/* Make Select2 fill the same space as Bootstrap controls */
+.select2-container {
+  width: auto !important;
+  max-width: 100%;
+}
+
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  background-color: var(--bs-body-bg) !important;
+  border: var(--bs-border-width) solid rgb(219, 223, 233) !important;
+  border-radius: var(--bs-border-radius) !important;
+  box-sizing: border-box !important;
+  min-height: calc(1.5em + .75rem + 2px) !important; /* Bootstrap form-control height */
+}
+
+/* SINGLE: padding + text align like .form-select */
+.select2-container--default .select2-selection--single {
+  padding: .375rem 2.25rem .375rem 1rem !important; /* matches BS form-select padding */
+  height: 3.2rem !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: var(--bs-body-color) !important;
+  line-height: calc(30px - 2px) !important; /* subtract borders */
+  padding: 0 !important; /* we already padded the selection */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: var(--bs-secondary-color) !important;
+}
+
+/* Arrow positioning */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 100% !important;
+  right: .75rem !important;
+  width: 1.5rem !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border-color: var(--bs-secondary-color) transparent transparent transparent !important;
+  border-style: solid !important;
+  border-width: .35rem .3rem 0 .3rem !important;
+  margin-left: -0.3rem !important;
+  margin-top: -0.15rem !important;
+}
+
+/* MULTIPLE: padding like BS input */
+.select2-container--default .select2-selection--multiple {
+  padding: .25rem .5rem !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: var(--bs-secondary-bg) !important;
+  border: var(--bs-border-width) solid rgb(219, 223, 233) !important;
+  border-radius: 999px !important;
+  padding: .15rem .5rem !important;
+  margin: .125rem .25rem .125rem 0 !important;
+  color: var(--bs-body-color) !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: var(--bs-secondary-color) !important;
+  margin-right: .25rem !important;
+}
+
+.select2-container--default .select2-search--inline .select2-search__field {
+  margin-top: .15rem !important;
+}
+
+.select2-container--default .select2-search--inline textarea {
+  padding-top: 0.5rem !important;
+}
+
+/* Focus: match Bootstrap focus ring */
+.select2-container--default.select2-container--focus .select2-selection--single,
+.select2-container--default.select2-container--focus .select2-selection--multiple,
+.select2-container--default.select2-container--open .select2-selection--single,
+.select2-container--default.select2-container--open .select2-selection--multiple {
+  border-color: rgba(var(--bs-primary-rgb), .5) !important;
+  box-shadow: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .25) !important;
+}
+
+/* Dropdown: match Bootstrap dropdown look */
+.select2-dropdown {
+  background-color: var(--bs-body-bg) !important;
+  border: var(--bs-border-width) solid rgb(219, 223, 233) !important;
+  border-radius: var(--bs-border-radius) !important;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+  overflow: hidden !important;
+  z-index: 1056 !important; /* plays nice with modals */
+  left: 0 !important;          /* don't push it offscreen */
+  top: 0 !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Search input inside dropdown: like .form-control */
+.select2-search--dropdown .select2-search__field {
+  background-color: var(--bs-body-bg) !important;
+  color: var(--bs-body-color) !important;
+  border: var(--bs-border-width) solid rgb(219, 223, 233) !important;
+  border-radius: var(--bs-border-radius) !important;
+  padding: .375rem .75rem !important;
+  outline: none !important;
+  height: 2.65rem;
+}
+
+/* Kill bullets / spacing if template messes with ul/li */
+.select2-results__options {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.select2-results__option {
+  padding: .75rem 1.25rem !important;
+}
+
+/* Hover/active like Bootstrap */
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  /*background-color: red !important;*/
+  color: var(--bs-body-color) !important;
+}
+
+.select2-container--default .select2-results__option--selected {
+  background-color: rgba(var(--bs-primary-rgb), .15) !important;
+  color: var(--bs-body-color) !important;
+}
+
+/* Disabled: like Bootstrap */
+select:disabled + .select2-container .select2-selection,
+select[disabled] + .select2-container .select2-selection {
+  background-color: var(--bs-secondary-bg) !important;
+  opacity: 1 !important;
+}
+
+/* Bootstrap validation states (works because container is right after the select) */
+select.is-invalid + .select2-container .select2-selection {
+  border-color: var(--bs-danger) !important;
+}
+
+select.is-invalid + .select2-container.select2-container--focus .select2-selection,
+select.is-invalid + .select2-container.select2-container--open .select2-selection {
+  box-shadow: 0 0 0 .25rem rgba(var(--bs-danger-rgb), .25) !important;
+}
+
+select.is-valid + .select2-container .select2-selection {
+  border-color: var(--bs-success) !important;
+}
+
+select.is-valid + .select2-container.select2-container--focus .select2-selection,
+select.is-valid + .select2-container.select2-container--open .select2-selection {
+  box-shadow: 0 0 0 .25rem rgba(var(--bs-success-rgb), .25) !important;
+}
+
+.select2-container--open .select2-dropdown {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
