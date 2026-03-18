@@ -14,7 +14,7 @@
       </small>
     </div>
 
-    <%= search_form_for @q, url: companies_path do |f| %>
+    <%= search_form_for @query, url: companies_path do |f| %>
 
       <div class="row">
         <!-- Search bar -->
@@ -32,7 +32,7 @@
         <div class="col-12 col-xl-6 ps-4 ps-xl-6 pt-2 pb-6">
           <div class="d-flex align-items-center gap-4 h-40px mt-4 mt-xl-0">
             <small class="w-100 w-xl-auto">
-              <b>Rango fechas:</b>
+              <b>Fecha creación</b>
             </small>
             <div class="flex-grow-1">
               <%= f.date_field :created_at_gteq, class: "form-control h-40px", placeholder: "Inicio" %>
@@ -45,27 +45,7 @@
       </div>
 
       <div class="row">
-        <div class="col-12 col-xl-6">
-          <div class="d-flex flex-wrap align-items-center gap-8 mt-8 mt-xl-0 px-2">
-            <small>
-              <b>Ordenar por:</b>
-            </small>
-            <small>
-              <%= sort_link(@q, :name, '<i class="fa-solid fa-building me-1"></i> Nombre'.html_safe, class: "text-dark") %>
-            </small>
-            <small>
-              <%= sort_link(@q, :legal_name, '<i class="fa-solid fa-building me-1"></i> Nombre legal'.html_safe, class: "text-dark") %>
-            </small>
-            <small>
-              <%= sort_link(@q, :creator_name, '<i class="fa-solid fa-user me-1"></i> Creador'.html_safe, class: "text-dark") %>
-            </small>
-            <small>
-              <%= sort_link(@q, :created_at, '<i class="fa-solid fa-calendar me-1"></i> Fecha Registro'.html_safe, class: "text-dark") %>
-            </small>
-          </div>
-        </div>
-
-        <div class="col-12 col-xl-6">
+        <div class="col">
           <div class="d-flex flex-wrap align-items-center gap-8 px-2">
             <small>
               <b>Mostrar:</b>
@@ -88,14 +68,14 @@
     <thead>
       <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
         <th>Logo</th>
-        <th>Nombre</th>
-        <th>Suscripción</th>
-        <th>Razón fiscal</th>
-        <th>ID Fiscal</th>
-        <th>Dirección</th>
-        <th>Administrador</th>
-        <th>Creada por</th>
-        <th>Estado</th>
+        <th><%= render "components/sort_link", attribute: :name, label: "Nombre" %></th>
+        <th><%= render "components/sort_link", attribute: :subscription_name, label: "Suscripción" %></th>
+        <th><%= render "components/sort_link", attribute: :legal_name, label: "Razón Social" %></th>
+        <th><%= render "components/sort_link", attribute: :tax_id, label: "ID Fiscal" %></th>
+        <th><%= render "components/sort_link", attribute: :manager_full_name, label: "Administrador" %></th>
+        <th><%= render "components/sort_link", attribute: :creator_full_name, label: "Creado por" %></th>
+        <th><%= render "components/sort_link", attribute: :created_at, label: "Creado" %></th>
+        <th><%= render "components/sort_link", attribute: :status, label: "Estado" %></th>
         <th></th>
       </tr>
     </thead>
@@ -108,9 +88,9 @@
           <td><%= link_to subscription.name, subscription %></td>
           <td><%= company.legal_name.present? ? company.legal_name : "-" %></td>
           <td><%= company.tax_id.present? ? company.tax_id : "-" %></td>
-          <td><%= company.full_address.presence || "-" %></td>
           <td><%= company.manager&.full_name || "-" %></td>
           <td><%= company.creator.full_name %></td>
+          <td><%= company.created_at.strftime("%d-%m-%Y") %></td>
           <td><%= company_status_badge company %></td>
 
           <td class="text-end">

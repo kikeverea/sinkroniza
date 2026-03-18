@@ -5,8 +5,8 @@ module ApplicationHelper
       "<i class='fa-solid fa-xmark text-danger'></i>".html_safe
   end
 
-  def badge(text, color, classes: "")
-    "<span class='badge text-white text-bg-#{color} #{classes}'>#{text}</span>".html_safe
+  def badge(text, color, classes: "", color_as_style: false)
+    "<span class='badge text-white #{"text-bg-#{color}" unless color_as_style} #{classes}' #{"style='background-color: #{color};'" if color_as_style}'}>#{text}</span>".html_safe
   end
 
   def can_read_user_roles(roles, cancancan)

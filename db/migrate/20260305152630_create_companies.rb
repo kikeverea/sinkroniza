@@ -8,7 +8,7 @@ class CreateCompanies < ActiveRecord::Migration[7.1]
       t.string :cp
       t.string :logo
       t.string :status
-      t.references :subscription, null: false, foreign_key: true
+      t.references :subscription, null: true, foreign_key: true
       t.references :creator, null: false, foreign_key: { to_table: :users }
 
       t.timestamps

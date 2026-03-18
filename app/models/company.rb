@@ -1,10 +1,11 @@
 class Company < ApplicationRecord
   before_validation :set_creator, on: :create
+  before_save :invalidate_if_no_subscription
   after_create :set_manager
 
   attr_accessor :manager_attributes
 
-  belongs_to :subscription
+  belongs_to :subscription, optional: true
   belongs_to :creator, class_name: "User"
   has_one :manager, -> { where(role: :company_admin) }, class_name: "User"
   has_many :employees, -> { where(role: :user) }, class_name: "User"
@@ -12,15 +13,16 @@ class Company < ApplicationRecord
 
   mount_base64_uploader :logo, ImageUploader
 
-  validates :subscription_id, :name, presence: true
+  validates :name, presence: true
+  validates :subscription_id, presence: true, on: :create
   validates :name, uniqueness: true
 
   def self.ransackable_associations(_auth_object = nil)
-    %w[ subscription creator ]
+    %w[ subscription creator manager ]
   end
 
   def self.ransackable_attributes(_auth_object = nil)
-    %w[ name legal_name created_at ]
+    %w[ name legal_name tax_id created_at status ]
   end
 
   enum :status, {
@@ -46,6 +48,12 @@ class Company < ApplicationRecord
   def set_creator
     return if Current.user.nil?
     self.creator ||= Current.user
+  end
+
+  def invalidate_if_no_subscription
+    return unless persisted? && will_save_change_to_subscription_id?
+
+    self.status = :inactive if subscription_id.nil?
   end
 
   def set_manager

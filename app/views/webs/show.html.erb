@@ -5,10 +5,6 @@
           <td><strong>Nombre</strong></td>
           <td><%= @web.name %></td>
         </tr>
-        <tr>
-          <td><strong>Alias</strong></td>
-          <td><%= @web.alias.present? ? @web.alias : "-" %></td>
-        </tr>
         <% if @show_company %>
           <tr>
             <td><strong>Compañía</strong></td>

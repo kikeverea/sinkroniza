@@ -9,12 +9,12 @@
 </div>
 
 <div class="card card-body w-100 w-xl-50">
-  <%= render "webs/index", web_company: @web_company, webs: @web_company.webs %>
+  <%= render "webs/index", web_company: @web_company, webs: @web_company.webs.accessible_by(current_ability) %>
 </div>
 
 <div class="flex items-center justify-start mt-4 mb-8">
   <%= link_to "← Atrás", web_companies_path, class: "me-1" %>
-  <% if can? :manage, Web  %>
+  <% if can? :manage, @web_company  %>
     | <%= link_to "Editar", edit_web_company_path(@web_company), class: "ms-1" %>
   <% end %>
 </div>

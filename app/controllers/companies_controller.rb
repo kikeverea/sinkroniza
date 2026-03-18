@@ -6,9 +6,9 @@ class CompaniesController < ApplicationController
     @title = "Clientes"
 
     @search = params[:q].nil? ? "" : params[:q][:name_or_legal_name_cont]
-    @q = Company.ransack(params[:q])
+    @query = Company.ransack(params[:q])
 
-    @companies = @q.result
+    @companies = @query.result
       .accessible_by(current_ability)
       .includes(:subscription, :creator, :manager)
       .order(:name)

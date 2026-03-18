@@ -86,10 +86,14 @@
         <%= image_tag web.logo.url, class: "w-200px" %>
       </div>
     <% end %>
-    
-    <div class="mt-8">
+
+    <div class="mt-8 text-end">
+      <%= link_to "Cancelar",
+        web.web_company,
+        class: "btn btn-link btn-sm btn-color-muted btn-active-color-success me-6",
+        data: { bs_dismiss: "modal" }
+      %>
       <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
-      <%= link_to "Cancelar", web.web_company, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
     </div>
   <% end %>
 </div>

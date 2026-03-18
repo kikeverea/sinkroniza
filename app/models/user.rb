@@ -27,8 +27,8 @@ class User < ApplicationRecord
   validates :name, :lastname, presence: true
   validate :company_presence
 
-  scope :kept, -> { where.not(status: :deleted).accessible_by(Current.ability) }
-  scope :discarded, -> { where(status: :deleted).accessible_by(Current.ability) }
+  scope :kept, -> { where.not(status: :deleted) }
+  scope :discarded, -> { where(status: :deleted) }
 
   def password_required?
     return false if skip_password_validation

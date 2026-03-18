@@ -10,9 +10,9 @@ class UsersController < ApplicationController
 
     @search = params[:q].nil? ? "" : params[:q][:email_or_name_cont]
 
-    @q = User.includes(:company).ransack(params[:q])
+    @query = User.includes(:company).ransack(params[:q])
 
-    result = @q.result.accessible_by(current_ability)
+    result = @query.result.accessible_by(current_ability)
 
     @users = (@target.nil? || @target == "users") ? result.kept : User.kept
     @discarded_users = @target == "discarded" ? result.discarded : User.discarded

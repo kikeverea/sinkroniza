@@ -4,7 +4,7 @@
     <%= link_to new_web_path(web_company_id: web_company.id),
       class: "btn btn-flush btn-active-color-primary",
       title: "Añadir web",
-      data: { controller: "tooltip" } do
+      data: { controller: "tooltip", turbo_stream: true } do
     %>
       <i class="fa fa-plus-circle fs-1"></i>
     <% end %>

@@ -8,7 +8,9 @@ class CreateWebs < ActiveRecord::Migration[7.1]
       t.string :favicon
       t.string :access_url
       t.boolean :active, default: true
-      t.string :send_button
+      t.string :send_button_id
+      t.string :username_input_id
+      t.string :password_input_id
       t.references :company, null: true, foreign_key: true
       t.references :creator, null: false, foreign_key: { to_table: :users }
 

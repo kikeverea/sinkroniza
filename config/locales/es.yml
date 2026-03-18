@@ -70,13 +70,16 @@ es:
         company: Compañía
         password: Contraseña
         password_confirmation: Confirmar contraseña
-      webs:
+      web:
         web_company: Compañía web
         web_company_type: Tipo
         name: Nombre
         logo: Logo
+        send_button_id: ID botón formulario
+        username_input_id: ID input usuario
+        password_input_id: ID input contraseña
         favicon: Favicon
-        access_url: URL
+        access_url: Url
         active: Activa
       group:
         name: Nombre

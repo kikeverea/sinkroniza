@@ -1,4 +1,6 @@
 class Web < ApplicationRecord
+  include Taggable
+
   company_scoped optional: true
 
   before_validation :set_creator, on: :create
@@ -11,10 +13,6 @@ class Web < ApplicationRecord
   belongs_to :web_company
 
   validates :name, :access_url, presence: true
-
-  def status_text
-    I18n.t("activerecord.enums.web.status.#{status}")
-  end
 
   def favicon
     value = super

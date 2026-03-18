@@ -13,21 +13,24 @@ class WebsController < ApplicationController
   def new
     @title = "Nueva web"
     @web = Web.new(web_company: WebCompany.find(params[:web_company_id]))
+
+    render "components/turbo_modal_content", locals: { channel: :web, partial: "webs/form" }
   end
 
   def edit
     @title = "Editar web"
+    render "components/turbo_modal_content", locals: { channel: :web, partial: "webs/form" }
   end
 
   def create
     @web = Web.new(web_params)
 
     respond_to do |format|
-      if @web.save!
-        format.html { redirect_to @web, notice: "Web creada." }
+      if @web.save
+        format.html { redirect_to @web.web_company, notice: "Web creada." }
         format.json { render :show, status: :created, location: @web }
       else
-        format.html { render :new, status: :unprocessable_content }
+        format.turbo_stream { render "components/turbo_modal_content", locals: { channel: :web, partial: "webs/form" } }
         format.json { render json: @web.errors, status: :unprocessable_content }
       end
     end
@@ -73,6 +76,9 @@ class WebsController < ApplicationController
           :creator_user_id,
           :creator_user_name,
           :status,
+          :send_button_id,
+          :username_input_id,
+          :password_input_id,
           tag_ids: []
         )
     end

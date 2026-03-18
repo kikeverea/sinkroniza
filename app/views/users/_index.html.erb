@@ -12,7 +12,7 @@
       </small>
     </div>
 
-    <%= search_form_for (@target.nil? || @target == target) ? @q : User.ransack, url: users_path(target: target) do |f| %>
+    <%= search_form_for (@target.nil? || @target == target) ? @query : User.ransack, url: users_path(target: target) do |f| %>
 
       <%= hidden_field_tag :target, target %>
 
@@ -53,13 +53,13 @@
               <b>Ordenar por:</b>
             </small>
             <small>
-              <%= sort_link(@q, :full_name, '<i class="fa-solid fa-user me-1"></i> Nombre'.html_safe, class: "text-dark") %>
+              <%= sort_link(@query, :full_name, '<i class="fa-solid fa-user me-1"></i> Nombre'.html_safe, class: "text-dark") %>
             </small>
             <small>
-              <%= sort_link(@q, :role, '<i class="fa-solid fa-user me-1"></i> Rol'.html_safe, class: "text-dark") %>
+              <%= sort_link(@query, :role, '<i class="fa-solid fa-user me-1"></i> Rol'.html_safe, class: "text-dark") %>
             </small>
             <small>
-              <%= sort_link(@q, :created_at, '<i class="fa-solid fa-calendar me-1"></i> Fecha Registro'.html_safe, class: "text-dark") %>
+              <%= sort_link(@query, :created_at, '<i class="fa-solid fa-calendar me-1"></i> Fecha Registro'.html_safe, class: "text-dark") %>
             </small>
           </div>
         </div>
