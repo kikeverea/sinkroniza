@@ -19,15 +19,15 @@ class Ability
     can :read, WebCompany, company_id: nil
     can :read, Web, company_id: nil
     can :read, Tag, company_id: nil
-    can :manage, WebCompany, company_id: user.company_id
-    can :manage, Web, company_id: user.company_id
-    can :manage, Tag, company_id: user.company_id
     can :manage, Credential, company_id: user.company_id
 
     if user.company_admin?
+      cannot :create, User, role: :super_admin
       can :update, Company, id: user.company_id
       can :manage, [User, Group], company_id: user.company_id
-      cannot :create, User, role: :super_admin
+      can :manage, WebCompany, company_id: user.company_id
+      can :manage, Web, company_id: user.company_id
+      can :manage, Tag, company_id: user.company_id
       return
     end
 
