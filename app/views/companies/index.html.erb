@@ -64,53 +64,55 @@
 </div>
 
 <div class="card card-body mt-5">
-  <table class="table table-hover table-rounded table-striped gy-7 gs-7">
-    <thead>
-      <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
-        <th>Logo</th>
-        <th><%= render "components/sort_link", attribute: :name, label: "Nombre" %></th>
-        <th><%= render "components/sort_link", attribute: :subscription_name, label: "Suscripción" %></th>
-        <th><%= render "components/sort_link", attribute: :legal_name, label: "Razón Social" %></th>
-        <th><%= render "components/sort_link", attribute: :tax_id, label: "ID Fiscal" %></th>
-        <th><%= render "components/sort_link", attribute: :manager_full_name, label: "Administrador" %></th>
-        <th><%= render "components/sort_link", attribute: :creator_full_name, label: "Creado por" %></th>
-        <th><%= render "components/sort_link", attribute: :created_at, label: "Creado" %></th>
-        <th><%= render "components/sort_link", attribute: :status, label: "Estado" %></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @companies.each do |company| %>
-        <% subscription = company.subscription %>
-        <tr>
-          <td><%= company.logo? ? image_tag(company.logo.url, class: "w-100px") : "-" %></td>
-          <td><%= link_to company.name, company %></td>
-          <td><%= link_to subscription.name, subscription %></td>
-          <td><%= company.legal_name.present? ? company.legal_name : "-" %></td>
-          <td><%= company.tax_id.present? ? company.tax_id : "-" %></td>
-          <td><%= company.manager&.full_name || "-" %></td>
-          <td><%= company.creator.full_name %></td>
-          <td><%= company.created_at.strftime("%d-%m-%Y") %></td>
-          <td><%= company_status_badge company %></td>
-
-          <td class="text-end">
-            <button
-              type="button"
-              class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Acciones
-            </button>
-            <div class="dropdown-menu" style="border: 1px solid #ECECEC">
-              <%= link_to "Ver", company, class: "dropdown-item" %>
-              <%= link_to "Editar", edit_company_path(company), class: "dropdown-item" %>
-              <%= link_to "Eliminar", company, class:"dropdown-item", data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %>
-            </div>
-          </td>
+  <div class="table-responsive">
+    <table class="table table-hover table-rounded table-striped gy-7 gs-7">
+      <thead>
+        <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
+          <th>Logo</th>
+          <th><%= render "components/sort_link", attribute: :name, label: "Nombre" %></th>
+          <th><%= render "components/sort_link", attribute: :subscription_name, label: "Plan" %></th>
+          <th><%= render "components/sort_link", attribute: :legal_name, label: "Razón Social" %></th>
+          <th><%= render "components/sort_link", attribute: :tax_id, label: "ID Fiscal" %></th>
+          <th><%= render "components/sort_link", attribute: :manager_full_name, label: "Administrador" %></th>
+          <th><%= render "components/sort_link", attribute: :creator_full_name, label: "Creado por" %></th>
+          <th><%= render "components/sort_link", attribute: :created_at, label: "Creado" %></th>
+          <th><%= render "components/sort_link", attribute: :status, label: "Estado" %></th>
+          <th></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @companies.each do |company| %>
+          <% subscription = company.subscription %>
+          <tr>
+            <td><%= company.logo? ? image_tag(company.logo.url, class: "w-100px") : "-" %></td>
+            <td><%= link_to company.name, company %></td>
+            <td><%= link_to subscription.name, subscription %></td>
+            <td><%= company.legal_name.present? ? company.legal_name : "-" %></td>
+            <td><%= company.tax_id.present? ? company.tax_id : "-" %></td>
+            <td><%= company.manager&.full_name || "-" %></td>
+            <td><%= company.creator.full_name %></td>
+            <td><%= company.created_at.strftime("%d-%m-%Y") %></td>
+            <td><%= company_status_badge company %></td>
+
+            <td class="text-end">
+              <button
+                type="button"
+                class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Acciones
+              </button>
+              <div class="dropdown-menu" style="border: 1px solid #ECECEC">
+                <%= link_to "Ver", company, class: "dropdown-item" %>
+                <%= link_to "Editar", edit_company_path(company), class: "dropdown-item" %>
+                <%= link_to "Eliminar", company, class:"dropdown-item", data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

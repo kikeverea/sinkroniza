@@ -5,6 +5,7 @@ class Web < ApplicationRecord
 
   before_validation :set_creator, on: :create
   before_save :set_web_company_type
+  after_save :set_web_company_images
 
   mount_base64_uploader :logo, ImageUploader
   mount_uploader :favicon, FaviconUploader
@@ -23,6 +24,11 @@ class Web < ApplicationRecord
     favicon.present?
   end
 
+  def display_access_url
+    max_length = 72
+    display = access_url.split("?").first
+    display.length > max_length ? "#{display.first(max_length - 3)}..." : display
+  end
 
   private
 
@@ -33,5 +39,15 @@ class Web < ApplicationRecord
 
   def set_web_company_type
     self.web_company_type ||= web_company.web_company_type
+  end
+
+  def set_web_company_images
+    web_company = self.web_company
+    return if web_company.logo? && web_company.favicon?
+
+    web_company.logo = self.logo if web_company.logo.blank? && self.logo.present?
+    web_company.favicon = self.favicon if web_company.favicon.blank? && self.favicon.present?
+
+    web_company.save
   end
 end

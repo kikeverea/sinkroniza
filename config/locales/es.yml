@@ -12,8 +12,8 @@ es:
           deleted: "Eliminado"
       subscription:
         status:
-          active: "Activa"
-          inactive: "Inactiva"
+          active: "Activo"
+          inactive: "Inactivo"
       web:
         status:
           pending: "Pendiente"

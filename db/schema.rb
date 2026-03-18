@@ -182,7 +182,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_26_100755) do
     t.string "name"
     t.string "logo"
     t.string "favicon"
-    t.string "access_url"
+    t.text "access_url"
     t.boolean "active", default: true
     t.string "send_button_id"
     t.string "username_input_id"

@@ -6,7 +6,7 @@ class CreateWebs < ActiveRecord::Migration[7.1]
       t.string :name
       t.string :logo
       t.string :favicon
-      t.string :access_url
+      t.text :access_url
       t.boolean :active, default: true
       t.string :send_button_id
       t.string :username_input_id

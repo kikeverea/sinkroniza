@@ -19,10 +19,16 @@
       <% tags = web.tags %>
       <tr>
         <td class="pb-1">
-          <%= image_tag web.favicon? ? web.favicon.url : asset_path("logo-sm.png"), class: "w-30px h-30px" %>
+          <%= image_tag web.favicon? ? web.favicon.url : asset_path("logo-sm.png"), class: "w-20px h-20px" %>
         </td>
-        <td class="pb-1"><%= link_to web.name, web %></td>
-        <td class="pb-1"><%= web.access_url.present? ? web.access_url : "-" %></td>
+        <td class="pb-1 fw-semibold">
+          <%= link_to web.name, web %>
+        </td>
+        <td class="pb-1">
+          <%= link_to web.access_url, target: "_blank", rel: "noopener" do %>
+            <%= web.display_access_url %> <i class="fa-solid fa-arrow-up-right-from-square ms-2 text-primary"></i>
+          <% end %>
+        </td>
         <% if can? :manage, Web  %>
           <td class="text-end pb-1 pe-5">
             <div class="d-flex justify-content-end gap-2">

@@ -3,7 +3,7 @@ class SubscriptionsController < ApplicationController
 
   def index
     authorize! :read, Subscription
-    @title = "Suscripciones"
+    @title = "Planes"
 
     @search = params[:q].nil? ? "" : params[:q][:name_cont]
     @query = Subscription.ransack(params[:q])
@@ -19,16 +19,16 @@ class SubscriptionsController < ApplicationController
   end
 
   def show
-    @title = "Subscripción"
+    @title = "Plan"
   end
 
   def new
-    @title = "Nueva Suscripción"
+    @title = "Nuevo Plan"
     @subscription = Subscription.new
   end
 
   def edit
-    @title = "Editar Subscripción"
+    @title = "Editar Plan"
   end
 
   def create
@@ -36,7 +36,7 @@ class SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if @subscription.save
-        format.html { redirect_to subscriptions_path, notice: "Subscripción creada" }
+        format.html { redirect_to subscriptions_path, notice: "Plan creado" }
         format.json { render :show, status: :created, location: @subscription }
       else
         format.html { render :new, status: :unprocessable_content }
@@ -48,7 +48,7 @@ class SubscriptionsController < ApplicationController
   def update
     respond_to do |format|
       if @subscription.update(subscription_params)
-        format.html { redirect_to subscriptions_path, notice: "Subscripción actualizada" }
+        format.html { redirect_to subscriptions_path, notice: "Plan actualizado" }
         format.json { render :show, status: :ok, location: @subscription }
       else
         format.html { render :edit, status: :unprocessable_content }
@@ -61,7 +61,7 @@ class SubscriptionsController < ApplicationController
     @subscription.destroy!
 
     respond_to do |format|
-      format.html { redirect_to subscriptions_url, notice: "Subscripción eliminada" }
+      format.html { redirect_to subscriptions_url, notice: "Plan eliminado" }
       format.json { head :no_content }
     end
   end
