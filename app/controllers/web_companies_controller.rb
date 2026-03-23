@@ -70,6 +70,11 @@ class WebCompaniesController < ApplicationController
     end
   end
 
+  ## API
+  def api_index
+    render json: WebCompany.accessible_by(current_ability)
+  end
+
   private
     def set_web_company
       @web_company = WebCompany.find(params[:id])

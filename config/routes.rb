@@ -30,6 +30,9 @@ Rails.application.routes.draw do
 
 ## Web companies
   get "web_companies/ransack", to: "web_companies#ransack", as: :ransack_web_companies
+
+  ### API
+  get "api/me/web_companies", to: "web_companies#api_index"
   resources :web_companies
 
 

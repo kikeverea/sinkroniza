@@ -25,4 +25,15 @@ class WebCompany < ApplicationRecord
   def type_text
     I18n.t("activerecord.enums.web_company.web_company_type.#{web_company_type}")
   end
+
+  def as_json(options = nil)
+    {
+      id: id,
+      name: name,
+      logo: logo&.url,
+      favicon: favicon&.url,
+      web_company_type: type_text,
+      webs: webs.accessible_by(Current.ability).map(&:as_json)
+    }
+  end
 end
