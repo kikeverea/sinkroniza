@@ -14,7 +14,7 @@
 
 <table class="table gs-7">
   <tbody>
-    <% web_count = webs.count %>
+    <% web_length = webs.count %>
     <% webs.each_with_index do |web, i| %>
       <% tags = web.tags %>
       <tr>
@@ -61,7 +61,7 @@
           </td>
         </tr>
       <% end %>
-      <% unless i == (web_count -1) %>
+      <% unless i == (web_length -1) %>
         <tr>
           <td colspan="4" class="py-3">
             <div class="separator"></div>

@@ -74,7 +74,18 @@ class CredentialsController < ApplicationController
     render json: @credential
   end
 
-  def api_change_credential_password
+  def api_create
+    @credential = Credential.new(credential_params)
+    @credential.group_id ||= current_user.personal_group.id
+
+    if @credential.save
+      render json: @credential, status: :created
+    else
+      render json: { created: false }, status: :unprocessable_content
+    end
+  end
+
+  def api_change_password
     password_param = params.require(:credential).permit(:password)
 
     if @credential.update(encrypted_blob: password_param[:password])

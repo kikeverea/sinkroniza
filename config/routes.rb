@@ -47,7 +47,8 @@ Rails.application.routes.draw do
   ### API
   get "api/me/credentials", to: "credentials#api_credentials"
   get "api/me/credentials/:id", to: "credentials#api_credential"
-  put "api/me/credentials/:id", to: "credentials#api_change_credential_password"
+  post "api/me/credentials", to: "credentials#api_create"
+  put "api/me/credentials/:id", to: "credentials#api_change_password"
 
   resources :credentials
 
