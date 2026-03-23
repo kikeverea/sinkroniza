@@ -14,7 +14,8 @@ class Credential < ApplicationRecord
     autologin: "autologin",
     regular: "regular",
     note: "note",
-  }
+  },
+  default: :regular
 
   def credential_type_text
     I18n.t("activerecord.enums.credential.credential_type.#{credential_type}")
@@ -22,9 +23,7 @@ class Credential < ApplicationRecord
 
   def as_json(options = nil)
     {
-      name: web.name,
-      logo: web.logo&.url,
-      url: web.access_url,
+      name: name,
       autologin_url: (add_query_params(web.access_url, { fromExtension: 1 }) if credential_type == "autologin"),
       encrypted_blob: encrypted_blob,
       type: credential_type

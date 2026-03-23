@@ -33,8 +33,12 @@ Rails.application.routes.draw do
   resources :web_companies
 
 
-## Web companies
+## Webs
   post "webs/scrape", to: "webs#scrape_web", as: :scrape_web
+
+  ### API
+  get "api/me/webs", to: "webs#api_index"
+
   resources :webs
 
 
@@ -45,7 +49,7 @@ Rails.application.routes.draw do
 
 ## Credentials
   ### API
-  get "api/me/credentials", to: "credentials#api_credentials"
+  get "api/me/credentials", to: "credentials#api_index"
   get "api/me/credentials/:id", to: "credentials#api_credential"
   post "api/me/credentials", to: "credentials#api_create"
   put "api/me/credentials/:id", to: "credentials#api_change_password"

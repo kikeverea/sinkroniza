@@ -12,6 +12,7 @@ class Web < ApplicationRecord
 
   belongs_to :creator, class_name: "User"
   belongs_to :web_company
+  has_many :credentials
 
   validates :name, :access_url, presence: true
 
@@ -28,6 +29,17 @@ class Web < ApplicationRecord
     max_length = 72
     display = access_url.split("?").first
     display.length > max_length ? "#{display.first(max_length - 3)}..." : display
+  end
+
+
+  def as_json(options = nil)
+    {
+      id: id,
+      name: name,
+      logo: logo&.url,
+      url: access_url,
+      credentials: credentials.accessible_by(Current.ability).map(&:as_json)
+    }
   end
 
   private

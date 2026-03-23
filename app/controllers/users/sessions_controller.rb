@@ -1,6 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   prepend_before_action :require_no_authentication, only: [:new, :create]
-  skip_before_action :verify_authenticity_token, :only => [:create, :new]
+  skip_before_action :verify_authenticity_token, only: [:create, :new]
 
   respond_to :json, :html
   layout "devise"

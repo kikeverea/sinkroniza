@@ -113,7 +113,6 @@ class User < ApplicationRecord
 
   def company_presence
     errors.add(:company_id, "El super admin no puede pertenecer a una compañía") if !company_id.nil? && role == "super_admin"
-    # errors.add(:company_id, "El admin de compañía debe pertenecer a la compañía") if company_id.nil? && role == "company_admin"
     errors.add(:company_id, "Los usuarios deben pertenecer a una compañía") if company_id.nil? && role == "user"
   end
 end

@@ -83,6 +83,12 @@ class WebsController < ApplicationController
   end
 
 
+  ### API
+
+  def api_index
+    render json: Web.accessible_by(current_ability)
+  end
+
   private
 
   def set_web

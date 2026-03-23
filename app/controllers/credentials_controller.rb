@@ -1,7 +1,8 @@
 class CredentialsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: %i[ api_change_credential_password ]
-  before_action :set_credential, only: %i[ show edit update destroy api_credential api_change_credential_password ]
+  skip_forgery_protection only: %i[api_create]
 
+  skip_before_action :verify_authenticity_token, only: %i[ api_change_password ]
+  before_action :set_credential, only: %i[ show edit update destroy api_credential api_change_password ]
 
   def index
     authorize! :read, Credential
@@ -32,7 +33,7 @@ class CredentialsController < ApplicationController
 
     respond_to do |format|
       if @credential.save
-        format.html { redirect_to @credential, notice: "Credential was successfully created." }
+        format.html { redirect_to @credential, notice: "Credencial creada" }
         format.json { render :show, status: :created, location: @credential }
       else
         format.html { render :new, status: :unprocessable_content }
@@ -46,7 +47,7 @@ class CredentialsController < ApplicationController
 
     respond_to do |format|
       if @credential.update(credential_params)
-        format.html { redirect_to @credential, notice: "Credential was successfully updated.", status: :see_other }
+        format.html { redirect_to @credential, notice: "Credencial actualizada", status: :see_other }
         format.json { render :show, status: :ok, location: @credential }
       else
         format.html { render :edit, status: :unprocessable_content }
@@ -59,14 +60,15 @@ class CredentialsController < ApplicationController
     @credential.destroy!
 
     respond_to do |format|
-      format.html { redirect_to credentials_path, notice: "Credential was successfully destroyed.", status: :see_other }
+      format.html { redirect_to credentials_path, notice: "Credencial eliminada", status: :see_other }
       format.json { head :no_content }
     end
   end
 
 
   ## API
-  def api_credentials
+
+  def api_index
     render json: current_user.credentials.where(visible_extension: true)
   end
 
@@ -76,7 +78,8 @@ class CredentialsController < ApplicationController
 
   def api_create
     @credential = Credential.new(credential_params)
-    @credential.group_id ||= current_user.personal_group.id
+    @credential.company_id = current_user.company_id if @credential.company_id.blank?
+    @credential.group_id = current_user.personal_group.id if @credential.group_id.blank?
 
     if @credential.save
       render json: @credential, status: :created
